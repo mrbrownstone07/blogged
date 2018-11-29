@@ -1,5 +1,5 @@
 <p align="center">
-  BLOGGED
+   <h1> BLOGGED </h1>
 </p>
 term project cse 311
 
