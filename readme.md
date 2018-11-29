@@ -1,6 +1,8 @@
+<h1> 
 <p align="center">
-   <h1> BLOGGED </h1>
+   BLOGGED 
 </p>
+</h1>
 term project cse 311
 
 ## Dependecies:
