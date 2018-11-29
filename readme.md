@@ -6,7 +6,7 @@
 term project cse 311
 
 ## Dependecies:
-    1. Laravel Framework </br>
-    2. Composer </br>
-    3. mysql </br>
-    4. Localhost </br>
+    1. Laravel Framework 
+    2. Composer 
+    3. mysql 
+    4. Localhost 
