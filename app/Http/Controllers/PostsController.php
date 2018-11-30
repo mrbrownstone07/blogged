@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-define('ROOT', "/home/opt/lampp/htdocs/blogged/");
-require(ROOT. 'app/Helpers/conn.php');
+use Connect;
 
 class PostsController extends Controller
 {
@@ -16,9 +15,10 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $conn = new Connect();
-        $posts = $conn->query("select * from posts");
-        return view('posts.index')->with('posts', $posts);
+        $conn = mysqli_connect("127.0.0.1", "root", "ibanezgio", "blogged");
+        $res = mysqli_query($conn, "select * from posts order by time desc");
+        $conn->close();
+        return view('posts.index')->with('posts', $res);
     }
 
     /**
@@ -28,7 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -38,8 +38,13 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {  
+        $conn = mysqli_connect("127.0.0.1", "root", "ibanezgio", "blogged"); 
+        $tile = mysqli_real_escape_string($conn, $_REQUEST['title']);
+        $body = mysqli_real_escape_string($conn, $_REQUEST['body']);
+        $query = "insert into posts (title, body) values ('$tile', '$body')";
+        $conn->query($query);
+        $conn->close();
     }
 
     /**
@@ -51,9 +56,11 @@ class PostsController extends Controller
     public function show($id)
     {   
         $query = "select * from posts where id = '$id'";
-        $post = DB::select($query);
+        $conn = mysqli_connect("127.0.0.1", "root", "ibanezgio", "blogged");
+        $res = mysqli_query($conn, $query);
+        $conn->close();
 
-        return view('posts.show')->with('post', $post);   
+        return view('posts.show')->with('post', $res);   
     }
 
     /**
@@ -64,7 +71,7 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('post.edit');
     }
 
     /**

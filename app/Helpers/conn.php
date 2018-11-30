@@ -1,26 +1,15 @@
 <?php
 
-namespace App\Helpers;
 
-define('DIR_VENDOR', __DIR__.'/vendor/');
-$dotenv = new Dotenv\Dotenv(__DIR__);
 
 class Connect{
-    private $dbName;
-    private $server; 
-    private $usr; 
-    private $psd; 
-    private $conn;
+    var $conn;
+    public function _construct(){
 
-    function _construct(){
-        $dbName = "blogged";
-        $server = "127.0.0.1";
-        $usr = "root";
-        $psd = "ibanezgio";
     }
 
-    function connectDb(){
-        $conn = mysqli_connect($server, $usr, $psd, $dbName);
+    public static function connectDb(){
+        $conn = mysqli_connect("127.0.0.1", "root", "ibanezgio", "blogged");
 
         if(!$conn) {
             echo 'could not connect';
@@ -29,7 +18,7 @@ class Connect{
         return $conn;
     }
 
-    function closeDbConnection(){
+    public static function closeDbConnection(){
         try{
             mysqli_close($conn);
         }catch(Exception $e){
@@ -37,7 +26,7 @@ class Connect{
         }
     }
 
-    function _destruct(){
+    public static function _destruct(){
 
     }
 }

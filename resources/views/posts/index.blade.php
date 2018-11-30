@@ -27,16 +27,16 @@
 @section('content')
     <div class="jumbotron bg_">
         <h2>Posts</h2>
+        <a class="btn btn-dark" href="post/create"> create post </a>
         <hr>
-        @if (count($posts) > 0)
+        @if (mysqli_num_rows($posts) > 0)
             @foreach ($posts as $p)
-
                 <div class="well post_block container">
                     <h4>
-                        <a href="/post/{{$p->id}}">{{$p->title}}</a>
+                        <a href="/post/{{$p['id']}}">{{$p['title']}}</a>
                     </h4>
                     <small>
-                        posted on: {{$p->time}}
+                        posted on: {{$p['time']}}
                     </small>
                 </div>
                 <hr>
