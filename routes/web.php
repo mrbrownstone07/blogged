@@ -12,6 +12,10 @@
 */
 
 Route::get('/', 'PagesController@index');
+Route::get('/about_us', 'PagesController@about_us');
+Route::get('/contact_us', 'PagesController@contact_us');
+Route::get('/faq', 'PagesContoller@faq');
+
 
 // Route::get('/about', function(){
 //     return view('pages.about');
