@@ -17,6 +17,10 @@ Route::get('/contact_us', 'PagesController@contact_us');
 Route::get('/faq', 'PagesController@faq');
 
 
+Route::resource('post', 'PostsController');
+
+
+
 // Route::get('/about', function(){
 //     return view('pages.about');
 // });
