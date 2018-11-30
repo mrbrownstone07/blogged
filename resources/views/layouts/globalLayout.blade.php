@@ -10,16 +10,21 @@
         .wrap{
             padding-top: 70px;
         }
+        body{
+            background-image: url('img/background/global.jpg');
+            background-size: cover;
+        }
     </style>
+
 </head>
 <body>
     @include('inc.navbar')
 
-    <div class="wrap">
-        <div class="container">
-             @yield('content')
-        </div>
+  
+    <div class="container wrap">
+            @yield('content')
     </div>
+   
 
 
 </body>
