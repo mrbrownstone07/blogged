@@ -46,8 +46,11 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        return view('posts.show')->with('id', $id);   
+    {   
+        $query = "select * from posts where id = '$id'";
+        $post = DB::select($query);
+
+        return view('posts.show')->with('post', $post);   
     }
 
     /**
