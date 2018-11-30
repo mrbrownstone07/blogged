@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+define('ROOT', "/home/opt/lampp/htdocs/blogged/");
+require(ROOT. 'app/Helpers/conn.php');
 
 class PostsController extends Controller
 {
@@ -14,7 +16,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = DB::select('select * from posts');
+        $conn = new Connect();
+        $posts = $conn->query("select * from posts");
         return view('posts.index')->with('posts', $posts);
     }
 
