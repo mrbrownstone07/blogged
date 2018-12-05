@@ -20,14 +20,15 @@ Route::get('/faq', 'PagesController@faq');
 Route::resource('post', 'PostsController');
 
 
-
-// Route::get('/about', function(){
-//     return view('pages.about');
-// });
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/profile/{slug}','ProfilesController@index');
+    Route::get('/changePhoto', 'ProfilesController@changePhoto');
+});
 
-Route::get('profile','ProfilesController@index');
+
+
+
 

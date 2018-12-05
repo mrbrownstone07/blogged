@@ -1,17 +1,44 @@
-@extends('layouts.app')
+<style>
+    .content_section{
+        padding: 10px;
+    }
+    .img_wrap{
+        width: 100px;
+        height: 100px;
+    }
+</style>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Profile</div>
+@extends('layouts.3_sections')
 
-                <div class="card-body">
-                    Welcome to your profile
+@section('left_section')
+    
+    <div class="card container content_Section">
+
+        <div class="card-img-top center">
+            <div class="row">
+                <div class="col-6">
+                    <a href="/changePhoto" target="myMondal">
+                        <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic . '.png') }}" 
+                            alt="image not found" class="rounded-circle img_wrap img-thumbnail">
+                    </a>
                 </div>
             </div>
         </div>
+
+        <hr>
+        <div class="card-title">
+            <h3> {{Auth::user()->name}} </h3> 
+            <small>{{Auth::user()->email}}</small>
+        </div>
+        
     </div>
-</div>
+    
+@endsection
+
+@section('mid_section')
+  
+@endsection
+
+@section('right_section')
+
 @endsection

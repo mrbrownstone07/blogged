@@ -37,12 +37,31 @@
                         @endif
                     </li>
                 @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                             <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-item">
+                                <h3>{{ Auth::user()->name }}</h3>
+                               <small>{{ Auth::user()->email }}</small> 
+                            </div>
+                            
+                            <a class="dropdown-item" href="/profile/{{Auth::user()->slug}}">
+                                Profile
+                            </a>
+
+                            <a class="dropdown-item" href="#">
+                                Discussion Room
+                            </a>
+                            
+                            {{--  more code goes here  --}}
+                        
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
