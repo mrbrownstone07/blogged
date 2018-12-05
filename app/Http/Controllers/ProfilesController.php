@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Auth;
 use DB;
 
@@ -25,7 +27,7 @@ class ProfilesController extends Controller
         
         DB::update($query);
         
-        $file->move(public_path('img/user_imgs/' ,$fileName));
+            store::disk('local')->put($fileName, FILE::get($file));
     
         return $fileName;
 
