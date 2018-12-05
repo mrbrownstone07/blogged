@@ -25,6 +25,11 @@
 @extends('layouts.globalLayout')
 
 @section('content')
+    @if (session('status'))
+    <div class="alert alert-success" role="alert">
+        {{ session('status') }}
+    </div>
+    @endif
     <div class="jumbotron bg_">
         <h2>Posts</h2>
         <hr>
@@ -44,11 +49,6 @@
         @else
             <p> No posts yet ! wow </p>   
         @endif
-
-       
             
-        
-            
-        
     </div>
 @endsection

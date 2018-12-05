@@ -5,7 +5,7 @@
 </style>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand mr" href="/">Blogged</a>
+    <a class="navbar-brand mr" href="/">{{ config('app.name', 'Laravel') }}</a>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav">
             <li class="nav-item active">
