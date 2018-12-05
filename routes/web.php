@@ -25,7 +25,8 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/profile/{slug}','ProfilesController@index');
-    Route::get('/changePhoto', 'ProfilesController@changePhoto');
+    //Route::get('changePhoto', 'ProfilesController@changePhoto');
+    Route::post('/uploadPhoto', 'ProfilesController@uploadPhoto');
 });
 
 
