@@ -29,22 +29,14 @@
             background-size: cover; 
             @endguest
         }
-        .transparent{
-            background-color: rgba(44, 44, 44, 0.7) !important;
-            color:snow;
-        }
     </style>
 
 </head>
 <body>
-    @include('inc.nonauth_navbar')
-
-  
+    
     <div class="container">
             @yield('content')
     </div>
    
-
-
 </body>
 </html>

@@ -1,3 +1,11 @@
+<style>
+        .dis_img_wrap{
+            width: 25px;
+            height: 25px;
+        }
+</style>
+
+
 <nav class="navbar navbar-expand-md navbar-dark navbar-laravel bg-dark">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
@@ -41,16 +49,21 @@
                         <a class="nav-link" href="/home">Home</a>
                     </li>
 
+
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                             <span class="caret"></span>
+                            <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic) }}" 
+                                alt="image not found" class="rounded-circle dis_img_wrap">
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            
                             <div class="dropdown-item">
                                 <h3>{{ Auth::user()->name }}</h3>
-                               <small>{{ Auth::user()->email }}</small> 
+                               <small> {{ Auth::user()->email }} </small> 
                             </div>
+
+                            <h5 class="dropdown-header"> </h5>
                             
                             <a class="dropdown-item" href="/profile/{{Auth::user()->slug}}">
                                 Profile

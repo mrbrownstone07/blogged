@@ -9,12 +9,12 @@
         margin-top: 10px; 
     }
 
-    hr {
+    hr{
         height: 1px;
         color: #ffffff;
         background-color: #ffffff;
         border: none;
-        }
+    }
     h2{
         text-align: center;
     }

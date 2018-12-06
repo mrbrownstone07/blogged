@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-6">
                     <a href="#" data-target="#myModal" data-toggle="modal">
-                        <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic . '.png') }}" 
+                        <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic) }}" 
                             alt="image not found" class="rounded-circle img_wrap img-thumbnail">
                     </a>
                 </div>
@@ -31,12 +31,20 @@
         </div>
 
         <hr>
+
         <div class="card-title">
             <h3> {{Auth::user()->name}} </h3> 
             <small>{{Auth::user()->email}}</small>
         </div>
         
     </div>
+
+    @if (!empty($message))
+        <div class="alert alert-secondary alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{$message}}
+        </div>
+    @endif
 
     <div class="modal" id="myModal">
             <div class="modal-dialog modal-lg">
@@ -49,22 +57,20 @@
               
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <div class="row container">
+                        <div class="row container text-center">
                             <div class="col">
-                                <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic . '.png') }}" 
+                                <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic) }}" 
                                     alt="image not found" class="modal_img_wrap">
                             </div>    
                         </div>
                         <div class="row container" style="padding-top:10px;">
                             <div class="col">
-
                                 <form action="/uploadPhoto" method="post" enctype="multipart/form-data"> 
                                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <input type="file" name="pic" class="form-control-file"/>
                                     <br>
                                     <input type="submit" class="btn btn-outline-success" name="btn" id="img_submit"/>
                                 </form>
-
                             </div>
                         </div>  
                     </div>
@@ -86,3 +92,4 @@
 @section('right_section')
 
 @endsection
+
