@@ -25,7 +25,20 @@
             margin-right: 20px;
             padding-top: 20px;
         }
+        .content_section{
+            padding: 10px;
+        }
+        .img_wrap{
+            width: 100px;
+            height: 100px;
+        }
+        .modal_img_wrap{
+            width: 500px;
+            height: 500px;
+        }
     </style>
+ 
+
 </head>
 <body>
     @include('inc.nonauth_navbar')

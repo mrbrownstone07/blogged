@@ -1,19 +1,4 @@
-<style>
-    .content_section{
-        padding: 10px;
-    }
-    .img_wrap{
-        width: 100px;
-        height: 100px;
-    }
-    .modal_img_wrap{
-        width: 500px;
-        height: 500px;
-    }
-</style>
-
-
-@extends('layouts.3_sections')
+@extends('layouts.profile_master')
 
 @section('left_section')
     
@@ -39,12 +24,14 @@
         
     </div>
 
-    @if (!empty($message))
-        <div class="alert alert-secondary alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{$message}}
-        </div>
-    @endif
+    <div class="card">
+        @if (!empty($message))
+            <div class="alert alert-secondary alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{$message}}
+            </div>
+        @endif
+    </div>
 
     <div class="modal" id="myModal">
             <div class="modal-dialog modal-lg">

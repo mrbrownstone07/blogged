@@ -17,25 +17,32 @@ class ProfilesController extends Controller
     }
 
     public function uploadPhoto(Request $request){
-        $id = Auth::user()->id;
-        $pic = $request->file('pic');
-        $fileName = $pic->getClientOriginalName();
-        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-        $fileName = md5($id) . Auth::user()->name . $ext;
-        $path = public_path(). '/img/user_imgs';
-
-        $pic->move($path, $fileName);
-
-        $query = "update users set profile_pic = '$fileName' where id = '$id'"; 
-        $is_update = DB::update($query);
-        $message  = "";
-        if($is_update){
-            $message = "Sucsses_ Updated your profile picture succesfully";
-        }else{
-            $message = "Error_ could not update your profile picture at this moment";
-        }
+        if($request->hasFile('pic')){
+            
+            $id = Auth::user()->id;
+            $pic = $request->file('pic');
+            $fileName = $pic->getClientOriginalName();
+            $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+            $fileName = $id . Auth::user()->name .'.'. $ext;
+            $path = public_path(). '/img/user_imgs';
     
-        return view('profiles.index')->with('message', $message);
+            $pic->move($path, $fileName);
+    
+            $query = "update users set profile_pic = '$fileName' where id = '$id'"; 
+            $is_update = DB::update($query);
+            $message  = "";
+    
+            if($is_update){
+                $message = "Sucsses_ Updated your profile picture succesfully";
+            }else{
+                $message = "Error_ could not update your profile picture at this moment";
+            }
+        
+            return view('profiles.index')->with('message', $message);
+        }
+
+        return view('profiles.index')->with('message', 'empty file uploaded');
+
     }
 
 }
