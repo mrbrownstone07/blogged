@@ -28,13 +28,14 @@ class ProfilesController extends Controller
         if($request->hasFile('pic')){
             $pic = $request->file('pic');
             $fileName = $pic->getClientOriginalName();
+            $id = Auth::user()->id;
 
             $hash_token = md5($fileName);
-            if(DB::select("select * from users where  pHash = '$hash_token'")){
+            if($hash_token === DB::select("select pHash from users where  id = '$id'")){
                 return view('profiles.index');
             }
 
-            $id = Auth::user()->id;
+            
 
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             $fileName = $id . Auth::user()->name . Carbon::now()->toDateTimeString() .'.'. $ext;

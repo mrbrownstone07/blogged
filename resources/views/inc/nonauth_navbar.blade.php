@@ -1,8 +1,5 @@
 <style>
-        .dis_img_wrap{
-            width: 25px !important;
-            height: 25px !important;
-        }
+
 </style>
 
 
@@ -67,6 +64,10 @@
                             
                             <a class="dropdown-item" href="/profile/{{Auth::user()->slug}}">
                                 Profile
+                            </a>
+
+                            <a class="dropdown-item" href="/findPeople">
+                                Find People
                             </a>
 
                             <a class="dropdown-item" href="#">

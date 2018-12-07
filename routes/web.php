@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', 'PagesController@index');
 Route::get('/about_us', 'PagesController@about_us');
 Route::get('/contact_us', 'PagesController@contact_us');
@@ -30,7 +31,15 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/editInfo', 'ProfilesController@editInfo');
     Route::post('/storeInfo', 'ProfilesController@storeInfo');
     Route::post('/updateInfo', 'ProfilesController@updateInfo');
+    
+    Route::get('/findPeople', 'FollowsController@index');
+    Route::get('/follow/{followe}', 'FollowsController@followRequest');
+    
 });
+
+
+
+
 
 
 

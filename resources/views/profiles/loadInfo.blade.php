@@ -1,3 +1,17 @@
+<style>
+        .img_wrap{
+            width: 100px;
+            height: 100px;
+        }
+        .card_margin{
+            margin-top: 10px;
+        }
+        .icon_wrap{
+            widht:12px;
+            height: 12px;
+        }
+</style>
+
 @extends('layouts.profile_master')
 
 @section('left_section')
