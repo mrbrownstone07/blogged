@@ -36,6 +36,20 @@
             width: 500px;
             height: 500px;
         }
+        .non_bottom{
+            padding:10px 10px 0px 10px;
+        }
+        .img_wrap{
+            width: 100px;
+            height: 100px;
+        }
+        .card_margin{
+            margin-top: 10px;
+        }
+        .icon_wrap{
+            width:12px;
+            height: 12px;
+        }
     </style>
  
 

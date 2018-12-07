@@ -1,7 +1,7 @@
 <style>
         .dis_img_wrap{
-            width: 25px;
-            height: 25px;
+            width: 25px !important;
+            height: 25px !important;
         }
 </style>
 
@@ -53,7 +53,7 @@
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic) }}" 
-                                alt="image not found" class="rounded-circle dis_img_wrap">
+                                alt="image not found" class="rounded-circle" style="width:25px; height:25px"> 
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

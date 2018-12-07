@@ -27,6 +27,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/profile/{slug}','ProfilesController@index');
     //Route::get('changePhoto', 'ProfilesController@changePhoto');
     Route::post('/uploadPhoto', 'ProfilesController@uploadPhoto');
+    Route::get('/editInfo', 'ProfilesController@editInfo');
+    Route::post('/storeInfo', 'ProfilesController@storeInfo');
+    Route::post('/updateInfo', 'ProfilesController@updateInfo');
 });
 
 

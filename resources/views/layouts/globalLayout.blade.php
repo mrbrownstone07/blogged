@@ -24,10 +24,10 @@
             padding-top: 70px;
         }
         body{
-            @guest
-            background-image: url('img/background/global.jpg');
-            background-size: cover; 
-            @endguest
+           
+            background-image: url('img/background/global.jpg') !important;
+            background-size: cover !important; 
+            
         }
         .transparent{
             background-color: rgba(44, 44, 44, 0.7) !important;
