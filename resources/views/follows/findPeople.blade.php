@@ -73,12 +73,12 @@
 
 @section('mid_section')
 <div class="card text-center">
-    <div class="card_margin card-title" style="margin-bottom: -10px;">
+    <div class="card-header">
         <h5> Find People </h5> 
     </div>
-    <hr>
+
     @foreach($users as $user)
-        <div class="jumbotron border-top border-bottom" style="background-color:white;">
+        <div class="jumbotron border-bottom" style="background-color:white;">
                 <div class="card-img-top card_bottom">
                         <img src="{{ URL::to('img/user_imgs/' . $user->profile_pic) }}" 
                             alt="image not found" class="img_wrap rounded-circle">
@@ -98,6 +98,12 @@
                         <small> {{$user->fname .' '. $user->lname }} </small>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
+
                 <hr>
                 <a href="/follow/{{$user->id}}">
                     <img src="{{URL::to('img/icons/follow.png')}}" alt="" 

@@ -56,7 +56,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             
                             <div class="dropdown-item">
-                                <h3>{{ Auth::user()->name }}</h3>
+                                <h3>{{ '@'. Auth::user()->name }}</h3>
                                <small> {{ Auth::user()->email }} </small> 
                             </div>
 

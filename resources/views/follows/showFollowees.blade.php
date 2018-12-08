@@ -25,12 +25,12 @@
 
 @section('mid_section')
 <div class="card text-center">
-    <div class="card_margin card-title" style="margin-bottom: -10px;">
+    <div class="card-header">
         <h5> People You Follow </h5> 
     </div>
-    <hr>
+
     @foreach($followees as $f)
-        <div class="jumbotron border-top border-bottom" style="background-color:white;">
+        <div class="jumbotron border-bottom" style="background-color:white;">
                 <div class="col-md-12card_bottom ">
                         <img src="{{ URL::to('img/user_imgs/' . $f->profile_pic) }}" 
                             alt="image not found" class="img_wrap rounded-circle">

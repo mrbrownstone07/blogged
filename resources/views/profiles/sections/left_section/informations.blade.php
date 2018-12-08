@@ -6,16 +6,22 @@
 
 </style>
 
-<div class="card card_marg container content_Section text-center cotentsection card_margin">
-    <div class="card-title">
+<div class="card card_marg text-center cotentsection card_margin">
+    <div class="card-header">
+            informations
+            <a href="/editInfo">
+                <img src="{{ URL::to('img/icons/edit.png')}}" alt="image not found" class="icon_wrap">    
+            </a>
+    </div>
+    {{--  <div class="card-title">
         informations
         <a href="/editInfo">
             <img src="{{ URL::to('img/icons/edit.png')}}" alt="image not found" class="icon_wrap">    
         </a>
         <hr>        
-    </div>
+    </div>  --}}
     @if (!empty($data))
-        <div class="card-body card_marg" style="margin-top: -30px;">
+        <div class="card-body card_marg" style="">
             <div class="row">
                 <div class="col-md-12">
                     @php
