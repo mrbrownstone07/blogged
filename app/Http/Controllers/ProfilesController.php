@@ -16,10 +16,15 @@ class ProfilesController extends Controller
         $id = Auth::user()->id;
         $data = DB::select("select * from profile where user_id = '$id' ");
 
+        $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
+        $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
+        //dd($followers);
         if($data){
-            return view('profiles.index')->with('data', $data[0]);
+
+            return view('profiles.index')->with('data', $data[0])->with('followers', $followers[0])->with('following', $following[0]);
+
         }else{
-            return view('profiles.index');;  
+            return view('profiles.index')->with('followers', $followers[0])->with('following', $following[0]);
         }
     }
 
@@ -133,7 +138,7 @@ class ProfilesController extends Controller
         
         try{
             $query = " update profile set fname = '$fname', lname = '$lname', city = '$city', country = '$country',
-                        about = '$about', bio = '$bio', updated_at = '$updated_at' ";
+                        about = '$about', bio = '$bio', updated_at = '$updated_at' where user_id = $id ";
             DB::update($query);
         }catch(\Illuminate\Database\QueryException $ex){
             dd($ex->getMessage());

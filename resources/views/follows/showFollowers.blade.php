@@ -1,0 +1,1 @@
+@extends('layouts.profile_master')

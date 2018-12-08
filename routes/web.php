@@ -34,6 +34,9 @@ Route::group(['middleware' => 'auth'], function() {
     
     Route::get('/findPeople', 'FollowsController@index');
     Route::get('/follow/{followe}', 'FollowsController@followRequest');
+    Route::get('/show_followers', 'FollowsController@showFollowers');
+    Route::get('/show_followees', 'FollowsController@showFollowees');
+    Route::get('/unfollow/{followe}', 'FollowsController@unfollowRequest');
     
 });
 

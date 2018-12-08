@@ -20,7 +20,9 @@
 
 @section('left_section')
     
-    @include('profiles.sections.left')
+    @include('profiles.sections.left_section.profilePic')
+    @include('profiles.sections.left_section.followFollowing')
+    @include('profiles.sections.left_section.informations')
     @include('profiles.modals.changeProPic')
      
 @endsection
