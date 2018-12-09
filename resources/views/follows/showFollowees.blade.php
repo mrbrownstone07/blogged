@@ -19,14 +19,14 @@
 
 @section('left_section')
     @include('profiles.sections.left_section.profilePic')
-    {{--  @include('profiles.sections.left_section.followFollowing')
-    @include('profiles.sections.left_section.informations')  --}}
+    @include('profiles.sections.left_section.followFollowing')
+    @include('profiles.sections.left_section.informations')  
 @endsection 
 
 @section('mid_section')
 <div class="card text-center">
     <div class="card-header">
-        <h5> People You Follow </h5> 
+        People You Follow
     </div>
 
     @foreach($followees as $f)
@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         @php
-                            $date = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $f->follow_time)->format('M Y');
+                            $date = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $f->follow_time)->format('d M Y');
                          @endphp
                         <small> following since {{" ". $date}} </small>
                     </div>

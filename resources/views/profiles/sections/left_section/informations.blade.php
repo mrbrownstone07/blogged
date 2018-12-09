@@ -6,6 +6,7 @@
 
 </style>
 
+
 <div class="card card_marg text-center cotentsection card_margin">
     <div class="card-header">
             informations
@@ -13,20 +14,11 @@
                 <img src="{{ URL::to('img/icons/edit.png')}}" alt="image not found" class="icon_wrap">    
             </a>
     </div>
-    {{--  <div class="card-title">
-        informations
-        <a href="/editInfo">
-            <img src="{{ URL::to('img/icons/edit.png')}}" alt="image not found" class="icon_wrap">    
-        </a>
-        <hr>        
-    </div>  --}}
+
     @if (!empty($data))
         <div class="card-body card_marg" style="">
             <div class="row">
                 <div class="col-md-12">
-                    @php
-                        
-                    @endphp
                     {{$data->fname .' '. $data->lname}}
                     <hr>
                 </div>
@@ -35,6 +27,7 @@
                 
             </div>      
             <div class="col-md-12" style="">
+                <h6 style="font-weight:bolder">Bio</h6>
                 {{$data->bio}}
             </div>
             <hr>
@@ -56,5 +49,36 @@
         </div>
                 
     @endif
+    {{--  <div v-if="isEmpty">
+        No Informations Updated
+    </div>
+    <div class="card-body card_marg" style="">
+        <div class="row">
+            <div class="col-md-12">
+                @{{profileData[0].fname +' '+ profileData[0].lname}} 
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            
+        </div>      
+        <div class="col-md-12" style="">
+            @{{profileData[0].bio}}
+        </div>
+        <hr>
+        <div class="row">    
+            <div class="col-md-12">
+                Lives in <span> @{{profileData[0].city}}, @{{profileData[0].country}} </span> 
+            </div>         
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                joined in <small> @{{profileData[0].created_at | joined_on}} </small>    
+            </div>
+        </div>
+        
+    </div>  --}}
 
-</div>
+</div>  
+

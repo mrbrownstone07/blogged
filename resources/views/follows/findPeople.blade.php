@@ -74,7 +74,7 @@
 @section('mid_section')
 <div class="card text-center">
     <div class="card-header">
-        <h5> Find People </h5> 
+        Find People 
     </div>
 
     @foreach($users as $user)

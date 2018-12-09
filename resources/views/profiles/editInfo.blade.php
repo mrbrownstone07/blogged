@@ -16,19 +16,20 @@
 
 
 @section('left_section')
-    @include('profiles.sections.left')
+    @include('profiles.sections.left_section.profilePic')
+    @include('profiles.sections.left_section.followFollowing')
+    @include('profiles.sections.left_section.informations') 
 @endsection
 
 @section('mid_section')
-    <div class="card non_bottom text-center ">
-            <div class="card-title">
-                Edit Informations (from edit info)  
+    <div class="card text-center ">
+            <div class="card-header">
+                Edit Informations   
             </div>
-            <hr>
-
-            <div class="text-center">
+           
+            <div class="card body text-center">
                 
-                <form action="/updateInfo" method="post">
+                <form action="/updateInfo" method="post" style="margin-top:20px">
                 
                     @csrf
                     <div class="form-group row">
@@ -74,7 +75,7 @@
                     </div>
 
                     
-                    {!! Form::submit('Submit', ['class' => 'btn btn-sucess']) !!}
+                    {!! Form::submit('Submit', ['class' => 'btn btn-outline-success']) !!}
                 
                 </form>  
             </div>

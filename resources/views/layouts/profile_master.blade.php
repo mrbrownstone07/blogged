@@ -18,6 +18,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/en-au.js"></script>
+
     <title>{{config('app.name'), 'Blogged'}}</title>
     <style>
         .wrap{
@@ -56,31 +58,30 @@
 </head>
 <body>
     @include('inc.nonauth_navbar')
-  
-    <div class="container-fluid wrap">
-        <div class="row">
-            
-            <div class="col-md-3">
+    
+        <div class="container-fluid wrap">
+            <div class="row">
                 
+                <div class="col-md-3">
+                    
                     @yield('left_section')
+                         
+                </div>
                 
-                
-            </div>
-            
-            <div class="col-md-6">
-                
+                <div class="col-md-6">
+                    
                     @yield('mid_section')
+                </div>
                 
-                
-            </div>
-            
-            <div class="col-md-3">
-                
+                <div class="col-md-3">
+                    
                     @yield('right_section')
-               
-            </div>
-        </div> 
-    </div>
+                   
+                </div>
+            </div> 
+        </div>
+    
+
 </body>
 </html>
 

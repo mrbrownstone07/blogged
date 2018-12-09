@@ -10,6 +10,9 @@
         widht:12px;
         height: 12px;
     }
+    [v-cloak]{
+        display: none;
+    }
 </style>
 
 <script>
@@ -28,7 +31,7 @@
 @endsection
 
 @section('mid_section')
-  
+
 @endsection
 
 @section('right_section')

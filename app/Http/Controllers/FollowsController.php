@@ -38,15 +38,26 @@ class FollowsController extends Controller
         $uid = Auth::user()->id;
         $followers = DB::select("SELECT * FROM users u join follows f on (follower = u.id) WHERE followee = '$uid'");
 
-        dd($followers);
-        //return view('follows.showFollowers');
+        //dd($followers);
+        return view('follows.showFollowers');
     }
 
     public function showFollowees(){
         $uid = Auth::user()->id;
-        $followees = DB::select("SELECT * FROM users u join follows f on (followee = u.id) WHERE follower = '$uid'");
+        $followees = DB::select("SELECT * FROM users u join follows f on (followee = u.id) 
+                        WHERE follower = '$uid' ORDER BY follow_time DESC");
 
-        //dd($followers);
+        $data = DB::select("select * from profile where user_id = '$uid' ");
+
+        $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$uid'");
+        $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$uid'");
+
+        if($data){
+            return view('follows.showFollowees')->with('followees', $followees)->with('data', $data[0])->with('followers', $followers[0])->with('following', $following[0]);
+
+        }else{
+            return view('follows.showFollowees')->with('followees', $followees)->with('followers', $followers[0])->with('following', $following[0]);
+        }
         return view('follows.showFollowees')->with('followees', $followees);
     }
 

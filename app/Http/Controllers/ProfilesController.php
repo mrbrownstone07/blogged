@@ -58,8 +58,11 @@ class ProfilesController extends Controller
             }else{
                 $message = "Error_ could not update your profile picture at this moment";
             }
+
+            $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
+            $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         
-            return view('profiles.index')->with('message', $message);
+            return view('profiles.index')->with('message', $message)->with('followers', $followers[0])->with('following', $following[0]);;
         }
 
         return redirect()->to('/profiles.index')->refresh()->with('message', 'empty file uploaded');
@@ -68,11 +71,12 @@ class ProfilesController extends Controller
     public function editInfo(){
         $id = Auth::user()->id;
         $data = DB::select("select * from profile where user_id = '$id' ");
-
+        $followers = $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
+        $following = $followees = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         if($data){
-            return view('profiles.editInfo')->with('data', $data[0]);
+            return view('profiles.editInfo')->with('data', $data[0])->with('followers', $followers[0])->with('following', $following[0]);
         }else{
-            return view('profiles.loadInfo');  
+            return view('profiles.loadInfo')->with('followers', $followers[0])->with('following', $following[0]);  
         }   
     }
 
@@ -146,4 +150,27 @@ class ProfilesController extends Controller
 
         return redirect()->action('ProfilesController@editInfo');
     }
+
+    public function getProfilePicSectionData(){
+        $id = Auth::user()->id;
+        $data = DB::select("select * from profile where user_id = '$id' ");
+        
+        return ($data);
+    }
+
+    public function getFollowerCount(){
+        $id = Auth::user()->id;
+        $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
+
+        return ($followers);
+    }
+
+    public function getFolloweeCount(){
+        $id = Auth::user()->id;
+        $followees = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
+        
+        return ($followees);
+    }
+
+    
 }
