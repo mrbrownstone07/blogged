@@ -17,8 +17,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/en-au.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    
 
     <title>{{config('app.name'), 'Blogged'}}</title>
     <style>
@@ -53,7 +53,6 @@
             height: 12px;
         }
     </style>
- 
 
 </head>
 <body>
@@ -80,8 +79,13 @@
                 </div>
             </div> 
         </div>
-    
+        <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace( 'article-ckeditor' );
+        </script>
 
 </body>
 </html>
+
+ 
 

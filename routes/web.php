@@ -18,7 +18,7 @@ Route::get('/contact_us', 'PagesController@contact_us');
 Route::get('/faq', 'PagesController@faq');
 
 
-Route::resource('post', 'PostsController');
+
 
 
 Auth::routes();
@@ -41,6 +41,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/profilePicData', 'ProfilesController@getProfilePicSectionData');
     Route::get('/followerCount', 'ProfilesController@getFollowerCount');
     Route::get('/followeeCount', 'ProfilesController@getFolloweeCount');
+    Route::resource('post', 'PostsController');
+    //Route::get('/posts/{id}/edit', 'PostsController@edit');
+    Route::get('/getUserPosts', 'PostsController@getUserPosts');
     
 });
 

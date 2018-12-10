@@ -28,53 +28,26 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// const app = new Vue({
-//     el: '#app',
+const app = new Vue({
+    el: '#app',
 
-//     data : {
-//         msg: 'my message',
-//         profileData: [],
-//         followees: [],
-//         follwers: [],
-//     },
+    data: {
+        posts: [],
+    },
 
-//     ready: function(){
-//         this.created();
-//     },
+    ready: function(){
+        this.created();
+    },
 
-//     created(){
-//         axios.get('http://blogged.test/profilePicData')
-//             .then(response => {
-//                 console.log(response);
-//                 this.profileData = response.data;
-//                 vue.filter('joined_on', function(value){
-//                     return moment(value).fromNow;
-//                 });
-//             })
-//             .catch(function (error){
-//               console.log(error);  
-//             });
+    created(){
+        axios.get("http://blogged.test/getUserPosts")
+            .then(response => {
+                console.log(response);
+                this.posts = response.data;
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+    },
 
-//         axios.get('http://blogged.test/follwerCount')
-//             .then(response => {
-//                 console.log(response);
-//                 this.follwers = response.data;
-//             })
-//             .catch(function (error){
-//               console.log(error);  
-//             });
-
-//         axios.get('http://blogged.test/follweeCount')
-//             .then(response => {
-//                 console.log(response);
-//                 this.followees  = response.data;
-//             })
-//             .catch(function (error){
-//               console.log(error);  
-//             });
-//     },
-
-//     methods: {
-
-//     }
-// });
+});

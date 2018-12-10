@@ -15,32 +15,42 @@ class ProfilesController extends Controller
     public function index($slug){
         $id = Auth::user()->id;
         $data = DB::select("select * from profile where user_id = '$id' ");
+        $usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
 
         $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
+        $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
+        $posts = DB::select("SELECT * FROM posts WHERE owner_id = '$id' ORDER BY time DESC");
         //dd($followers);
         if($data){
-
-            return view('profiles.index')->with('data', $data[0])->with('followers', $followers[0])->with('following', $following[0]);
+            return view('profiles.index')->with('data', $data[0])
+            ->with('followers', $followers[0])
+            ->with('following', $following[0])
+            ->with('postCount', $postsCount[0])
+            ->with('posts', $posts)
+            ->with('usrData', $usrData[0]);
 
         }else{
-            return view('profiles.index')->with('followers', $followers[0])->with('following', $following[0]);
+            return view('profiles.index')->with('followers', $followers[0])
+                                        ->with('following', $following[0])
+                                        ->with('postCount', $postsCount[0])
+                                        ->with('posts', $posts)
+                                        ->with('usrData', $usrData[0]);
         }
     }
 
     public function uploadPhoto(Request $request){
-     
+        $slug = Auth::user()->slug;
         if($request->hasFile('pic')){
             $pic = $request->file('pic');
             $fileName = $pic->getClientOriginalName();
             $id = Auth::user()->id;
+            
 
             $hash_token = md5($fileName);
             if($hash_token === DB::select("select pHash from users where  id = '$id'")){
                 return view('profiles.index');
             }
-
-            
 
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             $fileName = $id . Auth::user()->name . Carbon::now()->toDateTimeString() .'.'. $ext;
@@ -61,22 +71,33 @@ class ProfilesController extends Controller
 
             $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
             $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
-        
-            return view('profiles.index')->with('message', $message)->with('followers', $followers[0])->with('following', $following[0]);;
+            $posts = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
+            return redirect()->to("/profile/$slug");
+            
         }
 
-        return redirect()->to('/profiles.index')->refresh()->with('message', 'empty file uploaded');
+        return redirect()->to("/profile/$slug")->with('message', 'empty file uploaded');
     }
 
     public function editInfo(){
         $id = Auth::user()->id;
         $data = DB::select("select * from profile where user_id = '$id' ");
-        $followers = $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
-        $following = $followees = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
+        $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
+        $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
+        $posts = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
+        $usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
+        
         if($data){
-            return view('profiles.editInfo')->with('data', $data[0])->with('followers', $followers[0])->with('following', $following[0]);
+            return view('profiles.editInfo')->with('data', $data[0])
+                                            ->with('followers', $followers[0])
+                                            ->with('following', $following[0])
+                                            ->with('postCount', $posts[0])
+                                            ->with('usrData', $usrData[0]);
         }else{
-            return view('profiles.loadInfo')->with('followers', $followers[0])->with('following', $following[0]);  
+            return view('profiles.loadInfo')->with('followers', $followers[0])
+                                            ->with('following', $following[0])
+                                            ->with('postCount', $posts[0])
+                                            ->with('usrData', $usrData[0]);  
         }   
     }
 

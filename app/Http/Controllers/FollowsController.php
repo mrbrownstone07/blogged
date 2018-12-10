@@ -24,8 +24,14 @@ class FollowsController extends Controller
 
             $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$uid'");
             $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$uid'");
+            $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$uid'");
+            $usrData = DB::select("SELECT * FROM users WHERE id = '$uid'");
             //dd($following);
-            return view('follows.findPeople')->with('users', $users)->with('followers', $followers[0])->with('following', $following[0]);
+            return view('follows.findPeople')->with('users', $users)
+            ->with('followers', $followers[0])
+            ->with('following', $following[0])
+            ->with('postCount', $postsCount[0])
+            ->with('usrData', $usrData[0]);
         }
 
     }
@@ -51,14 +57,26 @@ class FollowsController extends Controller
 
         $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$uid'");
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$uid'");
+        $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$uid'");
+        $usrData = DB::select("SELECT * FROM users WHERE id = '$uid'");
 
         if($data){
-            return view('follows.showFollowees')->with('followees', $followees)->with('data', $data[0])->with('followers', $followers[0])->with('following', $following[0]);
+            return view('follows.showFollowees')->with('followees', $followees)
+            ->with('data', $data[0])
+            ->with('followers', $followers[0])
+            ->with('following', $following[0])
+            ->with('postCount', $postsCount[0])
+            ->with('usrData', $usrData[0]);
 
         }else{
-            return view('follows.showFollowees')->with('followees', $followees)->with('followers', $followers[0])->with('following', $following[0]);
+            return view('follows.showFollowees')->with('followees', $followees)
+            ->with('followers', $followers[0])
+            ->with('following', $following[0])
+            ->with('postCount', $postsCount[0])
+            ->with('usrData', $usrData[0]);
         }
-        return view('follows.showFollowees')->with('followees', $followees);
+        return view('follows.showFollowees')
+        ->with('followees', $followees);
     }
 
     public function unfollowRequest($followee_id){
