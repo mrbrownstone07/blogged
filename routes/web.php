@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/show_followers', 'FollowsController@showFollowers');
     Route::get('/show_followees', 'FollowsController@showFollowees');
     Route::get('/unfollow/{followe}', 'FollowsController@unfollowRequest');
+    Route::get('/remove/{follower}', 'FollowsController@removeFollower');
 
     Route::get('/profilePicData', 'ProfilesController@getProfilePicSectionData');
     Route::get('/followerCount', 'ProfilesController@getFollowerCount');
@@ -44,6 +45,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('post', 'PostsController');
     //Route::get('/posts/{id}/edit', 'PostsController@edit');
     Route::get('/getUserPosts', 'PostsController@getUserPosts');
+    Route::get('/fetchNoti/{user_id}', 'NotificationsController@fetchNotifications');
+    Route::get('/posts/{id}', 'PostsController@show');
+    
     
 });
 

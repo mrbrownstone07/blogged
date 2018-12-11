@@ -24,7 +24,8 @@
 
 
 
-    <div class="card card_marg text-center cotentsection" onmouseover="show('post_btn')" onmouseout="hide('post_btn')">
+    <div id="edit_post" class="card shadow-sm card_marg text-center cotentsection"
+        onmouseover="addShadow('edit_post')" onmouseout="removeShadow('edit_post')" >
         <div class="card-header">
                 Share your thoughts
                 <a href="">

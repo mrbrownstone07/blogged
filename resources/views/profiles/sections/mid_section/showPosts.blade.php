@@ -1,12 +1,7 @@
 
 <style>
-    .whitebg{
-        background-color: white;
-    }
-    .p_icon_wrap{
-        width: 20px;
-        height: 20px;
-    }
+
+
     icon_link: hover{
         color:red;
     }
@@ -14,11 +9,13 @@
 
 
 
-<div class="card shadow  card_margin card_marg text-center cotentsection">
+<div class="card card_margin card_marg card_bottom text-center cotentsection">
     <div class="card-header">
         your posts
         <img src="{{ URL::to('img/icons/post.png')}}" alt="image not found" class="icon_wrap">      
     </div>
+{{--  </div> 
+added end div for testing purposes  --}}
     @if(count($posts) == 0)
         <div>
 
@@ -32,15 +29,23 @@
         @endif
         @foreach ($posts as $p)
             
-            <div id="b" class="jumbotron jumbotron-fluid whitebg card_bottom" style="padding:20px"
-                onmouseover="addShadow('b')" onmouseout="removeShadow('b')">
+            <div id="b{{$p->post_id}}" class="jumbotron jumbotron-fluid whitebg card_bottom" style="padding:20px"
+                onmouseover="addShadow('b{{$p->post_id}}')" onmouseout="removeShadow('b{{$p->post_id}}')">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 text-left">
-                                <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic) }}" 
-                                    alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
-                                {{'@'. $usrData->name}}         
+                                
+                                @if (empty($usrData))
+                                    <img src="{{ URL::to('img/user_imgs/' . $p->profile_pic) }}" 
+                                        alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
+                                    {{'@'. $p->name}}                                     
+                                @else
+                                    <img src="{{ URL::to('img/user_imgs/' . $usrData->profile_pic) }}" 
+                                        alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
+                                    {{'@'. $usrData->name}}      
+                                @endif
+      
                             </div>
 
                             <div class="col-md-6 text-right">
@@ -94,11 +99,21 @@
                                     Comment 
                                 </a>
                             </div> 
+                            <div class="col-md-2 pull-left">
+                                    <a href="/posts/{{$p->post_id}}" id="icon_link">
+                                        <img src="{{ URL::to('img/icons/show.png')}}" alt="image not found" class="p_icon_wrap">
+                                        Show
+                                    </a>
+                            </div> 
                             {{--  time here  --}}
-                            @php
-                                $d = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $p->time)->format('M d Y');
-                            @endphp
-                            <small class="col-md-8 text-right"> Posted on:  {{$d}} </small>
+
+                            <div class="col-md-6 text-right">
+                                @php
+                                    $d= (new Carbon\Carbon( $p->time))->diffForHumans();
+                                @endphp
+                                <small class="col-md-8 text-right"> Posted:  {{$d}} </small>
+                            </div> 
+
                         </div>                        
                     </div>
                 </div> 
@@ -176,11 +191,12 @@
 
 @endif
 
-<script>
-    $(document).on("click", ".open-deletePost", function(){
-        var post_id = $(this).data('postId');
-        $(".modal-body #post_id").val(post_id);
-    })
+<script type="text/javascript">
+
+    $('#deletePost').on('show.bs.modal', function (e) {
+        console.log(e.relatedTarget) // do something...
+      })
+
 
 </script>
 

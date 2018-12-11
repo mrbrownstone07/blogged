@@ -21,6 +21,16 @@ class ProfilesController extends Controller
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
         $posts = DB::select("SELECT * FROM posts WHERE owner_id = '$id' ORDER BY time DESC");
+
+        $notifications = DB::select("SELECT * 
+                                    FROM 
+                                    notifications_log, follow_notification, users
+                                    
+                                    WHERE 
+                                    notification_id = follow_noti_id 
+                                    AND user_to_be_notified = '$id'
+                                    AND notification_from = id
+                                ");
         //dd($followers);
         if($data){
             return view('profiles.index')->with('data', $data[0])
@@ -28,14 +38,16 @@ class ProfilesController extends Controller
             ->with('following', $following[0])
             ->with('postCount', $postsCount[0])
             ->with('posts', $posts)
-            ->with('usrData', $usrData[0]);
+            ->with('usrData', $usrData[0])
+            ->with('notifications', $notifications);
 
         }else{
             return view('profiles.index')->with('followers', $followers[0])
                                         ->with('following', $following[0])
                                         ->with('postCount', $postsCount[0])
                                         ->with('posts', $posts)
-                                        ->with('usrData', $usrData[0]);
+                                        ->with('usrData', $usrData[0])
+                                        ->with('notifications', $notifications);
         }
     }
 
@@ -86,18 +98,23 @@ class ProfilesController extends Controller
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         $posts = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
         $usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
+        $notifications = self::getNotifications($id);
+     
+        
         
         if($data){
             return view('profiles.editInfo')->with('data', $data[0])
                                             ->with('followers', $followers[0])
                                             ->with('following', $following[0])
                                             ->with('postCount', $posts[0])
-                                            ->with('usrData', $usrData[0]);
+                                            ->with('usrData', $usrData[0])
+                                            ->with('notifications', $notifications);
         }else{
             return view('profiles.loadInfo')->with('followers', $followers[0])
                                             ->with('following', $following[0])
                                             ->with('postCount', $posts[0])
-                                            ->with('usrData', $usrData[0]);  
+                                            ->with('usrData', $usrData[0])
+                                            ->with('notifications', $notifications);  
         }   
     }
 
@@ -191,6 +208,20 @@ class ProfilesController extends Controller
         $followees = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         
         return ($followees);
+    }
+
+    public function getNotifications($id){
+        $notifications = DB::select("   SELECT * 
+                                        FROM 
+                                        notifications_log, follow_notification, users
+                                        
+                                        WHERE 
+                                        notification_id = follow_noti_id 
+                                        AND user_to_be_notified = '$id'
+                                        AND notification_from = id
+                                        ORDER BY notification_send_at DESC
+                                    ");
+        return $notifications;       
     }
 
     

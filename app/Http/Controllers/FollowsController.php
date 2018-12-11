@@ -26,12 +26,14 @@ class FollowsController extends Controller
             $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$uid'");
             $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$uid'");
             $usrData = DB::select("SELECT * FROM users WHERE id = '$uid'");
+            $notifications = self::fetchNotifications($uid);
             //dd($following);
             return view('follows.findPeople')->with('users', $users)
             ->with('followers', $followers[0])
             ->with('following', $following[0])
             ->with('postCount', $postsCount[0])
-            ->with('usrData', $usrData[0]);
+            ->with('usrData', $usrData[0])
+            ->with('notifications', $notifications);
         }
 
     }
@@ -42,10 +44,35 @@ class FollowsController extends Controller
 
     public function showFollowers(){
         $uid = Auth::user()->id;
-        $followers = DB::select("SELECT * FROM users u join follows f on (follower = u.id) WHERE followee = '$uid'");
+        $people_followers = DB::select("SELECT * FROM users u join follows f on (follower = u.id) WHERE followee = '$uid'");
+        $notifications = self::fetchNotifications($uid);
+        $followersCount = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$uid'");
+        $followeesCount = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$uid'");
+        $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$uid'");
+        $usrData = DB::select("SELECT * FROM users WHERE id = '$uid'");
+        $data = DB::select("select * from profile where user_id = '$uid' ");
 
-        //dd($followers);
-        return view('follows.showFollowers');
+        if($data){
+            return view('follows.showFollowers')->with('people_followers', $people_followers)
+            ->with('data', $data[0])
+            ->with('followers', $followersCount[0])
+            ->with('following', $followeesCount[0])
+            ->with('postCount', $postsCount[0])
+            ->with('usrData', $usrData[0])
+            ->with('notifications', $notifications);
+
+
+        }else{
+            return view('follows.showFollowers')->with('people_followers', $people_followers)
+            ->with('followers', $followersCount[0])
+            ->with('following', $followeesCount[0])
+            ->with('postCount', $postsCount[0])
+            ->with('usrData', $usrData[0])
+            ->with('notifications', $notifications);
+
+        }
+        return view('follows.showFollowers')->with('followers', $followers)
+        ->with('notifications', $notifications);
     }
 
     public function showFollowees(){
@@ -59,6 +86,7 @@ class FollowsController extends Controller
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$uid'");
         $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$uid'");
         $usrData = DB::select("SELECT * FROM users WHERE id = '$uid'");
+        $notifications = self::fetchNotifications($uid);
 
         if($data){
             return view('follows.showFollowees')->with('followees', $followees)
@@ -66,17 +94,20 @@ class FollowsController extends Controller
             ->with('followers', $followers[0])
             ->with('following', $following[0])
             ->with('postCount', $postsCount[0])
-            ->with('usrData', $usrData[0]);
+            ->with('usrData', $usrData[0])
+            ->with('notifications', $notifications);
 
         }else{
             return view('follows.showFollowees')->with('followees', $followees)
             ->with('followers', $followers[0])
             ->with('following', $following[0])
             ->with('postCount', $postsCount[0])
-            ->with('usrData', $usrData[0]);
+            ->with('usrData', $usrData[0])
+            ->with('notifications', $notifications);
         }
         return view('follows.showFollowees')
-        ->with('followees', $followees);
+        ->with('followees', $followees)
+        ->with('notifications', $notifications);
     }
 
     public function unfollowRequest($followee_id){
@@ -100,4 +131,37 @@ class FollowsController extends Controller
         return redirect()->to('/show_followees');        
     }
 
+    public function fetchNotifications($id){
+        $notifications = DB::select("   SELECT * 
+                                        FROM 
+                                        notifications_log, follow_notification, users
+                                        
+                                        WHERE 
+                                        notification_id = follow_noti_id 
+                                        AND user_to_be_notified = '$id'
+                                        AND notification_from = id
+                                        ORDER BY notification_send_at DESC
+                                    ");
+        return $notifications;       
+    }
+
+    public function removeFollower($follower){
+        $followee_id = Auth::user()->id;
+        $hash_id = md5($followee_id . $follower);
+
+        if(DB::select("select * from follows where follows_id = '$hash_id'")){
+            try{
+               
+               DB::delete("delete from follows where follows_id = '$hash_id' ");
+               
+            }catch(\Illuminate\Database\QueryException $ex){
+                dd($ex->getMessage());
+            }
+        }else{
+            echo "1234";
+        }
+   
+        return redirect()->to('/show_followers'); 
+
+    }
 }

@@ -45,10 +45,55 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/home">Home</a>
                     </li>
+                    
+                    {{--  notifications drop down  --}}
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <img src="{{ URL::to('img/icons/noti2.png')}}" alt="image not found" class="p_icon_wrap"> 
+                        </a>
 
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            
+                            <h5 class="dropdown-header"> notifications </h5>
+
+                          
+                            @if (count($notifications) > 0)
+                                @foreach ($notifications as $noti)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class=" container dropdown-item">
+                                            <a href="#"> {{'@'.$noti->name}} </a>
+                                            
+                                            @if ($noti->notification_type == 1)
+                                                followed you !
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class=" container dropdown-item">
+                                            @php
+                                                $noti_time = (new Carbon\Carbon($noti->notification_send_at))->diffForHumans();
+                                            @endphp
+
+                                            <small> {{$noti_time}} </small>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @endforeach
+                            @endif
+
+
+                        </div>
+                    </li>
+                    {{--  notifications drop down ends here  --}}
 
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ URL::to('img/user_imgs/' . Auth::user()->profile_pic) }}" 
                                 alt="image not found" class="rounded-circle" style="width:25px; height:25px"> 
                         </a>

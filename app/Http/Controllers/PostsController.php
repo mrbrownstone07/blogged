@@ -72,10 +72,12 @@ class PostsController extends Controller
 
     public function show($id)
     {   
-        $query = "select * from posts where id = '$id'";
+        $query = "select * from posts where post_id = '$id'";
         $post = DB::select($query);
+        $uid = Auth::user()->id;
+        $notifications = self::fetchNotifications($uid);
 
-        return view('posts.show')->with('post', $post);   
+        return view('posts.show')->with('post', $post)->with('notifications', $notifications);   
     }
 
     /**
@@ -94,13 +96,15 @@ class PostsController extends Controller
         $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
+        $notifications = self::fetchNotifications($id);
         //dd($post);
         return view('posts.edit')   ->with('followers', $followers[0])
                                     ->with('following', $following[0])
                                     ->with('postCount', $postsCount[0])
                                     ->with('post', $post[0])
                                     ->with('usrData', $usrData[0])
-                                    ->with('data', $data[0]);
+                                    ->with('data', $data[0])
+                                    ->with('notifications', $notifications);
         
     }
 
@@ -135,6 +139,56 @@ class PostsController extends Controller
 
         return redirect()->to("/profile/$slug")->with('success', 'post deleted');
         
+    }
+
+
+
+    // DB access funcitons
+
+    public function getFollowerCount($id){
+        $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
+
+        return ($followers);
+    }
+
+    public function getFolloweeCount($id){
+        $followees = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
+        
+        return ($followees);
+    }
+
+    public function getPostsCount($id){
+        $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
+    }
+
+    public function fetchNotifications($id){
+        $notifications = DB::select("   SELECT * 
+                                        FROM 
+                                        notifications_log, follow_notification, users
+                                        
+                                        WHERE 
+                                        notification_id = follow_noti_id 
+                                        AND user_to_be_notified = '$id'
+                                        AND notification_from = id
+                                        ORDER BY notification_send_at DESC
+                                    ");
+        return $notifications;       
+    }
+
+    public function fetchUserPosts($id){
+        $posts = DB::select("SELECT * FROM posts WHERE owner_id = '$id' ORDER BY time DESC");
+
+        return $posts;
+    }
+
+    public function fetchProfileData($id){
+        $data = DB::select("select * from profile where user_id = '$id' ");
+
+        return $data;
+    }
+
+    public function fetchUserData($id){
+        DB::select("select * from profile where user_id = '$id' ");   
     }
 
 

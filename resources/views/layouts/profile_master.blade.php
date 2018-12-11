@@ -18,10 +18,18 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     
 
     <title>{{config('app.name'), 'Blogged'}}</title>
     <style>
+        .whitebg{
+            background-color: white;
+        }
+        .p_icon_wrap{
+            width: 20px;
+            height: 20px;
+        }
         .wrap{
             margin-left: 20px;
             margin-right: 20px;
@@ -85,6 +93,36 @@
             CKEDITOR.replace( 'article-ckeditor' );
 
         </script>
+        {{--  @php
+            function get_timeago( $ptime )
+            {
+                $etime = time() - $ptime;
+            
+                if( $etime < 1 )
+                {
+                    return 'less than 1 second ago';
+                }
+            
+                $a = array( 12 * 30 * 24 * 60 * 60  =>  'year',
+                            30 * 24 * 60 * 60       =>  'month',
+                            24 * 60 * 60            =>  'day',
+                            60 * 60             =>  'hour',
+                            60                  =>  'minute',
+                            1                   =>  'second'
+                );
+            
+                foreach( $a as $secs => $str )
+                {
+                    $d = $etime / $secs;
+            
+                    if( $d >= 1 )
+                    {
+                        $r = round( $d );
+                        return 'about ' . $r . ' ' . $str . ( $r > 1 ? 's' : '' ) . ' ago';
+                    }
+                }
+            }
+        @endphp  --}}
 
 </body>
 </html>

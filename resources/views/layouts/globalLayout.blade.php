@@ -33,6 +33,43 @@
             background-color: rgba(44, 44, 44, 0.7) !important;
             color:snow;
         }
+        .whitebg{
+            background-color: white;
+        }
+        .p_icon_wrap{
+            width: 20px;
+            height: 20px;
+        }
+        .wrap{
+            margin-left: 20px;
+            margin-right: 20px;
+            padding-top: 20px;
+        }
+        .content_section{
+            padding: 10px;
+        }
+        .img_wrap{
+            width: 100px;
+            height: 100px;
+        }
+        .modal_img_wrap{
+            width: 500px;
+            height: 500px;
+        }
+        .non_bottom{
+            padding:10px 10px 0px 10px;
+        }
+        .img_wrap{
+            width: 100px;
+            height: 100px;
+        }
+        .card_margin{
+            margin-top: 10px;
+        }
+        .icon_wrap{
+            width:12px;
+            height: 12px;
+        }
     </style>
 
 </head>

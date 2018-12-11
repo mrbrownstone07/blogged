@@ -7,7 +7,7 @@
 </style>
 
 
-<div class="card card_marg text-center cotentsection card_margin">
+<div id="i" class="card shadow-sm card_marg text-center cotentsection card_margin">
     <div class="card-header">
             informations
             <a href="/editInfo">

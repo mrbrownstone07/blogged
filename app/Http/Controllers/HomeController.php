@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
+use DB;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -22,7 +23,52 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('home');
+    {   $id = Auth::user()->id;  
+        $notifications = self::getNotifications($id);
+        $posts = self::getPosts();
+
+        return view('home')->with('notifications', $notifications)
+                            ->with('posts', $posts);
+    }
+
+    public function getNotifications($id){
+        $notifications = DB::select("   SELECT * 
+                                        FROM 
+                                        notifications_log, follow_notification, users
+                                        WHERE 
+                                        notification_id = follow_noti_id 
+                                        AND user_to_be_notified = '$id'
+                                        AND notification_from = id
+                                        ORDER BY notification_send_at DESC
+                                    ");
+        return $notifications;       
+    }
+
+    public function getposts(){
+        $id = Auth::user()->id;  
+        $posts = DB::select("   SELECT * 
+                                FROM posts p
+                                LEFT JOIN users u   
+                                ON(u.id = p.owner_id) 
+                                WHERE EXISTS(
+                                    SELECT * 
+                                    FROM follows f 
+                                    WHERE f.followee = u.id 
+                                    AND f.follower = '$id'
+                                )
+                                
+
+                                UNION
+
+                                SELECT * 
+                                FROM posts, users
+                                WHERE id = owner_id
+                                AND id = '$id'
+                                
+                                
+                                ORDER BY time DESC
+                                ");
+
+        return $posts;
     }
 }
