@@ -81,11 +81,25 @@
         </div>
         <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
         <script>
+
             CKEDITOR.replace( 'article-ckeditor' );
+
         </script>
 
 </body>
 </html>
+
+<script>
+        function addShadow(id) {
+            var element = document.getElementById(id);
+            element.classList.add("shadow");
+        }
+    
+        function removeShadow(id) {
+            var element = document.getElementById(id);
+            element.classList.remove("shadow");
+        }
+</script>
 
  
 

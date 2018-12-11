@@ -13952,23 +13952,7 @@ Vue.component('example-component', __webpack_require__(39)); // const files = re
  */
 
 var app = new Vue({
-  el: '#app',
-  data: {
-    posts: []
-  },
-  ready: function ready() {
-    this.created();
-  },
-  created: function created() {
-    var _this = this;
-
-    axios.get("http://blogged.test/getUserPosts").then(function (response) {
-      console.log(response);
-      _this.posts = response.data;
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
+  el: '#app'
 });
 
 /***/ }),

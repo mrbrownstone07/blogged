@@ -9,6 +9,10 @@
         display: none
     }
 
+    #shadow_change{
+
+    }
+
 </style>
 
 <script>
@@ -25,7 +29,8 @@
 
 
 
-<div class="card card_marg text-center cotentsection" onmouseover="show('post_btn')" onmouseout="hide('post_btn')">
+<div id="a" class="card shadowElement card_marg text-center cotentsection" 
+    onmouseover="show('post_btn'); addShadow('a')" onmouseout="hide('post_btn'); removeShadow('a')">
     <div class="card-header">
             Share your thoughts
             <a href="">

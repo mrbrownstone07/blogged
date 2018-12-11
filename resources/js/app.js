@@ -30,24 +30,4 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 
 const app = new Vue({
     el: '#app',
-
-    data: {
-        posts: [],
-    },
-
-    ready: function(){
-        this.created();
-    },
-
-    created(){
-        axios.get("http://blogged.test/getUserPosts")
-            .then(response => {
-                console.log(response);
-                this.posts = response.data;
-            })
-            .catch(function(error){
-                console.log(error);
-            });
-    },
-
 });

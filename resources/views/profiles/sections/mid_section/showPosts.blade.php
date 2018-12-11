@@ -14,7 +14,7 @@
 
 
 
-<div class="card  card_margin card_marg text-center cotentsection">
+<div class="card shadow  card_margin card_marg text-center cotentsection">
     <div class="card-header">
         your posts
         <img src="{{ URL::to('img/icons/post.png')}}" alt="image not found" class="icon_wrap">      
@@ -31,7 +31,9 @@
             </div>
         @endif
         @foreach ($posts as $p)
-            <div class="jumbotron jumbotron-fluid whitebg card_bottom" style="padding:20px">
+            
+            <div id="b" class="jumbotron jumbotron-fluid whitebg card_bottom" style="padding:20px"
+                onmouseover="addShadow('b')" onmouseout="removeShadow('b')">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
@@ -53,7 +55,7 @@
                                                 Edit
                                             </a>
                 
-                                            <a class="dropdown-item" href="#" data-target="#deletePost" data-toggle="modal" data-postid="{{$p->post_id}}">
+                                            <a id="deleteBtn" class="dropdown-item" href="#" data-target="#deletePost" data-toggle="modal" data-postId="1">
                                                 Delete   
                                             </a>
                                     </div>
@@ -121,7 +123,8 @@
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
+            
         @endforeach 
     </div>
 </div>
@@ -139,7 +142,7 @@
               
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <input type="hidden" name="p" id="post_id" value=""/>
+                    <input type="hidden" name="p" id="hidden_value" value=""/>
                     <div class="row">
                         <div class="container">
                             <p class="text-left"> 
@@ -173,26 +176,14 @@
 
 @endif
 
-<script  type="text/javascript">
-    $('#deletePost').on('show.bs.modal', function(event){
-
-        var button = $(event.relatedTarget)
-        var post_id = button.data('postid')
-        var modal = $(this)
-
-        modal.find('.modal-body #post_id').val(post_id);
+<script>
+    $(document).on("click", ".open-deletePost", function(){
+        var post_id = $(this).data('postId');
+        $(".modal-body #post_id").val(post_id);
     })
+
 </script>
-{{--  <script>
-  
-    $('#deletePost').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) 
-        var post_id = button.data('postid') 
-        var modal = $(this)
-        modal.find('.modal-body #post_id').val(post_id);
-    })
-      
-</script>   --}}
+
 
 
 
