@@ -24,14 +24,15 @@ class HomeController extends Controller
      */
     public function index()
     {   $id = Auth::user()->id;  
-        $notifications = self::getNotifications($id);
+        $notifications = self::getNotifications();
         $posts = self::getPosts();
 
         return view('home')->with('notifications', $notifications)
                             ->with('posts', $posts);
     }
 
-    public function getNotifications($id){
+    public function getNotifications(){
+        $id = Auth::user()->id;
         $notifications = DB::select("   SELECT * 
                                         FROM 
                                         notifications_log, follow_notification, users

@@ -13,14 +13,24 @@ use DB;
 class ProfilesController extends Controller
 {
     public function index($slug){
-        $id = Auth::user()->id;
+        $usrData = DB::select("SELECT * FROM users where slug = '$slug' ");
+        $id = $usrData[0]->id;
+  
         $data = DB::select("select * from profile where user_id = '$id' ");
-        $usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
+        //$usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
 
         $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
-        $posts = DB::select("SELECT * FROM posts WHERE owner_id = '$id' ORDER BY time DESC");
+        //$posts = DB::select("SELECT * FROM posts WHERE owner_id = '$id' ORDER BY time DESC");
+        $posts = DB::select("SELECT * 
+                            FROM posts, users
+                            WHERE id = owner_id
+                            AND id = '$id'
+                            ORDER BY time DESC
+                                ");
+
+        $user_id = Auth::user()->id;
 
         $notifications = DB::select("SELECT * 
                                     FROM 
@@ -28,7 +38,7 @@ class ProfilesController extends Controller
                                     
                                     WHERE 
                                     notification_id = follow_noti_id 
-                                    AND user_to_be_notified = '$id'
+                                    AND user_to_be_notified = '$user_id'
                                     AND notification_from = id
                                 ");
         //dd($followers);
@@ -98,7 +108,7 @@ class ProfilesController extends Controller
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         $posts = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
         $usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
-        $notifications = self::getNotifications($id);
+        $notifications = self::getNotifications();
      
         
         
@@ -210,7 +220,8 @@ class ProfilesController extends Controller
         return ($followees);
     }
 
-    public function getNotifications($id){
+    public function getNotifications(){
+        $id = Auth::user()->id;
         $notifications = DB::select("   SELECT * 
                                         FROM 
                                         notifications_log, follow_notification, users

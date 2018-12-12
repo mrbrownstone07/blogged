@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/getUserPosts', 'PostsController@getUserPosts');
     Route::get('/fetchNoti/{user_id}', 'NotificationsController@fetchNotifications');
     Route::get('/posts/{id}', 'PostsController@show');
+
+    Route::get('/show_notifiaction/{noti_id}', 'NotificationsController@showNotifications');
     
     
 });

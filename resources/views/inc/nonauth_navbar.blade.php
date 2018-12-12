@@ -1,5 +1,12 @@
 <style>
-
+    .noti_badge{
+        position: relative;
+        top:-5px;
+        left:-10px;
+    }
+    .unseen_noti_bg{
+        background-color: rgb(244, 245, 245);
+    }
 </style>
 
 
@@ -47,44 +54,108 @@
                     </li>
                     
                     {{--  notifications drop down  --}}
+                    @php
+                        $noti_count = 0;
+                        foreach ($notifications as $noti) {
+                            if($noti->notification_status == 0){
+                                $noti_count++;
+                            }
+                        }   
+                    @endphp
+
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <img src="{{ URL::to('img/icons/noti2.png')}}" alt="image not found" class="p_icon_wrap"> 
+                            <img src="{{ URL::to('img/icons/noti2.png')}}" alt="image not found" class="p_icon_wrap">
+                            @if ($noti_count > 0)
+                                <span class="badge noti_badge badge-pill badge-light">{{$noti_count}}</span>                                
+                            @endif    
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
                             
                             <h5 class="dropdown-header"> notifications </h5>
 
                           
                             @if (count($notifications) > 0)
+                                <small class="dropdown-header"> NEW </small>
+                                @if($noti_count == 0)
+                                    <div class="dropdown-item">
+                                        No new notifications
+                                    </div>
+                                @endif
+
                                 @foreach ($notifications as $noti)
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class=" container dropdown-item">
-                                            <a href="#"> {{'@'.$noti->name}} </a>
-                                            
-                                            @if ($noti->notification_type == 1)
-                                                followed you !
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
+                                    @if ($noti->notification_status == 0)
+                                        <a href="/show_notifiaction/{{$noti->notification_id}}" class="dropdown-item unseen_noti_bg ">
+                                            <div class="dropdown-item">
+                                                <div class="row">
+                                                    <div class="text-left">
+                                                        
+                                                        <img src="{{ URL::to('img/user_imgs/' . $noti->profile_pic) }}" 
+                                                            alt="image not found" class="rounded-circle" style="width:30px; height:30px">  
+                                                        {{'@'.$noti->name}}     
+                                                    
+                                                        
+                                                        @if ($noti->notification_type == 1)
+                                                            followed you !
+                                                        @endif
+                                                    </div>
+                                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class=" container dropdown-item">
-                                            @php
-                                                $noti_time = (new Carbon\Carbon($noti->notification_send_at))->diffForHumans();
-                                            @endphp
-
-                                            <small> {{$noti_time}} </small>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-
+                                                <div class="row">
+                                                    <div class="text-left">
+                                                        @php
+                                                            $noti_time = (new Carbon\Carbon($noti->notification_send_at))->diffForHumans();
+                                                        @endphp
+        
+                                                        <small> {{$noti_time}} </small> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @endif
                                 @endforeach
+                                
+                                <h5 class="dropdown-header"> EARLIER </h5>
+     
+                                @foreach ($notifications as $noti)
+                                    @if ($noti->notification_status == 1)
+                                    <a href="/show_notifiaction/{{$noti->notification_id}}" class="dropdown-item">
+                                        <div class="dropdown-item">
+                                            <div class="row">
+                                                <div class="text-left">
+                                                    
+                                                    <img src="{{ URL::to('img/user_imgs/' . $noti->profile_pic) }}" 
+                                                        alt="image not found" class="rounded-circle" style="width:30px; height:30px">  
+                                                    {{'@'.$noti->name}}     
+                                                
+                                                    
+                                                    @if ($noti->notification_type == 1)
+                                                        followed you !
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="text-left">
+                                                    @php
+                                                        $noti_time = (new Carbon\Carbon($noti->notification_send_at))->diffForHumans();
+                                                    @endphp
+
+                                                    <small> {{$noti_time}} </small> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @endif
+                            @endforeach
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a href="">
+                                                <small class="dropdown-item text-center"> View all notifications</small>
+                                            </a> 
+                                        </div>
+                                    </div>    
                             @endif
 
 

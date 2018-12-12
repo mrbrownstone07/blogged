@@ -75,7 +75,7 @@ class PostsController extends Controller
         $query = "select * from posts where post_id = '$id'";
         $post = DB::select($query);
         $uid = Auth::user()->id;
-        $notifications = self::fetchNotifications($uid);
+        $notifications = self::fetchNotifications();
 
         return view('posts.show')->with('post', $post)->with('notifications', $notifications);   
     }
@@ -96,7 +96,7 @@ class PostsController extends Controller
         $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
-        $notifications = self::fetchNotifications($id);
+        $notifications = self::fetchNotifications();
         //dd($post);
         return view('posts.edit')   ->with('followers', $followers[0])
                                     ->with('following', $following[0])
@@ -161,7 +161,8 @@ class PostsController extends Controller
         $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
     }
 
-    public function fetchNotifications($id){
+    public function fetchNotifications(){
+        $id = Auth::user()->id;
         $notifications = DB::select("   SELECT * 
                                         FROM 
                                         notifications_log, follow_notification, users

@@ -10,9 +10,12 @@
 <div id="i" class="card shadow-sm card_marg text-center cotentsection card_margin">
     <div class="card-header">
             informations
-            <a href="/editInfo">
-                <img src="{{ URL::to('img/icons/edit.png')}}" alt="image not found" class="icon_wrap">    
-            </a>
+            @if (Auth::user()->id == $usrData->id)
+                <a href="/editInfo">
+                    <img src="{{ URL::to('img/icons/edit.png')}}" alt="image not found" class="icon_wrap">    
+                </a>             
+            @endif
+
     </div>
 
     @if (!empty($data))

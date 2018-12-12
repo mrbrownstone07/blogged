@@ -22,4 +22,21 @@ class NotificationsController extends Controller
 
         return $notifications;
     }
+
+    public function showNotifications($id){
+        $noti_type = DB::select("SELECT * 
+                                    FROM notifications_log 
+                                    WHERE notification_id = '$id' ");
+  
+                                
+        if ($noti_type[0]->notification_type == 1) {
+            
+            DB::update("UPDATE follow_notification
+                        SET notification_status = 1
+                        WHERE follow_noti_id = '$id'");
+            
+            return redirect()->to("/show_followers");
+        }
+
+    }
 }

@@ -16,7 +16,7 @@
                         <small class="card-title">posted: {{ $t}}</small>
                         <hr>
                         <div class="card-text">
-                            {{$item->body}}
+                            {!!$item->body!!}
                         </div>
                     </div>
                 </div>

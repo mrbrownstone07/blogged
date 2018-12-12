@@ -24,6 +24,7 @@ added end div for testing purposes  --}}
     <div class="card-body card_marg" style="padding:0px; background-color:whitesmoke">
         @if(count($posts) == 0)
             <div class="jumbotron jumbotron-fluid whitebg card_bottom">
+               
                 post something....
             </div>
         @endif
@@ -35,37 +36,41 @@ added end div for testing purposes  --}}
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 text-left">
-                                
+                            
                                 @if (empty($usrData))
+                                <a href="/profile/{{$p->slug}}">  
                                     <img src="{{ URL::to('img/user_imgs/' . $p->profile_pic) }}" 
                                         alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
-                                    {{'@'. $p->name}}                                     
+                                    {{'@'. $p->name}}
+                                </a>                                      
                                 @else
                                     <img src="{{ URL::to('img/user_imgs/' . $usrData->profile_pic) }}" 
                                         alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
                                     {{'@'. $usrData->name}}      
                                 @endif
-      
+
                             </div>
+                            @if($p->id == Auth::user()->id)
+                                <div class="col-md-6 text-right">
 
-                            <div class="col-md-6 text-right">
-                                <li class="dropdown">
-                                    <a id="Dropdown" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <img src="{{ URL::to('img/icons/settings.png')}}" alt="image not found" class="icon_wrap">
-                                    </a>
+                                    <li class="dropdown">
+                                        <a id="Dropdown" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            <img src="{{ URL::to('img/icons/settings.png')}}" alt="image not found" class="icon_wrap">
+                                        </a>
 
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                             <h5 class="dropdown-item"> Settings </h5>
                                             <a class="dropdown-item" href="/post/{{$p->post_id}}/edit">
                                                 Edit
                                             </a>
-                
+                    
                                             <a id="deleteBtn" class="dropdown-item" href="#" data-target="#deletePost" data-toggle="modal" data-postId="1">
                                                 Delete   
                                             </a>
-                                    </div>
-                                </li> 
-                            </div>
+                                        </div>
+                                    </li> 
+                                </div>
+                            @endif
 
 
                             <div class="row">

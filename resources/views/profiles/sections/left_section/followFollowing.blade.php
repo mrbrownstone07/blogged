@@ -28,7 +28,7 @@
         
         <div class="row">
             <div class="col-md-4">
-                @if ($postCount->p == 0)
+                @if ($postCount->p == 0 || Auth::user()->id != $usrData->id)
 
                     <img src="{{URL::to('img/icons/post.png')}}" alt="" 
                         class="f_icon_wrap" style="width: 25px;height: 25px;"><br>
@@ -46,7 +46,7 @@
             </div>
 
             <div class="col-md-4">
-                @if ($followers->f == 0)
+                @if ($followers->f == 0 || Auth::user()->id != $usrData->id)
 
                     <img src="{{URL::to('img/icons/follower.png')}}" alt="" 
                         class="f_icon_wrap" style="width: 25px;height: 25px;"><br>
@@ -61,10 +61,11 @@
                     </a>
                     
                 @endif
+                
             </div>
 
             <div class="col-md-4">
-                @if ($following->f == 0)
+                @if ($following->f == 0 || Auth::user()->id != $usrData->id)
                     <img src="{{URL::to('img/icons/following.png')}}" alt="" 
                         class="f_icon_wrap" style="width: 25px;height: 25px;"><br>
                     <small>Following</small>

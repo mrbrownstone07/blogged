@@ -31,7 +31,10 @@
 @endsection
 
 @section('mid_section')
-    @include('profiles.sections.mid_section.createPosts')
+    @if (Auth::user()->id == $usrData->id)
+        @include('profiles.sections.mid_section.createPosts')    
+    @endif
+
     @include('profiles.sections.mid_section.showPosts')
 @endsection
 
