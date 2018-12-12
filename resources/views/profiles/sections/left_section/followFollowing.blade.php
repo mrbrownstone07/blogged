@@ -76,7 +76,66 @@
                         <small>Following</small>
                     </a>   
                 @endif
-            </div>    
+            </div>
         </div>
+
+        {{--  check if the user follows the auth user  --}}
+        @if (Auth::user()->id != $usrData->id)
+            @php
+                $auid = Auth::user()->id;
+                $check = DB::select("SELECT * FROM follows 
+                                         WHERE follower = '$usrData->id'
+                                         AND followee = '$auid'
+                                    ");
+                
+            @endphp
+
+            @if(!empty($check))
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <small> {{'@'. $usrData->name}} Follows You </small> 
+                    </div>
+                </div>
+            @endif
+              
+        @endif
+
+        {{--  check if the auth user follows the user  --}}
+        @if (Auth::user()->id != $usrData->id)
+            <hr>
+            @php
+                $auid = Auth::user()->id;
+                $check = DB::select("SELECT * FROM follows 
+                                        WHERE follower = '$auid'
+                                        AND followee = '$usrData->id'
+                                    ");
+                
+            @endphp
+
+            @if(!empty($check))
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <small> Your are following {{'@'. $usrData->name}} </small> 
+                    </div>  
+                </div>
+                <div class="row card_margin">          
+                    <div class="col-md-12">
+                        <a href="/unfollowFrompProfileView/{{$usrData->id}}">
+                            <img src="{{URL::to('img/icons/cross.png')}}" alt="" 
+                                class="p_icon_wrap" style="width: 15px;height: 15px;"><br>
+                            <small> Unfollow </small>
+                            </a> 
+                    </div>
+                </div>
+            @else
+                <a href="/followFrompProfileView/{{$usrData->id}}">
+                    <img src="{{URL::to('img/icons/follow.png')}}" alt="" 
+                        class="icon_wrap">
+                    <small> Follow {{'@'. $usrData->name}} </small>
+                </a>
+            @endif  
+        @endif
     </div>
 </div>

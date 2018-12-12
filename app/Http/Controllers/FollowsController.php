@@ -42,6 +42,10 @@ class FollowsController extends Controller
         return Auth::user()->follow($followee_id);
     }
 
+    public function followFromProfileRequest($followee_id){
+        return Auth::user()->followFromProfile($followee_id);
+    }
+
     public function showFollowers(){
         $uid = Auth::user()->id;
         $people_followers = DB::select("SELECT * FROM users u join follows f on (follower = u.id) WHERE followee = '$uid'");
@@ -129,6 +133,30 @@ class FollowsController extends Controller
         }
    
         return redirect()->to('/show_followees');        
+    }
+
+    public function unfollowFromProfileRequest($followee_id){
+        $follower = Auth::user()->id;
+        $hash_id = md5($followee_id . $follower);
+        // echo $hash_id;
+        // echo $follower;
+        // echo $followee_id;
+        if(DB::select("select * from follows where follows_id = '$hash_id'")){
+            try{
+               
+               DB::delete("delete from follows where follows_id = '$hash_id' ");
+               
+            }catch(\Illuminate\Database\QueryException $ex){
+                dd($ex->getMessage());
+            }
+        }else{
+            echo "1234";
+        }
+   
+        $s = DB::select("SELECT * FROM users WHERE id = '$followee_id' ");
+        $data = $s[0];
+        
+        return redirect()->to("/profile/$data->slug");       
     }
 
     public function fetchNotifications($id){

@@ -22,7 +22,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="http://"> <h5> {{'@'.$f->name}} </h5> </a>
+                            <a href="/profile/{{$f->slug}}"> <h5> {{'@'.$f->name}} </h5> </a>
                         </div>
                     </div>
                     <div class="row">

@@ -24,8 +24,7 @@ added end div for testing purposes  --}}
     <div class="card-body card_marg" style="padding:0px; background-color:whitesmoke">
         @if(count($posts) == 0)
             <div class="jumbotron jumbotron-fluid whitebg card_bottom">
-               
-                post something....
+                <h4> No posts </h4>
             </div>
         @endif
         @foreach ($posts as $p)

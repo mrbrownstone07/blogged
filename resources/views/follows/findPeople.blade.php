@@ -85,7 +85,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="http://"> <h5> {{'@'.$user->name}} </h5> </a>
+                        <a href="/profile/{{$user->slug}}"> <h5> {{'@'.$user->name}} </h5> </a>
                     </div>
                 </div>
                 <div class="row">
