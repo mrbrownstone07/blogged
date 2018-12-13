@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use AUTH;
+use Carbon\Carbon;
 
 class NotificationsController extends Controller
 {
@@ -30,9 +31,10 @@ class NotificationsController extends Controller
   
                                 
         if ($noti_type[0]->notification_type == 1) {
-            
+            $seen_at = Carbon::now()->toDateTimeString();
             DB::update("UPDATE follow_notification
-                        SET notification_status = 1
+                        SET notification_status = 1,
+                            notifications_seen_at = '$seen_at'
                         WHERE follow_noti_id = '$id'");
             
             return redirect()->to("/show_followers");

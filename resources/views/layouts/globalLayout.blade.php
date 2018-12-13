@@ -20,6 +20,9 @@
 
     <title>{{config('app.name'), 'Blogged'}}</title>
     <style>
+        .form-rounded {
+                border-radius: 1rem;
+                }
         .wrap{
             padding-top: 70px;
         }

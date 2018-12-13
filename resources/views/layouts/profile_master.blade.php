@@ -60,6 +60,14 @@
             width:12px;
             height: 12px;
         }
+        .form-rounded {
+            border-radius: 1rem;
+        }
+        textarea {
+            overflow: auto;
+            resize: none;
+            outline: none;
+        }
     </style>
 
 </head>
@@ -136,6 +144,17 @@
         function removeShadow(id) {
             var element = document.getElementById(id);
             element.classList.remove("shadow");
+        }
+
+        var tx = document.getElementsByTagName('textarea');
+        for (var i = 0; i < tx.length; i++) {
+          tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
+          tx[i].addEventListener("input", OnInput, false);
+        }
+        
+        function OnInput() {
+          this.style.height = 'auto';
+          this.style.height = (this.scrollHeight) + 'px';
         }
 </script>
 

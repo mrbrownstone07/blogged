@@ -8,8 +8,9 @@
         @foreach ($post as $item)
             
                 <div class="card">
+                    
                     <div class="card-body">
-                        <h4 class="card-title">{{$item->title}}</h4>
+                        <h4 class="card-title text-center">{{$item->title}}</h4>
                         @php
                             $t= (new Carbon\Carbon( $item->time))->diffForHumans();
                         @endphp
@@ -18,6 +19,11 @@
                         <div class="card-text">
                             {!!$item->body!!}
                         </div>
+                        <hr>
+                        
+                    </div>
+                    <div class="card-footer">
+                        
                     </div>
                 </div>
           

@@ -29,6 +29,9 @@
             background-size: cover; 
             @endguest
         }
+        .form-rounded {
+            border-radius: 1rem;
+        }
     </style>
 
 </head>

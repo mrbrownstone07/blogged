@@ -43,25 +43,22 @@ class PostsController extends Controller
             'body' =>'required'
         ]);
 
-        $time = Carbon::now()->toDateTimeString();
-        $updated_at = Carbon::now()->toDateTimeString();
         $id = Auth::user()->id;
         $title = $request->title;
         $body = $request->body;
         $slug = Auth::user()->slug;
+        $time = Carbon::now()->toDateTimeString();
         $query = "INSERT INTO posts (
                     title, 
                     body, 
-                    time, 
-                    owner_id, 
-                    updated_at
+                    owner_id,
+                    time 
                 ) 
                 VALUES (
                     '$title', 
                     '$body', 
-                    '$time', 
-                    '$id', 
-                    '$updated_at'
+                    '$id',
+                    '$time'
                 )";
 
         DB::insert($query);
@@ -119,8 +116,12 @@ class PostsController extends Controller
         $body = $request->body;
         $updated_at = Carbon::now()->toDateTimeString();
 
+
+
         
-        DB::update("UPDATE posts SET title = '$title', body = '$body', updated_at = '$updated_at' WHERE post_id = '$id'");
+        DB::update("UPDATE posts 
+                    SET title = '$title', body = '$body', post_updated_at = '$updated_at' 
+                    WHERE post_id = '$id'");
         
         return redirect("/post/$id/edit")->with('success', 'post updated');
     }

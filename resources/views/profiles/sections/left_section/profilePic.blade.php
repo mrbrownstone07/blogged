@@ -33,7 +33,7 @@
             </a>
             
             <small>{{$usrData->email}}</small>
-        </div>    
+        </div> 
     </div>
 
    

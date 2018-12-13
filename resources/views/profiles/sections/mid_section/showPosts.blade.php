@@ -9,7 +9,7 @@
 
 
 
-<div class="card card_margin card_marg card_bottom text-center cotentsection">
+<div class="card shadow-sm card_margin card_marg card_bottom text-center cotentsection">
     <div class="card-header">
         your posts
         <img src="{{ URL::to('img/icons/post.png')}}" alt="image not found" class="icon_wrap">      
@@ -91,7 +91,7 @@ added end div for testing purposes  --}}
                         <hr>
                         <div class="row">
                             <div class="col-md-2 pull-left">
-                                <a href="" id="icon_link">
+                                <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}" id="icon_link">
                                     <img src="{{ URL::to('img/icons/like.png')}}" alt="image not found" class="p_icon_wrap">
                                     Like 
                                 </a>
@@ -131,7 +131,7 @@ added end div for testing purposes  --}}
                                 @csrf
                                 <div class="form-group row">    
                                     <div class="col-md-10">
-                                        {!! Form::textarea('comment', '' , ['class' => 'form-control', 'placeholder' => 'comment', 'rows' => '1']) !!}
+                                        {!! Form::textarea('comment', '' , ['class' => ['form-control', 'form-rounded'],  'placeholder' => 'comment', 'rows' => '1']) !!}
                                     </div> 
                                     <div class="col-md-2">
                                         {!! Form::submit('Comment', ['class' => 'btn btn-outline-success']) !!}

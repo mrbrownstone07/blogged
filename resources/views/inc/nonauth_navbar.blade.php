@@ -7,10 +7,35 @@
     .unseen_noti_bg{
         background-color: rgb(244, 245, 245);
     }
+    .scrollable-menu {
+        height: auto;
+        width: auto;
+        max-height: 500px;
+        max-width: 500px;
+        overflow-x: hidden;
+    }
+
+
+    #Scrollstyle::-webkit-scrollbar-track{
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    #Scrollstyle::-webkit-scrollbar{
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    #Scrollstyle::-webkit-scrollbar-thumb{
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #555;
+    }
 </style>
 
 
-<nav class="navbar navbar-expand-md navbar-dark navbar-laravel bg-dark">
+<nav class="navbar shadow  navbar-expand-md navbar-dark navbar-laravel bg-dark">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -63,7 +88,7 @@
                         }   
                     @endphp
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown ">
                         <a id="navbarDropdown" class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <img src="{{ URL::to('img/icons/noti2.png')}}" alt="image not found" class="p_icon_wrap">
                             @if ($noti_count > 0)
@@ -71,7 +96,7 @@
                             @endif    
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="navbarDropdown">
+                        <div id="Scrollstyle" class="dropdown-menu scrollable-menu dropdown-menu-right shadow-lg " aria-labelledby="navbarDropdown">
                             
                             <h5 class="dropdown-header"> notifications </h5>
 
@@ -117,8 +142,11 @@
                                 @endforeach
                                 
                                 <h5 class="dropdown-header"> EARLIER </h5>
-     
+                                @php
+                                    $i = 0
+                                @endphp
                                 @foreach ($notifications as $noti)
+                                    
                                     @if ($noti->notification_status == 1)
                                     <a href="/show_notifiaction/{{$noti->notification_id}}" class="dropdown-item">
                                         <div class="dropdown-item">
@@ -139,15 +167,23 @@
                                             <div class="row">
                                                 <div class="text-left">
                                                     @php
-                                                        $noti_time = (new Carbon\Carbon($noti->notification_send_at))->diffForHumans();
+                                                    $noti_time = (new Carbon\Carbon($noti->notification_send_at))->diffForHumans();
                                                     @endphp
-
                                                     <small> {{$noti_time}} </small> 
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
+                                    
+                                    @php
+                                       $i++;  
+                                    @endphp
+
+                                    @if ($i == 9)
+                                        @break;
+                                    @endif
                                 @endif
+
                             @endforeach
                                     <div class="row">
                                         <div class="col-md-12">
@@ -169,7 +205,7 @@
                                 alt="image not found" class="rounded-circle" style="width:25px; height:25px"> 
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu shadow-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                             
                             <div class="dropdown-item">
                                 <h3>{{ '@'. Auth::user()->name }}</h3>

@@ -42,13 +42,13 @@
                 @csrf
                 <div class="form-group row">    
                     <div class="col-md-12">
-                        {!! Form::text('title', $post->title , ['class' => 'form-control', 'placeholder' => 'title']) !!}
+                        {!! Form::text('title', $post->title , ['class' => ['form-control', 'form-rounded'], 'placeholder' => 'title']) !!}
                     </div>         
                 </div>
 
                 <div class="form-group row">  
                     <div class="col-md-12">
-                        {!! Form::textarea('body', $post->body, ['class' => 'form-control', 
+                        {!! Form::textarea('body', $post->body, ['class' => ['form-control', 'form-rounded'], 
                             'placeholder' => "what's in your mind", 'id' => 'article-ckeditor']) !!}
                     </div>         
                 </div>

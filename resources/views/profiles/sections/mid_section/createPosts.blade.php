@@ -29,7 +29,7 @@
 
 
 
-<div id="a" class="card shadowElement card_marg text-center cotentsection" 
+<div id="a" class="card shadow-sm shadowElement card_marg text-center cotentsection" 
     onmouseover="show('post_btn'); addShadow('a')" onmouseout="hide('post_btn'); removeShadow('a')">
     <div class="card-header">
             Share your thoughts
@@ -47,13 +47,13 @@
             @csrf
             <div class="form-group row">    
                 <div class="col-md-12">
-                    {!! Form::text('title', '' , ['class' => 'form-control', 'placeholder' => 'title']) !!}
+                    {!! Form::text('title', '' , ['class' => ['form-control', 'form-rounded'], 'placeholder' => 'title']) !!}
                 </div>         
             </div>
             <div id="post_btn">
                 <div class="form-group row" >  
                     <div class="col-md-12">
-                        {!! Form::textarea('body', '', ['class' => 'form-control', 
+                        {!! Form::textarea('body', '', ['class' => ['form-control', 'form-rounded'],  
                                 'placeholder' => "what's in your mind", 'rows' => '2', 'id' => 'article-ckeditor']) !!}
                     </div>         
                 </div>

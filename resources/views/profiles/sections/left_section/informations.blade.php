@@ -26,6 +26,15 @@
                     <hr>
                 </div>
             </div>
+                    
+        
+            <div class="row">
+                <div class="col-md-12">
+                    {{$usrData->sex}}
+                    <hr>
+                </div>
+            </div>
+            
             <div class="row">
                 
             </div>      

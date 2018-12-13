@@ -79,7 +79,7 @@ trait Followable{
                                         )
                                         VALUES(
                                             '$notification_id',
-                                            '$created_at',
+                                            '$created_at', 
                                             '$followee',
                                             '$follower'
                                         )");

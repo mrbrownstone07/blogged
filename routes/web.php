@@ -17,10 +17,6 @@ Route::get('/about_us', 'PagesController@about_us');
 Route::get('/contact_us', 'PagesController@contact_us');
 Route::get('/faq', 'PagesController@faq');
 
-
-
-
-
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
@@ -51,6 +47,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/posts/{id}', 'PostsController@show');
 
     Route::get('/show_notifiaction/{noti_id}', 'NotificationsController@showNotifications');
+
+    Route::get('/like/{post_id}/{liked_by}', 'ReactsController@handleRequest');
     
     
 });
