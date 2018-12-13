@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/fetchNoti/{user_id}', 'NotificationsController@fetchNotifications');
     Route::get('/posts/{id}', 'PostsController@show');
 
-    Route::get('/show_notifiaction/{noti_id}', 'NotificationsController@showNotifications');
+    Route::get('/show_notifiaction/{noti_id}/{noti_type}', 'NotificationsController@showNotifications');
 
     Route::get('/like/{post_id}/{liked_by}', 'ReactsController@handleRequest');
     

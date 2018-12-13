@@ -26,20 +26,21 @@ class HomeController extends Controller
     {   $id = Auth::user()->id;  
         $notifications = self::getNotifications();
         $posts = self::getPosts();
+        $reactions = self::getReactions();
 
         return view('home')->with('notifications', $notifications)
-                            ->with('posts', $posts);
+                            ->with('posts', $posts)
+                            ->with('reactions', $reactions);
     }
 
     public function getNotifications(){
         $id = Auth::user()->id;
-        $notifications = DB::select("   SELECT * 
+        $notifications = DB::select( "SELECT * 
                                         FROM 
-                                        notifications_log, follow_notification, users
+                                        notifications_log, users
                                         WHERE 
-                                        notification_id = follow_noti_id 
-                                        AND user_to_be_notified = '$id'
-                                        AND notification_from = id
+                                        user_to_be_notified = '$id'
+                                        AND notification_from = users.id
                                         ORDER BY notification_send_at DESC
                                     ");
         return $notifications;       
@@ -72,4 +73,32 @@ class HomeController extends Controller
 
         return $posts;
     }
+
+    public function getReactions(){
+        $id = Auth::user()->id;
+        $reactions = DB::select("SELECT * 
+                            FROM reacts 
+                            WHERE reacts.liked_post IN (
+                                SELECT posts.post_id 
+                                FROM posts
+                                WHERE posts.owner_id IN (
+                                    SELECT follows.followee
+                                    FROM follows
+                                    WHERE follows.follower = '$id'
+                                )
+                            )
+
+                            UNION
+
+                            SELECT * 
+                            FROM reacts
+                            WHERE reacts.liked_post IN (
+                                SELECT posts.post_id
+                                FROM posts
+                                WHERE posts.owner_id = '$id'
+                            )");
+
+        return $reactions;
+    }
+    
 }

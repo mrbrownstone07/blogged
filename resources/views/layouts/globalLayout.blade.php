@@ -20,11 +20,12 @@
 
     <title>{{config('app.name'), 'Blogged'}}</title>
     <style>
+
         .form-rounded {
                 border-radius: 1rem;
                 }
-        .wrap{
-            padding-top: 70px;
+        .body_wrap{
+            margin-top: 75px;
         }
         body{
            
@@ -80,7 +81,7 @@
     @include('inc.nonauth_navbar')
 
   
-    <div class="container">
+    <div class="container body_wrap">
             @yield('content')
     </div>
    

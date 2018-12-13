@@ -30,11 +30,6 @@
             width: 20px;
             height: 20px;
         }
-        .wrap{
-            margin-left: 20px;
-            margin-right: 20px;
-            padding-top: 20px;
-        }
         .content_section{
             padding: 10px;
         }
@@ -68,13 +63,20 @@
             resize: none;
             outline: none;
         }
+        .body_wrap{
+            margin-top: 75px;
+        }
+        hr.divider { 
+            margin: 0em;
+            border-width: 2px;
+        }     
     </style>
 
 </head>
 <body>
     @include('inc.nonauth_navbar')
     
-        <div class="container-fluid wrap">
+        <div class="container-fluid body_wrap wrap">
             <div class="row">
                 
                 <div class="col-md-3">

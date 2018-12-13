@@ -164,16 +164,13 @@ class PostsController extends Controller
 
     public function fetchNotifications(){
         $id = Auth::user()->id;
-        $notifications = DB::select("   SELECT * 
+        $notifications = DB::select("SELECT * 
                                         FROM 
-                                        notifications_log, follow_notification, users
-                                        
+                                        notifications_log, users
                                         WHERE 
-                                        notification_id = follow_noti_id 
-                                        AND user_to_be_notified = '$id'
-                                        AND notification_from = id
-                                        ORDER BY notification_send_at DESC
-                                    ");
+                                        user_to_be_notified = '$id'
+                                        AND notification_from = users.id
+                                        ORDER BY notification_send_at DESC");
         return $notifications;       
     }
 

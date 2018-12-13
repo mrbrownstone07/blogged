@@ -21,27 +21,21 @@ trait Followable{
             try{
                 DB::insert("INSERT INTO follows (follows_id, followee, follower, follow_time) values ('$hash_id', '$followee', '$follower', '$created_at') ");
                 
-                DB::insert("INSERT INTO notifications_log (
-                                            notification_id,
-                                            notification_type
-                                        ) 
-                                        VALUES (
-                                            '$notification_id',
-                                            '1'
-                                        )");
 
-                DB::insert("INSERT INTO follow_notification (
-                                            follow_noti_id,
-                                            notification_send_at, 
-                                            user_to_be_notified, 
-                                            notification_from 
-                                        )
-                                        VALUES(
-                                            '$notification_id',
-                                            '$created_at',
-                                            '$followee',
-                                            '$follower'
-                                        )");
+                DB::insert("INSERT INTO notifications_log (
+                    notification_id,
+                    notification_send_at,
+                    notification_type, 
+                    user_to_be_notified, 
+                    notification_from 
+                )
+                VALUES(
+                    '$notification_id',
+                    '$created_at', 
+                    '1',
+                    '$followee',
+                    '$follower'
+                )");
                 
             }catch(\Illuminate\Database\QueryException $ex){
                 dd($ex->getMessage());
@@ -64,22 +58,15 @@ trait Followable{
                 
                 DB::insert("INSERT INTO notifications_log (
                                             notification_id,
-                                            notification_type
-                                        ) 
-                                        VALUES (
-                                            '$notification_id',
-                                            '1'
-                                        )");
-
-                DB::insert("INSERT INTO follow_notification (
-                                            follow_noti_id,
-                                            notification_send_at, 
+                                            notification_send_at,
+                                            notification_type, 
                                             user_to_be_notified, 
                                             notification_from 
                                         )
                                         VALUES(
                                             '$notification_id',
                                             '$created_at', 
+                                            '0',
                                             '$followee',
                                             '$follower'
                                         )");

@@ -9,10 +9,21 @@
     }
     .scrollable-menu {
         height: auto;
-        width: auto;
+        //width: auto;
         max-height: 500px;
-        max-width: 500px;
+        //max-width: 500px;
+        width:500px;
         overflow-x: hidden;
+    }
+
+    hr.divider { 
+        margin: 0em;
+        border-width: 2px;
+    } 
+
+    .line_header{
+        padding-bottom: 2px;
+        padding-top: 2px;
     }
 
 
@@ -35,7 +46,7 @@
 </style>
 
 
-<nav class="navbar shadow  navbar-expand-md navbar-dark navbar-laravel bg-dark">
+<nav class="navbar shadow fixed-top navbar-expand-md navbar-dark navbar-laravel bg-dark">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
@@ -98,31 +109,54 @@
 
                         <div id="Scrollstyle" class="dropdown-menu scrollable-menu dropdown-menu-right shadow-lg " aria-labelledby="navbarDropdown">
                             
-                            <h5 class="dropdown-header"> notifications </h5>
-
-                          
+                            <div class="dropdown-header position-fixed col-12" style="background-color:white; margin-top:-10px">
+                                    <b> Notifications </b>       
+                            </div>
+                            
+                            
+                            
+                            <br>
                             @if (count($notifications) > 0)
-                                <small class="dropdown-header"> NEW </small>
+                                
+                                <hr class="divider" style=" margin-top:2px">
+                                <small class="dropdown-header line_header"> NEW </small>
+                                <hr class="divider">
+                                
                                 @if($noti_count == 0)
-                                    <div class="dropdown-item">
-                                        No new notifications
+                                    <div class="dropdown-item text-center">
+                                        <small> No new notification </small>    
                                     </div>
+                                    <hr class="divider" style="">
                                 @endif
 
                                 @foreach ($notifications as $noti)
                                     @if ($noti->notification_status == 0)
-                                        <a href="/show_notifiaction/{{$noti->notification_id}}" class="dropdown-item unseen_noti_bg ">
+                                        <a href="/show_notifiaction/{{$noti->notification_id}}/{{$noti->notification_type}}" 
+                                                class="dropdown-item unseen_noti_bg">
                                             <div class="dropdown-item">
                                                 <div class="row">
                                                     <div class="text-left">
                                                         
                                                         <img src="{{ URL::to('img/user_imgs/' . $noti->profile_pic) }}" 
                                                             alt="image not found" class="rounded-circle" style="width:30px; height:30px">  
-                                                        {{'@'.$noti->name}}     
+                                                        <b> {{'@'.$noti->name}} </b>      
                                                     
                                                         
                                                         @if ($noti->notification_type == 1)
-                                                            followed you !
+                                                            started following you !
+                                                        @endif
+
+                                                        @if($noti->notification_type == 2)
+                                                            @php
+                                                                $notiPost = DB::select("SELECT * FROM posts WHERE post_id = (
+                                                                            SELECT post_reacted
+                                                                            FROM react_notifications 
+                                                                            WHERE noti_id = '$noti->notification_id')"
+                                                                        );
+                                                                $title = substr($notiPost[0]->title, 0, 10);
+                                                            @endphp
+                                                            liked your post!  <b> {{$title}} </b>
+                                                            
                                                         @endif
                                                     </div>
                                                 </div>
@@ -138,60 +172,79 @@
                                                 </div>
                                             </div>
                                         </a>
+                                        <hr class="divider" style="">
                                     @endif
                                 @endforeach
+                                <hr class="divider">
+                                <small class="dropdown-header line_header"> EARLIER </small>
                                 
-                                <h5 class="dropdown-header"> EARLIER </h5>
+                                <hr class="divider" style="">
                                 @php
                                     $i = 0
                                 @endphp
                                 @foreach ($notifications as $noti)
                                     
                                     @if ($noti->notification_status == 1)
-                                    <a href="/show_notifiaction/{{$noti->notification_id}}" class="dropdown-item">
-                                        <div class="dropdown-item">
-                                            <div class="row">
-                                                <div class="text-left">
+                                        <a href="/show_notifiaction/{{$noti->notification_id}}/{{$noti->notification_type}}" 
+                                            class="dropdown-item">
+                                            <div class="dropdown-item">
+                                                <div class="row">
                                                     
-                                                    <img src="{{ URL::to('img/user_imgs/' . $noti->profile_pic) }}" 
-                                                        alt="image not found" class="rounded-circle" style="width:30px; height:30px">  
-                                                    {{'@'.$noti->name}}     
-                                                
+                                                        <div class="text-left">
+                                                            
+                                                            <img src="{{ URL::to('img/user_imgs/' . $noti->profile_pic) }}" 
+                                                                alt="image not found" class="rounded-circle" style="width:30px; height:30px">  
+                                                            {{'@'.$noti->name}}     
+                                                        
+                                                            
+                                                            @if ($noti->notification_type == 1)
+                                                                started following you!
+                                                            @endif
+
+                                                            @if ($noti->notification_type == 2)
+                                                                @php
+                                                                    $notiPost = DB::select("SELECT * FROM posts WHERE post_id = (
+                                                                                SELECT post_reacted
+                                                                                FROM react_notifications 
+                                                                                WHERE noti_id = '$noti->notification_id')"
+                                                                            );
+                                                                    $title = substr($notiPost[0]->title, 0, 10);
+                                                                @endphp
+                                                                liked your post!  <b> {{$title}} </b>
+                                                            @endif
+                                                        </div>
                                                     
-                                                    @if ($noti->notification_type == 1)
-                                                        followed you !
-                                                    @endif
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="text-left">
+                                                        @php
+                                                        $noti_time = (new Carbon\Carbon($noti->notification_send_at))->diffForHumans();
+                                                        @endphp
+                                                        <small> {{$noti_time}} </small> 
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </a>
+                                        
+                                        @php
+                                        $i++;  
+                                        @endphp
 
-                                            <div class="row">
-                                                <div class="text-left">
-                                                    @php
-                                                    $noti_time = (new Carbon\Carbon($noti->notification_send_at))->diffForHumans();
-                                                    @endphp
-                                                    <small> {{$noti_time}} </small> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    
-                                    @php
-                                       $i++;  
-                                    @endphp
-
-                                    @if ($i == 9)
-                                        @break;
+                                        @if ($i == 9)
+                                            @break;
+                                        @endif
+                                        <hr class="divider" style="">
                                     @endif
-                                @endif
 
-                            @endforeach
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <a href="">
-                                                <small class="dropdown-item text-center"> View all notifications</small>
-                                            </a> 
-                                        </div>
-                                    </div>    
+                                @endforeach
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="">
+                                            <small class="dropdown-item text-center"> View all notifications</small>
+                                        </a> 
+                                    </div>
+                                </div>    
                             @endif
 
 

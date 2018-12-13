@@ -15,33 +15,15 @@ class ProfilesController extends Controller
     public function index($slug){
         $usrData = DB::select("SELECT * FROM users where slug = '$slug' ");
         $id = $usrData[0]->id;
-  
-        $data = DB::select("select * from profile where user_id = '$id' ");
-        //$usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
 
+        $data = DB::select("select * from profile where user_id = '$id' ");
         $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
         $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
         $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
-        //$posts = DB::select("SELECT * FROM posts WHERE owner_id = '$id' ORDER BY time DESC");
-        $posts = DB::select("SELECT * 
-                            FROM posts, users
-                            WHERE id = owner_id
-                            AND id = '$id'
-                            ORDER BY time DESC
-                                ");
+        $posts = DB::select("SELECT * FROM posts, users WHERE id = owner_id AND id = '$id' ORDER BY time DESC");
+        $notifications = self::getNotifications();
+        $reactions = self::getReactions();
 
-        $user_id = Auth::user()->id;
-
-        $notifications = DB::select("SELECT * 
-                                    FROM 
-                                    notifications_log, follow_notification, users
-                                    
-                                    WHERE 
-                                    notification_id = follow_noti_id 
-                                    AND user_to_be_notified = '$user_id'
-                                    AND notification_from = id
-                                ");
-        //dd($followers);
         if($data){
             return view('profiles.index')->with('data', $data[0])
             ->with('followers', $followers[0])
@@ -49,7 +31,8 @@ class ProfilesController extends Controller
             ->with('postCount', $postsCount[0])
             ->with('posts', $posts)
             ->with('usrData', $usrData[0])
-            ->with('notifications', $notifications);
+            ->with('notifications', $notifications)
+            ->with('reactions', $reactions);
 
         }else{
             return view('profiles.index')->with('followers', $followers[0])
@@ -57,7 +40,8 @@ class ProfilesController extends Controller
                                         ->with('postCount', $postsCount[0])
                                         ->with('posts', $posts)
                                         ->with('usrData', $usrData[0])
-                                        ->with('notifications', $notifications);
+                                        ->with('notifications', $notifications)
+                                        ->with('reactions', $reactions);;
         }
     }
 
@@ -67,7 +51,7 @@ class ProfilesController extends Controller
             $pic = $request->file('pic');
             $fileName = $pic->getClientOriginalName();
             $id = Auth::user()->id;
-            
+
 
             $hash_token = md5($fileName);
             if($hash_token === DB::select("select pHash from users where  id = '$id'")){
@@ -79,12 +63,12 @@ class ProfilesController extends Controller
             $path = public_path(). '/img/user_imgs';
 
             $pic->move($path, $fileName);
-    
-            $query = "update users set profile_pic = '$fileName', pHash = '$hash_token'  where id = '$id'"; 
+
+            $query = "update users set profile_pic = '$fileName', pHash = '$hash_token'  where id = '$id'";
             $is_update = DB::update($query);
-            
+
             $message  = "";
-    
+
             if($is_update){
                 $message = "Sucsses_ Updated your profile picture succesfully";
             }else{
@@ -95,7 +79,7 @@ class ProfilesController extends Controller
             $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
             $posts = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
             return redirect()->to("/profile/$slug");
-            
+
         }
 
         return redirect()->to("/profile/$slug")->with('message', 'empty file uploaded');
@@ -109,9 +93,9 @@ class ProfilesController extends Controller
         $posts = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
         $usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
         $notifications = self::getNotifications();
-     
-        
-        
+
+
+
         if($data){
             return view('profiles.editInfo')->with('data', $data[0])
                                             ->with('followers', $followers[0])
@@ -124,8 +108,8 @@ class ProfilesController extends Controller
                                             ->with('following', $following[0])
                                             ->with('postCount', $posts[0])
                                             ->with('usrData', $usrData[0])
-                                            ->with('notifications', $notifications);  
-        }   
+                                            ->with('notifications', $notifications);
+        }
     }
 
     public function storeInfo(Request $request){
@@ -133,12 +117,12 @@ class ProfilesController extends Controller
         $lname = '';
         $city = '';
         $about  = '';
-        $bio = ''; 
+        $bio = '';
         $id = Auth::user()->id;
         $created_at = Carbon::now()->toDateTimeString();
         $updated_at = Carbon::now()->toDateTimeString();
 
-        
+
         if($request->Input('fname') != ''){
             $fname = $request->input('fname');
         }
@@ -161,12 +145,12 @@ class ProfilesController extends Controller
         if($request->input('bio') != ''){
             $bio = $request->input('bio');
         }
-        
-       
+
+
         try{
-            $query = "insert into profile 
-                    (city, country, fname, lname, about, bio, user_id, created_at, updated_at) 
-                    values 
+            $query = "insert into profile
+                    (city, country, fname, lname, about, bio, user_id, created_at, updated_at)
+                    values
                     ('$city', '$country', '$fname', '$lname', '$about', '$bio', '$id', '$created_at', '$updated_at') ";
             DB::insert($query);
         }catch(\Illuminate\Database\QueryException $ex){
@@ -187,7 +171,7 @@ class ProfilesController extends Controller
         $about  = $request->input('about');
         $bio = $request->input('bio');
         $updated_at = Carbon::now()->toDateTimeString();
-        
+
         try{
             $query = " update profile set fname = '$fname', lname = '$lname', city = '$city', country = '$country',
                         about = '$about', bio = '$bio', updated_at = '$updated_at' where user_id = $id ";
@@ -202,7 +186,7 @@ class ProfilesController extends Controller
     public function getProfilePicSectionData(){
         $id = Auth::user()->id;
         $data = DB::select("select * from profile where user_id = '$id' ");
-        
+
         return ($data);
     }
 
@@ -216,24 +200,47 @@ class ProfilesController extends Controller
     public function getFolloweeCount(){
         $id = Auth::user()->id;
         $followees = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
-        
+
         return ($followees);
     }
 
     public function getNotifications(){
         $id = Auth::user()->id;
-        $notifications = DB::select("   SELECT * 
-                                        FROM 
-                                        notifications_log, follow_notification, users
-                                        
-                                        WHERE 
-                                        notification_id = follow_noti_id 
-                                        AND user_to_be_notified = '$id'
-                                        AND notification_from = id
-                                        ORDER BY notification_send_at DESC
-                                    ");
-        return $notifications;       
+        $notifications = DB::select("SELECT *
+                                    FROM
+                                    notifications_log, users
+                                    WHERE
+                                    user_to_be_notified = '$id'
+                                    AND notification_from = users.id
+                                    ORDER BY notification_send_at DESC");
+        return $notifications;
     }
 
-    
+    public function getReactions(){
+        $id = Auth::user()->id;
+        $reactions = DB::select("SELECT *
+                            FROM reacts
+                            WHERE reacts.liked_post IN (
+                                SELECT posts.post_id
+                                FROM posts
+                                WHERE posts.owner_id IN (
+                                    SELECT follows.followee
+                                    FROM follows
+                                    WHERE follows.follower = '$id'
+                                )
+                            )
+
+                            UNION
+
+                            SELECT *
+                            FROM reacts
+                            WHERE reacts.liked_post IN (
+                                SELECT posts.post_id
+                                FROM posts
+                                WHERE posts.owner_id = '$id'
+                            )");
+
+        return $reactions;
+    }
+
 }

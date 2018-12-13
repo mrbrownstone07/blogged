@@ -83,7 +83,7 @@ added end div for testing purposes  --}}
                         <div class="row">
                             <div class="container">
                                 <div class="col-md-12 text-left">
-                                    {{$p->title}}           
+                                    {{$p->title}}    {{$p->post_id}}        
                                 </div> 
                             </div>
 
@@ -91,10 +91,33 @@ added end div for testing purposes  --}}
                         <hr>
                         <div class="row">
                             <div class="col-md-2 pull-left">
-                                <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}" id="icon_link">
-                                    <img src="{{ URL::to('img/icons/like.png')}}" alt="image not found" class="p_icon_wrap">
-                                    Like 
-                                </a>
+                                @php
+                                    $likes = 0;
+                                    $liked_flag = 0;
+                                    
+                                    if(!empty($reactions))
+                                    foreach($reactions as $react){
+                                        if($react->reaction == 1 && $react->liked_post == $p->post_id ){
+                                            $likes++;
+                                            if($react->liker_id == Auth::user()->id)
+                                                $liked_flag = 1;
+                                        }
+                                    }
+                                @endphp
+
+                                @if ($liked_flag == 0)
+                                    <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}" id="icon_link">
+                                        <img src="{{ URL::to('img/icons/like.png')}}" alt="image not found" class="p_icon_wrap">
+                                        {{$likes}} 
+                                    </a>                                    
+                                @endif
+
+                                @if ($liked_flag == 1)
+                                    <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}" id="icon_link">
+                                        <img src="{{ URL::to('img/icons/likedIcon.png')}}" alt="image not found" class="p_icon_wrap">
+                                        {{$likes}} 
+                                    </a>                                    
+                                @endif
 
                             </div>
                             <div class="col-md-2 pull-left">
