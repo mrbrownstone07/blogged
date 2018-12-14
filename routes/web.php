@@ -49,6 +49,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/show_notifiaction/{noti_id}/{noti_type}', 'NotificationsController@showNotifications');
 
     Route::get('/like/{post_id}/{liked_by}/{path}', 'ReactsController@handleRequest');
+
+    Route::post('/store_comment', 'CommentsController@store');
     
     
 });

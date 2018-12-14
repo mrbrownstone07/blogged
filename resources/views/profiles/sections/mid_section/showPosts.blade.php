@@ -129,7 +129,7 @@ added end div for testing purposes  --}}
                             <div class="col-md-2 pull-left">
                                 <a href="" id="icon_link">
                                     <img src="{{ URL::to('img/icons/comment.png')}}" alt="image not found" class="p_icon_wrap">
-                                    Comment 
+                                    Comment
                                 </a>
                             </div> 
                             <div class="col-md-2 pull-left">
@@ -155,19 +155,21 @@ added end div for testing purposes  --}}
                     <hr>
                     <div class="row">
                         <div class="col-md-12">
-                            {!! Form::open(['', 'method' => 'POST']) !!}
-                
+                            {{--  {!! Form::open(['action' => '/store_comment', 'method' => 'POST']) !!}  --}}
+                            <form action="/store_comment" method="post">
                                 @csrf
                                 <div class="form-group row">    
                                     <div class="col-md-10">
                                         {!! Form::textarea('comment', '' , ['class' => ['form-control', 'form-rounded'],  'placeholder' => 'comment', 'rows' => '1']) !!}
                                     </div> 
                                     <div class="col-md-2">
+                                        {!! Form::hidden('path', $location, ['class' => 'form-control']) !!}
+                                        {!! Form::hidden('post_id', $p->post_id, ['class' => 'form-control']) !!}
                                         {!! Form::submit('Comment', ['class' => 'btn btn-outline-success']) !!}
                                     </div>       
                                 </div>    
-                            
-                            {!! Form::close() !!}  
+                            </form>
+                            {{--  {!! Form::close() !!}    --}}
                         </div>
                     </div>
                 </div>
@@ -212,6 +214,7 @@ added end div for testing purposes  --}}
 
                                 {!! Form::hidden('_method', 'DELETE') !!}
                                 {!! Form::submit('Yes, Delete', ['class' => 'btn btn-outline-danger']) !!}
+
                                 
                             {!! Form::close() !!}
                         </div>
