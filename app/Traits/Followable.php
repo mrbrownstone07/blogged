@@ -66,7 +66,7 @@ trait Followable{
                                         VALUES(
                                             '$notification_id',
                                             '$created_at', 
-                                            '0',
+                                            '1',
                                             '$followee',
                                             '$follower'
                                         )");

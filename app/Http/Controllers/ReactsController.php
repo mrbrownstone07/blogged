@@ -7,7 +7,7 @@ use DB;
 use Carbon\Carbon;
 class ReactsController extends Controller
 {
-    public function handleRequest($post_id, $liked_by){
+    public function handleRequest($post_id, $liked_by, $location){
         $post_data = DB::select("SELECT * FROM posts WHERE post_id ='$post_id'");
         $user_to_ber_notified = $post_data[0]->owner_id;
         $hash_id = md5($user_to_ber_notified . $liked_by);        
@@ -54,8 +54,9 @@ class ReactsController extends Controller
 
             
             
-        }      
-        return redirect()->to("/home");
+        }
+
+        return ($location == 'home')? redirect()->to("/home") : redirect()->to("/profile/".substr($location, 8, strlen($location)));
     } 
 }
         

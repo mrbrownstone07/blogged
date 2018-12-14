@@ -83,7 +83,7 @@ added end div for testing purposes  --}}
                         <div class="row">
                             <div class="container">
                                 <div class="col-md-12 text-left">
-                                    {{$p->title}}    {{$p->post_id}}        
+                                    {{$p->title}}           
                                 </div> 
                             </div>
 
@@ -91,6 +91,7 @@ added end div for testing purposes  --}}
                         <hr>
                         <div class="row">
                             <div class="col-md-2 pull-left">
+
                                 @php
                                     $likes = 0;
                                     $liked_flag = 0;
@@ -103,17 +104,22 @@ added end div for testing purposes  --}}
                                                 $liked_flag = 1;
                                         }
                                     }
+                                    $location = $_SERVER['REQUEST_URI'];
+                                    $location = ($location[1] == 'h') ? 
+                                        substr($location, 1, 4) : 
+                                            str_replace('/', '_', substr($location, 1, strlen($location))) ;
+                                    
                                 @endphp
 
                                 @if ($liked_flag == 0)
-                                    <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}" id="icon_link">
+                                    <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}/{{$location}}" id="icon_link">
                                         <img src="{{ URL::to('img/icons/like.png')}}" alt="image not found" class="p_icon_wrap">
-                                        {{$likes}} 
+                                        {{$likes}}                                        
                                     </a>                                    
                                 @endif
 
                                 @if ($liked_flag == 1)
-                                    <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}" id="icon_link">
+                                    <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}/{{$location}}" id="icon_link">
                                         <img src="{{ URL::to('img/icons/likedIcon.png')}}" alt="image not found" class="p_icon_wrap">
                                         {{$likes}} 
                                     </a>                                    
@@ -224,8 +230,10 @@ added end div for testing purposes  --}}
         console.log(e.relatedTarget) // do something...
       })
 
-
+    var stringPathName = window.location.pathname;
+    console.log(stringPathName);
 </script>
+
 
 
 

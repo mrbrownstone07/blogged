@@ -22,7 +22,7 @@ class ProfilesController extends Controller
         $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
         $posts = DB::select("SELECT * FROM posts, users WHERE id = owner_id AND id = '$id' ORDER BY time DESC");
         $notifications = self::getNotifications();
-        $reactions = self::getReactions();
+        $reactions = self::getReactions($id);
 
         if($data){
             return view('profiles.index')->with('data', $data[0])
@@ -216,8 +216,8 @@ class ProfilesController extends Controller
         return $notifications;
     }
 
-    public function getReactions(){
-        $id = Auth::user()->id;
+    public function getReactions($id){
+        
         $reactions = DB::select("SELECT *
                             FROM reacts
                             WHERE reacts.liked_post IN (

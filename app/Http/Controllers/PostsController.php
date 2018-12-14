@@ -37,12 +37,13 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        
         $this->validate($request, [
             'title' => 'required',
             'body' =>'required'
         ]);
-
+        //dd($request->path);
         $id = Auth::user()->id;
         $title = $request->title;
         $body = $request->body;
@@ -62,8 +63,9 @@ class PostsController extends Controller
                 )";
 
         DB::insert($query);
-
-        return redirect()->to("/profile/$slug");
+        
+        $location = $request->path;
+        return ($location == 'home')? redirect()->to("/home") : redirect()->to("/profile/".substr($location, 8, strlen($location)));
         
     }
 

@@ -40,9 +40,15 @@
 
     
     <div class="card-body card_marg">
-
+        @php
+            $location = $_SERVER['REQUEST_URI'];
+            $location = ($location[1] == 'h') ? 
+                substr($location, 1, 4) : 
+                    str_replace('/', '_', substr($location, 1, strlen($location)));
+                
+        @endphp
         
-        {!! Form::open(['action' => 'PostsController@store', 'method' => 'POST']) !!}
+        {!! Form::open(['action' => ['PostsController@store', $location], 'method' => 'POST']) !!}
            
             @csrf
             <div class="form-group row">    
@@ -62,6 +68,9 @@
             </div>
             <div class="form-group row" id="">  
                 <div class="col-md-12">
+                    
+                    {!! Form::hidden('path', $location, ['class' => 'form-control']) !!}
+                    
                     {!! Form::submit('Post', ['class' => 'btn btn-outline-success']) !!}
                 </div>         
             </div> 

@@ -207,13 +207,13 @@ class FollowsController extends Controller
                                                     WHERE follows.follower IN(
                                                         SELECT follows.followee
                                                         FROM follows
-                                                        WHERE follows.follower =14
+                                                        WHERE follows.follower = '$id'
                                                     ))
-                                                AND users.id <> 14
+                                                AND users.id <> '$id'
                                                 AND users.id NOT IN(
                                                     SELECT follows.followee
                                                     FROM follows
-                                                    WHERE follows.follower = 14
+                                                    WHERE follows.follower = '$id'
                                                 ))");
 
         return $people_you_may_know ;
@@ -230,16 +230,16 @@ class FollowsController extends Controller
                                         users.id NOT IN(
                                             SELECT follows.followee
                                                 FROM follows
-                                            WHERE follows.follower = 14
+                                            WHERE follows.follower = '$id'
                                             UNION
                                                 SELECT follows.followee
                                                 FROM follows
                                             WHERE follows.follower IN(
                                                 SELECT follows.followee
                                                 FROM follows
-                                            WHERE follows.follower = 14
+                                            WHERE follows.follower = '$id'
                                         )
-                                    ) AND users.id <> 14");
+                                    ) AND users.id <> '$id'");
         return $other_people;
     }
 }
