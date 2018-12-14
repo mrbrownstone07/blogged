@@ -1,34 +1,43 @@
 
 <style>
-
+    #comments_Section{
+        
+    }
 
     icon_link: hover{
         color:red;
     }
 </style>
 
+@php
+    $location = $_SERVER['REQUEST_URI'];
+    $location = ($location[1] == 'h') ? 
+        substr($location, 1, 4) : 
+            str_replace('/', '_', substr($location, 1, strlen($location))) ;   
+@endphp
 
 
-<div class="card shadow-sm card_margin card_marg card_bottom text-center cotentsection">
+
+<div class="card shadow-sm  card_marg card_bottom text-center cotentsection">
     <div class="card-header">
-        your posts
+        @if($location[0] == 'h')
+            Your Home page
+        @else
+            {{'@'.substr($location, 8, strlen($location))."'s posts"}}
+        @endif
+
         <img src="{{ URL::to('img/icons/post.png')}}" alt="image not found" class="icon_wrap">      
     </div>
-{{--  </div> 
-added end div for testing purposes  --}}
-    @if(count($posts) == 0)
-        <div>
 
-        </div>
-    @endif
     <div class="card-body card_marg" style="padding:0px; background-color:whitesmoke">
         @if(count($posts) == 0)
-            <div class="jumbotron jumbotron-fluid whitebg card_bottom">
+            <div class="jumbotron jumbotron-fluid text-center whitebg card_bottom">
                 <h4> No posts </h4>
             </div>
         @endif
         @foreach ($posts as $p)
-            
+        {{--  <div class="card card_bottom">  --}}
+           
             <div id="b{{$p->post_id}}" class="jumbotron jumbotron-fluid whitebg card_bottom" style="padding:20px"
                 onmouseover="addShadow('b{{$p->post_id}}')" onmouseout="removeShadow('b{{$p->post_id}}')">
                 <div class="row">
@@ -43,31 +52,30 @@ added end div for testing purposes  --}}
                                     {{'@'. $p->name}}
                                 </a>                                      
                                 @else
+                                <a href="/profile/{{$usrData->slug}}">
                                     <img src="{{ URL::to('img/user_imgs/' . $usrData->profile_pic) }}" 
                                         alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
-                                    {{'@'. $usrData->name}}      
+                                    {{'@'. $usrData->name}}
+                                </a>      
                                 @endif
 
                             </div>
                             @if($p->id == Auth::user()->id)
-                                <div class="col-md-6 text-right">
+                                <div id="setting_d" class="col-md-6 text-right">
+                                    <a id="Dropdown" class="" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        <img src="{{ URL::to('img/icons/settings.png')}}" alt="image not found" class="icon_wrap">
+                                    </a>
 
-                                    <li class="dropdown">
-                                        <a id="Dropdown" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            <img src="{{ URL::to('img/icons/settings.png')}}" alt="image not found" class="icon_wrap">
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <h5 class="dropdown-item"> Settings </h5>
+                                        <a class="dropdown-item" href="/post/{{$p->post_id}}/edit">
+                                            Edit
                                         </a>
-
-                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                            <h5 class="dropdown-item"> Settings </h5>
-                                            <a class="dropdown-item" href="/post/{{$p->post_id}}/edit">
-                                                Edit
-                                            </a>
                     
-                                            <a id="deleteBtn" class="dropdown-item" href="#" data-target="#deletePost" data-toggle="modal" data-postId="1">
-                                                Delete   
-                                            </a>
-                                        </div>
-                                    </li> 
+                                        <a id="deleteBtn" class="dropdown-item" href="#" data-target="#deletePost" data-toggle="modal" data-postId="1">
+                                            Delete   
+                                        </a>
+                                    </div>   
                                 </div>
                             @endif
 
@@ -79,7 +87,7 @@ added end div for testing purposes  --}}
                             </div>
 
                         </div>
-                        <hr>
+                        <br>
                         <div class="row">
                             <div class="container">
                                 <div class="col-md-12 text-left">
@@ -103,34 +111,30 @@ added end div for testing purposes  --}}
                                             if($react->liker_id == Auth::user()->id)
                                                 $liked_flag = 1;
                                         }
-                                    }
-                                    $location = $_SERVER['REQUEST_URI'];
-                                    $location = ($location[1] == 'h') ? 
-                                        substr($location, 1, 4) : 
-                                            str_replace('/', '_', substr($location, 1, strlen($location))) ;
-                                    
+                                    }                                    
                                 @endphp
 
                                 @if ($liked_flag == 0)
                                     <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}/{{$location}}" id="icon_link">
-                                        <img src="{{ URL::to('img/icons/like.png')}}" alt="image not found" class="p_icon_wrap">
-                                        {{$likes}}                                        
-                                    </a>                                    
+                                        <img src="{{ URL::to('img/icons/like.png')}}" alt="image not found" class="p_icon_wrap">                                         
+                                    </a>
+                                    {{$likes}}                                     
                                 @endif
 
                                 @if ($liked_flag == 1)
                                     <a href="/like/{{$p->post_id}}/{{Auth::user()->id}}/{{$location}}" id="icon_link">
                                         <img src="{{ URL::to('img/icons/likedIcon.png')}}" alt="image not found" class="p_icon_wrap">
-                                        {{$likes}} 
-                                    </a>                                    
+                                        
+                                    </a>
+                                    {{$likes}}                                     
                                 @endif
 
                             </div>
-                            <div class="col-md-2 pull-left">
-                                <a href="" id="icon_link">
+                            <div class="col-md-2 pull-left" onclick="showTog('comments_Section{{$p->post_id}}')">
+                                
                                     <img src="{{ URL::to('img/icons/comment.png')}}" alt="image not found" class="p_icon_wrap">
                                     Comment
-                                </a>
+                                
                             </div> 
                             <div class="col-md-2 pull-left">
                                     <a href="/posts/{{$p->post_id}}" id="icon_link">
@@ -150,31 +154,10 @@ added end div for testing purposes  --}}
                         </div>                        
                     </div>
                 </div> 
-               
-                <div class="container container-fluid whitebg card_margin">
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{--  {!! Form::open(['action' => '/store_comment', 'method' => 'POST']) !!}  --}}
-                            <form action="/store_comment" method="post">
-                                @csrf
-                                <div class="form-group row">    
-                                    <div class="col-md-10">
-                                        {!! Form::textarea('comment', '' , ['class' => ['form-control', 'form-rounded'],  'placeholder' => 'comment', 'rows' => '1']) !!}
-                                    </div> 
-                                    <div class="col-md-2">
-                                        {!! Form::hidden('path', $location, ['class' => 'form-control']) !!}
-                                        {!! Form::hidden('post_id', $p->post_id, ['class' => 'form-control']) !!}
-                                        {!! Form::submit('Comment', ['class' => 'btn btn-outline-success']) !!}
-                                    </div>       
-                                </div>    
-                            </form>
-                            {{--  {!! Form::close() !!}    --}}
-                        </div>
-                    </div>
-                </div>
+                @include('profiles.sections.mid_section.comment_section')  
             </div>
-            
+        {{--  </div>  --}}
+                    
         @endforeach 
     </div>
 </div>
@@ -209,13 +192,11 @@ added end div for testing purposes  --}}
                             <button type="button" class="btn btn-outline-success" data-dismiss="modal">No, Cancel</button>                         
                         </div>
                         <div class="col-md-1">                         
-                            {!! Form::open(['action' => ['PostsController@destroy', $p->post_id],
-                                'method' => 'POST', 'class' => '']) !!}
+                            {!! Form::open(['action' => ['PostsController@destroy', $p->post_id], 'method' => 'POST', 'class' => '']) !!}
 
                                 {!! Form::hidden('_method', 'DELETE') !!}
                                 {!! Form::submit('Yes, Delete', ['class' => 'btn btn-outline-danger']) !!}
-
-                                
+    
                             {!! Form::close() !!}
                         </div>
                     </div>
@@ -224,17 +205,29 @@ added end div for testing purposes  --}}
             </div>
         </div>
     </div>
-
 @endif
 
 <script type="text/javascript">
 
-    $('#deletePost').on('show.bs.modal', function (e) {
-        console.log(e.relatedTarget) // do something...
-      })
-
-    var stringPathName = window.location.pathname;
-    console.log(stringPathName);
+    function showTog(id){
+        var el = document.getElementById(id);
+        
+        if(el.style.display === "none"){
+            el.style.display = "block";
+            var t = el.id.substr(16);
+            t = "comm"+t;
+            var text_box = document.getElementById(t);
+            text_box.style['height'] = '40px';
+            var b = "btn"+el.id.substr(16);
+            $('#'+t).keydown(function(e){
+                if(e.keyCode == 13 && !e.shiftKey){
+                    e.preventDefault();
+                    $("#"+b).trigger('click');
+                }
+            });
+        }    
+        else el.style.display = "none";
+    }
 </script>
 
 

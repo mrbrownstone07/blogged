@@ -29,7 +29,7 @@
 
 
 
-<div id="a" class="card shadow-sm shadowElement card_marg text-center cotentsection" 
+<div id="a" class="card shadow-sm shadowElement card_marg card_bottom text-center cotentsection" 
     onmouseover="show('post_btn'); addShadow('a')" onmouseout="hide('post_btn'); removeShadow('a')">
     <div class="card-header">
             Share your thoughts

@@ -13,7 +13,7 @@ class CommentsController extends Controller
         $post_id = $request->post_id;
         $comment = $request->comment;
         $location = $request->path;
-        
+        //dd($comment);
         $user = Auth::user()->id;
         //dd($commented_at);
         $commented_at = Carbon::now()->toDateTimeString();
@@ -26,5 +26,7 @@ class CommentsController extends Controller
         }catch(\Illuminate\Database\QueryException $ex){
             dd($ex);
         }
+
+        return ($location == 'home')? redirect()->to("/home") : redirect()->to("/profile/".substr($location, 8, strlen($location)));
     }
 }

@@ -45,7 +45,7 @@
                         {!! Form::text('title', $post->title , ['class' => ['form-control', 'form-rounded'], 'placeholder' => 'title']) !!}
                     </div>         
                 </div>
-
+                <hr>
                 <div class="form-group row">  
                     <div class="col-md-12">
                         {!! Form::textarea('body', $post->body, ['class' => ['form-control', 'form-rounded'], 
