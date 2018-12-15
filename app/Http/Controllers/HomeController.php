@@ -27,10 +27,18 @@ class HomeController extends Controller
         $notifications = self::getNotifications();
         $posts = self::getPosts();
         $reactions = self::getReactions();
+        $user = DB::select("SELECT * FROM users WHERE id = '$id'");
+        $followers = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$id'");
+        $following = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$id'");
+        $postsCount = DB::select("SELECT COUNT(*) as p FROM posts WHERE owner_id = '$id'");
 
         return view('home')->with('notifications', $notifications)
                             ->with('posts', $posts)
-                            ->with('reactions', $reactions);
+                            ->with('reactions', $reactions)
+                            ->with('usrData', $user[0])
+                            ->with('followers', $followers[0])
+                            ->with('following', $following[0])
+                            ->with('postCount', $postsCount[0]);
     }
 
     public function getNotifications(){

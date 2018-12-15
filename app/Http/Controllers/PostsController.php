@@ -71,12 +71,13 @@ class PostsController extends Controller
 
     public function show($id)
     {   
-        $query = "select * from posts where post_id = '$id'";
+        $query = "select * from posts, users where post_id = '$id' and id = owner_id";
         $post = DB::select($query);
         $uid = Auth::user()->id;
         $notifications = self::fetchNotifications();
 
-        return view('posts.show')->with('post', $post)->with('notifications', $notifications);   
+        return view('posts.show')->with('post', $post[0])
+                                ->with('notifications', $notifications);   
     }
 
     /**

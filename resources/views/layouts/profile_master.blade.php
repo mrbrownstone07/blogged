@@ -19,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    < link rel="shortcut icon" href="img/icons/favicon.png" >
     
 
     <title>{{config('app.name'), 'Blogged'}}</title>
@@ -64,11 +65,11 @@
             outline: none;
         }
         .body_wrap{
-            margin-top: 75px;
+            margin-top: 60px;
         }
         hr.divider { 
-            margin: 0em;
-            border-width: 2px;
+            margin: 0px;
+            border-width: 0px;
         }
         .card_bottom{
             margin-bottom: 20px;

@@ -261,11 +261,11 @@
                         <div class="dropdown-menu shadow-lg dropdown-menu-right" aria-labelledby="navbarDropdown">
                             
                             <div class="dropdown-item">
-                                <h3>{{ '@'. Auth::user()->name }}</h3>
-                               <small> {{ Auth::user()->email }} </small> 
+                                <h4>{{ '@'. Auth::user()->name }}</h4>
+                                {{ Auth::user()->email }}
                             </div>
-
-                            <h5 class="dropdown-header"> </h5>
+                            <hr class="divider">
+                            
                             
                             <a class="dropdown-item" href="/profile/{{Auth::user()->slug}}">
                                 Profile
@@ -280,7 +280,9 @@
                             </a>
                             
                             {{--  more code goes here  --}}
-                        
+                            
+                            <hr class="divider">
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
