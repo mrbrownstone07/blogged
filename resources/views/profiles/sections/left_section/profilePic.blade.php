@@ -6,7 +6,7 @@
 
 </style>
 
-    <div class="card shadow-sm card_marg container content_Section text-center fixed-side">
+    <div class="card shadow-sm card_marg container card_bottom content_Section text-center fixed-side">
         <div class="card-img-top">
             <div class="row">
                 <div class="col-12">

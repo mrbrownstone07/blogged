@@ -9,3 +9,8 @@
     @include('profiles.sections.mid_section.createPosts')
     @include('profiles.sections.mid_section.showPosts')
 @endsection
+
+
+<script type="text/javascript">
+
+</script>

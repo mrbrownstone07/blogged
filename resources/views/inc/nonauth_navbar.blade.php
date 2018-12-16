@@ -158,6 +158,19 @@
                                                             liked your post!  <b> {{$title}} </b>
                                                             
                                                         @endif
+
+                                                        
+                                                        @if ($noti->notification_type == 3)
+                                                            @php
+                                                                $comNotiPost = DB::select("SELECT * FROM posts WHERE post_id = (
+                                                                    SELECT post_commented FROM comment_notifications WHERE
+                                                                    comment_noti_id = '$noti->notification_id'
+                                                                    
+                                                                )");
+                                                                $title = substr($comNotiPost[0]->title, 0, 10);
+                                                            @endphp
+                                                            commented on your post {{$title}}
+                                                        @endif
                                                     </div>
                                                 </div>
 
@@ -211,6 +224,19 @@
                                                                     $title = substr($notiPost[0]->title, 0, 10);
                                                                 @endphp
                                                                 liked your post!  <b> {{$title}} </b>
+                                                            @endif
+
+                                                            @if ($noti->notification_type == 3)
+                                                                @php
+                                                                    $comNotiPost = DB::select("SELECT * FROM posts WHERE post_id = (
+                                                                        SELECT post_commented FROM comment_notifications WHERE
+                                                                        comment_noti_id = '$noti->notification_id'
+                                                                        
+                                                                    )");
+                                                                    dd($comNotiPost);
+                                                                    $title = substr($comNotiPost[0]->title, 1, 10);
+                                                                @endphp
+                                                                commented on your post {{$title}}
                                                             @endif
                                                         </div>
                                                     

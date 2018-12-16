@@ -52,5 +52,15 @@ class NotificationsController extends Controller
             $post_id = $post[0]->post_id;
             return redirect()->to("/posts/$post_id");
         }
+        if($noti_id == 3){
+            $post = DB::select("SELECT * FROM posts WHERE post_id = (
+                SELECT post_reacted 
+                FROM react_notifications
+                WHERE noti_id = '$noti_id')
+            ");
+            $post_id = $post[0]->post_id;
+            $block = 'block';
+            return redirect()->to("/posts/$post_id")->with('style', $block);
+        }
     }
 }

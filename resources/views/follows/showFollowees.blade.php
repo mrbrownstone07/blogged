@@ -30,7 +30,7 @@
         </div>
 
         @foreach($followees as $f)
-            <div id="showFollowees{{$f->follows_id}}" class="jumbotron shadow-sm whitebg border-bottom"
+            <div id="showFollowees{{$f->follows_id}}" class="jumbotron shadow-sm whitebg no_wapper border-bottom"
                 onmouseover="addShadow('showFollowees{{$f->follows_id}}')" 
                     onmouseout="removeShadow('showFollowees{{$f->follows_id}}')">
                     <div class="col-md-12card_bottom ">

@@ -56,25 +56,42 @@
                         <hr> 
                     </div>
                     @php
-                    $reactions = DB::select("SELECT * FROM reacts WHERE liked_post = '$p->post_id'");
+                        $reactions = DB::select("SELECT * FROM reacts WHERE liked_post = '$p->post_id'");
                     
+                        $comments = DB::select("SELECT * 
+                                                FROM comments_log 
+                                                INNER JOIN users 
+                                                ON (commented_by = id) 
+                                                WHERE commented_on = '$p->post_id'
+                                    ");
+                                   
+                        $location = $_SERVER['REQUEST_URI'];
+                        $location = ($location[1] == 'h') ? 
+                            substr($location, 1, 4) : 
+                                str_replace('/', '_', substr($location, 1, strlen($location))) ;   
+                            
                     @endphp
-                    <div class="card-footer">
+                    
                         <div class="row">
-                            <div class="col-md-2 pull-left">
-                                @include('components.likes');
-                            </div> 
+                            <div class="col-md-2 text-center">
+                                @include('components.likes')
+                            </div>
+                            <div class="col-md-6 text-left" onclick="showTog('comments_Section{{$p->post_id}}')">
+                                <img src="{{ URL::to('img/icons/comment.png')}}" alt="image not found" class="p_icon_wrap">
+                                {{count($comments)}}
+                                
+                            </div>  
                         </div>                        
-                    </div>
-                </div>     
+                    @include('profiles.sections.mid_section.comment_section')
+                    <br> 
+                </div>
+                   
     @else
         <p> Post could not be found! </p>
     @endif
 
 @endsection
-{{--  <script language="JavaScript" type="text/javascript">
-    setTimeout("location.href = '/posts/{{$p->post_id}}'",10000); // milliseconds, so 10 seconds = 10000ms
-</script>  --}}
+
 <div class="modal" id="deletePost_show">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">
@@ -114,3 +131,25 @@
         </div>
     </div>
 </div>
+
+<script>
+    function showTog(id){
+        var el = document.getElementById(id);
+        
+        if(el.style.display === "none"){
+            el.style.display = "block";
+            var t = el.id.substr(16);
+            t = "comm"+t;
+            var text_box = document.getElementById(t);
+            text_box.style['height'] = '40px';
+            var b = "btn"+el.id.substr(16);
+            $('#'+t).keydown(function(e){
+                if(e.keyCode == 13 && !e.shiftKey){
+                    e.preventDefault();
+                    $("#"+b).trigger('click');
+                }
+            });
+        }    
+        else el.style.display = "none";
+    }
+</script>

@@ -75,9 +75,10 @@ class PostsController extends Controller
         $post = DB::select($query);
         $uid = Auth::user()->id;
         $notifications = self::fetchNotifications();
-
+        $style = 'none';
         return view('posts.show')->with('post', $post[0])
-                                ->with('notifications', $notifications);   
+                                ->with('notifications', $notifications)
+                                ->with('style', $style);   
     }
 
     /**

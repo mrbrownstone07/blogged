@@ -137,8 +137,8 @@
             </div>
             
             @foreach($people as $person)
-                <div class="jumbotron border-bottom" style="background-color:white;">
-                        <div class="card-img-top card_bottom">
+                <div class="jumbotron no_wapper border-bottom" style="background-color:white;">
+                        <div class="card-img-top ">
                                 <img src="{{ URL::to('img/user_imgs/' . $person->profile_pic) }}" 
                                     alt="image not found" class="img_wrap rounded-circle">
                         </div>
@@ -180,9 +180,9 @@
                                             @if($i == 2)
                                                 @break
                                             @endif
-                                            <a href="/profile/{{$follower->slug}}"> {{'@'. $follower->name}} </a> 
+                                            <a href="/profile/{{$follower->slug}}"> {{'@'. $follower->name }} </a>, 
                                         @endforeach
-                                        , and
+                                        and
                                         {{$other == 1? " $other other." : " $other others."}}
                                     @else
                                         @if ($count == 2) 
@@ -197,11 +197,11 @@
                                 </b>                                       
                             </div>
                         </div>
-        
                         <hr>
                         <a href="/follow/{{$person->id}}">
                             <img src="{{URL::to('img/icons/follow.png')}}" alt="" 
                                 class="icon_wrap">
+                            Follow
                         </a>
                 </div>      
             @endforeach
@@ -215,7 +215,7 @@
             </div>
             
             @foreach($users as $user)
-                <div class="jumbotron border-bottom" style="background-color:white;">
+                <div class="jumbotron no_wapper border-bottom" style="background-color:white;">
                         <div class="card-img-top card_bottom">
                                 <img src="{{ URL::to('img/user_imgs/' . $user->profile_pic) }}" 
                                     alt="image not found" class="img_wrap rounded-circle">
@@ -240,7 +240,6 @@
         
                             </div>
                         </div>
-        
                         <hr>
                         <a href="/follow/{{$user->id}}">
                             <img src="{{URL::to('img/icons/follow.png')}}" alt="" 

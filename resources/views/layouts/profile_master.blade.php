@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    < link rel="shortcut icon" href="img/icons/favicon.png" >
+    
     
 
     <title>{{config('app.name'), 'Blogged'}}</title>
@@ -65,7 +65,7 @@
             outline: none;
         }
         .body_wrap{
-            margin-top: 60px;
+            margin-top: 75px;
         }
         hr.divider { 
             margin: 0px;
@@ -73,6 +73,10 @@
         }
         .card_bottom{
             margin-bottom: 20px;
+        }
+        .no_wapper{
+            padding: 10px;
+            margin: 0px;
         }     
     </style>
 
@@ -133,7 +137,44 @@
           this.style.height = 'auto';
           this.style.height = (this.scrollHeight) + 'px';
         }
-</script>
 
+</script>
+<script language="JavaScript" type="text/javascript">
+   
+idleTimer = null;
+idleState = false;
+idleWait = 40000;
+var pathName = window.location['pathname'];
+(function ($) {
+
+    $(document).ready(function () {
+    
+        $('*').bind('mousemove keydown scroll', function () {
+        
+            clearTimeout(idleTimer);
+                    
+            if (idleState == true) { 
+                
+                
+                console.log('active');          
+            }
+            
+            idleState = false;
+            
+            idleTimer = setTimeout(function () { 
+
+                setTimeout("location.href = pathName",10000);
+                console.log(pathName);
+                
+
+                idleState = true; }, idleWait);
+        });
+        
+        $("body").trigger("mousemove");
+    
+    });
+}) (jQuery)
+
+</script> 
  
 

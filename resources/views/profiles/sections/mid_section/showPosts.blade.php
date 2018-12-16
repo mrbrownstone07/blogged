@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="col-md-6 text-left">
                             
-                                @if (empty($usrData))
+                                {{-- @if (empty($usrData))
                                 <a href="/profile/{{$p->slug}}">  
                                     <img src="{{ URL::to('img/user_imgs/' . $p->profile_pic) }}" 
                                         alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
@@ -53,7 +53,12 @@
                                         alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
                                     {{'@'. $usrData->name}}
                                 </a>      
-                                @endif
+                                @endif --}}
+                                <a href="/profile/{{$p->slug}}">  
+                                    <img src="{{ URL::to('img/user_imgs/' . $p->profile_pic) }}" 
+                                        alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
+                                    {{'@'. $p->name}}
+                                </a> 
 
                             </div>
                             @if($p->id == Auth::user()->id)
@@ -75,6 +80,7 @@
                                     </div>   
                                 </div>
                             @endif
+
                             <div class="row">
                                 <div class="col-md-12">
 
