@@ -2,13 +2,15 @@
 
 @section('left_section')
     @include('profiles.sections.left_section.profilePic')
+    @include('rooms.sections.createNew')
+    @include('rooms.sections.findRoom')
 @endsection
 
 @section('mid_section')
     <div class="card">
         <div class="card-header">
             <div class="col-md-12 text-center">
-                Your dicussion rooms
+                Dicussion Rooms
             </div>
         </div>
         <div class="jumbotron bg-white">
@@ -16,22 +18,50 @@
             <div class="card-title text-center">
                 Your rooms
             </div>
-            <hr>
+            <hr class="divider">
             <div class="card-body">
-              
-        
-        
+                @if (!empty($owned_rooms))
+                    @foreach ($owned_rooms as $index => $room)
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <a href="/show_room/{{$room->room_id}}"> {{($index+1).'. '}} {{$room->room_name}} </a>
+                        </div>
+                    </div>
+                    @endforeach    
+                @else
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            You dont own any room
+                        </div>
+                    </div>
+                @endif
             </div> 
         </div>
-        <div class="jumbotron bg-white">
+        <div class="jumbotron jumbotron-fluid bg-white">
             <hr>
             <div class="card-title text-center">
                 Rooms you are member of
             </div>
-            <hr>
+            <hr class="divider">
             <div class="card-body">
-
-
+                @if(empty($joined_rooms))
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            You are not member of any discussion room currently
+                        </div>
+                    </div>
+                @else
+                    @foreach ($joined_rooms as $index => $room)
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                {{($index+1).'  '}} 
+                                <a href="/show_room/{{$room->room_id_ref}}"> 
+                                    {{$room->room_name}} 
+                                </a>
+                            </div>
+                        </div>  
+                    @endforeach
+                @endif
             </div>
         </div> 
     </div>

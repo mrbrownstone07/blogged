@@ -53,9 +53,16 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::post('/store_comment', 'CommentsController@store');
     Route::get('/delete_comment/{comment_id}/{location}', 'CommentsController@deleteComment');
+    
     Route::get('/search', 'SearchController@search');
     Route::get('/s', 'SearchController@index');
+    
     Route::get('/dicussion_rooms/{slug}', 'RoomsController@index');
+    Route::post('/create_room', 'RoomsController@create');
+    Route::get('/show_room/{id}', 'RoomsController@show');
+    Route::get('/create_topic', 'RoomsController@createTopic');
+    Route::post('/store_topic/comment', 'RoomsController@storeComment');
+    Route::get('/join_room/{room_id}', 'RoomsController@joinRoom');
 });
 
 

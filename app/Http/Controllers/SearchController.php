@@ -31,7 +31,8 @@ class SearchController extends Controller
 
                                 ");
             if($users){
-                $result.="<div class='dropdown-header'>users</div><hr class='divider'>";
+                $result.="<div class='dropdown-header text-center'> search results </div>";
+                $result.="<hr class='divider'><div class='dropdown-header'>users</div><hr class='divider'>";
                 foreach($users as $user){
                     $result.= "<div class='container dropdown-item'> <a href= '/profile/$user->slug'>@".$user->name."</a></div>";    
                 }
@@ -47,7 +48,7 @@ class SearchController extends Controller
                 return Response($result);   
             }
 
-            return Response('1234');
+            return Response("<div class='container dropdown-item text-center'> <small> Nothing found </small> </div>");
         }
     }
 }
