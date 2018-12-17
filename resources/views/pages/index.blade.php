@@ -3,13 +3,25 @@
         background-color: rgba(44, 44, 44, 0.7) !important;
         color:snow;
     }
+    .no_wrap{
+        padding: 0px;
+        margin:0px;
+    }
+    .nav{
+        background-color: transparent !important;
+        {{--  font-weight: bolder;  --}}
+    }
+
+    .nav_links{
+        color:skyblue !important;
+    }
 </style>
 
 @extends('layouts.indexPageLayout')
 @section('content')
-    <div class="container row h-100">
+    <div class="container container-fluid row h-100">
         <div class="col-sm-12 my-auto">
-            <div class="jumbotron transparent">
+            <div class="jumbotron no_wrap transparent">
                 
                 <div class="row text-center">
                     <div class="col">
@@ -23,8 +35,8 @@
                     </div>
                 </div>
                 
-                <hr> <br> <br> 
-                
+                <hr> 
+
                 <div class="row text-center">
                     <div class="col">
                         <a class="btn btn-success" href="{{ route('login') }}" role="button"> Log-in </a>
@@ -44,12 +56,22 @@
                     </div>
                 </div>
 
-                <div class="row text-center">
-                    <div class="col">
-                        @include('inc.navbar')
+                <div class="row r">
+                    <div class="col-md-3 text-center">
+                        <a class="nav-link nav_links" href="/about_us">About us</a> 
                     </div>
-                </div>                
+                    <div class="col-md-3 text-center">
+                        <a class="nav-link nav_links" href="/contact_us">Contact us</a>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <a class="nav-link nav_links" href="/faq">FAQ</a>
+                    </div>           
+                    <div class="col-md-3 text-center">
+                        <a class="nav-link nav_links" href="/blog"> Blog </a>  
+                    </div>                                                 
+                </div>              
             </div>
         </div>
     </div>
 @endsection
+

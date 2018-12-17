@@ -27,6 +27,7 @@
     @include('profiles.sections.left_section.followFollowing')
     @include('profiles.sections.left_section.informations')
     @include('profiles.modals.changeProPic')
+    @include('profiles.sections.left_section.postNav')
      
 @endsection
 

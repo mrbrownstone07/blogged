@@ -24,25 +24,32 @@
             padding-top: 70px;
         }
         body{
-            
-            background-image: url('img/background/global.jpg');
-            background-size: cover; 
+            background-color: #FFFF66;
             
         }
         .form-rounded {
             border-radius: 1rem;
         }
         body {
+            padding: 20px;
             overflow:hidden;
+            margin-top: 30px;
         }
     </style>
 
 </head>
 <body>
-    
-    <div class="container">
-            @yield('content')
+    <div class="jumbotron bg-transparent">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class=" text-monospace"> {!!$msg!!} </h2>
+                <h3 class=" text-capitalize text-monospace"> Good Attempt ! </h3>
+                <h5 class=" text-monospace"> HERE IS SOME POTATO FOR YOU ENJOY ! </h5>
+                <img src="{{URL::to('img/icons/potato.png')}}" alt="" 
+                        class="f_icon_wrap" style="width: 300px;height: 250px;"><br>
+                    
+            </div>
+        </div>
     </div>
-   
 </body>
 </html>

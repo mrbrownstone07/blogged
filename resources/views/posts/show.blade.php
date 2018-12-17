@@ -78,8 +78,7 @@
                             </div>
                             <div class="col-md-6 text-left" onclick="showTog('comments_Section{{$p->post_id}}')">
                                 <img src="{{ URL::to('img/icons/comment.png')}}" alt="image not found" class="p_icon_wrap">
-                                {{count($comments)}}
-                                
+                                {{count($comments)}}    
                             </div>  
                         </div>                        
                     @include('profiles.sections.mid_section.comment_section')

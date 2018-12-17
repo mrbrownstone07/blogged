@@ -77,6 +77,9 @@
         .no_wapper{
             padding: 10px;
             margin: 0px;
+        }
+        body{
+            overflow-y:scroll;  
         }     
     </style>
 
@@ -109,6 +112,13 @@
         
         <script>
             CKEDITOR.replace( 'article-ckeditor' );
+            CKEDITOR.on("instanceCreated", function(event) {
+                event.editor.on("change", function () {
+                    console.log('1')
+                    console((event.editor.getData()));
+                });
+            });
+        
         </script>
 
 
@@ -133,48 +143,48 @@
           tx[i].addEventListener("input", OnInput, false);
         }
         
+        var idle = true;
+
         function OnInput() {
           this.style.height = 'auto';
           this.style.height = (this.scrollHeight) + 'px';
+          idle = false;
+          //console.log(idle);
         }
 
-</script>
-<script language="JavaScript" type="text/javascript">
-   
-idleTimer = null;
-idleState = false;
-idleWait = 40000;
-var pathName = window.location['pathname'];
-(function ($) {
+        idleTimer = null;
+        idleState = false;
+        idleWait = 40000;
+        var pathName = window.location['pathname'];
+        (function ($) {
 
-    $(document).ready(function () {
-    
-        $('*').bind('mousemove keydown scroll', function () {
-        
-            clearTimeout(idleTimer);
+            $(document).ready(function () {
+            
+                $('*').bind('mousemove keydown scroll', function () {
+                
+                    clearTimeout(idleTimer);
+                    console.log(20);
+                    if (idleState == true) { 
+                        alert('welcome back again');
+                    }
                     
-            if (idleState == true) { 
+                    idleState = false;
+                    
+                    idleTimer = setTimeout(function () { 
+                        console.log(pathName);
+                        setTimeout("location.href = pathName",10000);                        
+                        idleState = true; }, idleWait);
+                });
                 
-                
-                console.log('active');          
-            }
+                $("body").trigger("mousemove");
             
-            idleState = false;
-            
-            idleTimer = setTimeout(function () { 
+            });
+        }) (jQuery)
 
-                setTimeout("location.href = pathName",10000);
-                console.log(pathName);
-                
+</script>
 
-                idleState = true; }, idleWait);
-        });
-        
-        $("body").trigger("mousemove");
-    
-    });
-}) (jQuery)
+   
 
-</script> 
- 
+
+
 

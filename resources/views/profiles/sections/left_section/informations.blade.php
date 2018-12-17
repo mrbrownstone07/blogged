@@ -7,7 +7,7 @@
 </style>
 
 
-<div id="i" class="card shadow-sm card_marg text-center cotentsection card_margin">
+<div id="i" class="card shadow-sm card_bottom card_marg text-center cotentsection card_margin">
     <div class="card-header">
             informations
             @if (Auth::user()->id == $usrData->id)

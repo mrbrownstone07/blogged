@@ -72,10 +72,17 @@ class PostsController extends Controller
     public function show($id)
     {   
         $query = "select * from posts, users where post_id = '$id' and id = owner_id";
+       
         $post = DB::select($query);
         $uid = Auth::user()->id;
         $notifications = self::fetchNotifications();
         $style = 'none';
+
+        if(empty($post)){
+            $msg = 'Recived an unathorized url <b> /show/'.$id  .'</b> send by '.Auth::user()->name;
+            return view('potato')->with('msg', $msg);
+        }
+
         return view('posts.show')->with('post', $post[0])
                                 ->with('notifications', $notifications)
                                 ->with('style', $style);   
@@ -139,8 +146,26 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $slug = Auth::user()->slug;
-       // dd($id);
+        DB::delete("DELETE FROM reacts WHERE  liked_post = '$id'");
+        $react_id = DB::select("SELECT * FROM react_notifications WHERE post_reacted = '$id'");
+
+        foreach($react_id as $r){
+            DB::delete("DELETE FROM react_notifications WHERE noti_id = '$r->noti_id'");
+            DB::delete("DELETE FROM notifications_log WHERE notification_id = '$r->noti_id'");
+           
+            
+        }
+        
+        DB::delete("DELETE FROM comments_log where commented_on = '$id' ");
+        $noti_id = DB::select("SELECT * FROM comment_notifications WHERE post_commented = '$id'");
+
+        foreach($noti_id as $i){
+            DB::delete("DELETE FROM comment_notifications WHERE comment_noti_id = '$i->comment_noti_id' ");
+            DB::delete("DELETE FROM notifications_log WHERE notification_id = '$i->comment_noti_id'");
+        }
+
         DB::delete("DELETE FROM posts WHERE post_id = '$id'");
+
 
         return redirect()->to("/profile/$slug")->with('success', 'post deleted');
         

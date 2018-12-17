@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     
@@ -16,21 +16,23 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    
 
     <title>{{config('app.name'), 'Blogged'}}</title>
     <style>
 
         .form-rounded {
                 border-radius: 1rem;
-                }
+        }
         .body_wrap{
             margin-top: 75px;
         }
         body{
            
             background-image: url('img/background/global.jpg') !important;
-            background-size: cover !important; 
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             
         }
         .transparent{
@@ -73,6 +75,9 @@
         .icon_wrap{
             width:12px;
             height: 12px;
+        }
+        body{
+            overflow-y:scroll;  
         }
     </style>
 

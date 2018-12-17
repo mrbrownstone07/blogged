@@ -56,7 +56,17 @@ class ReactsController extends Controller
             
         }
 
-        return ($location == 'home')? redirect()->to("/home") : redirect()->to("/profile/".substr($location, 8, strlen($location)));
+        if($location == "home"){
+            return redirect()->to("/home");
+        }
+        elseif(substr($location, 0, 7) == 'profile'){
+            return  redirect()->to("/profile/".substr($location, 8, strlen($location)));
+        }
+        else{
+            return redirect()->to("/post/".$post_id);
+        }
+
+        //return ($location == 'home')? redirect()->to("/home") : redirect()->to("/profile/".substr($location, 8, strlen($location)));
     } 
 }
         

@@ -16,6 +16,7 @@ Route::get('/', 'PagesController@index');
 Route::get('/about_us', 'PagesController@about_us');
 Route::get('/contact_us', 'PagesController@contact_us');
 Route::get('/faq', 'PagesController@faq');
+Route::get('/blog', 'PagesController@blog');
 
 Auth::routes();
 
@@ -51,8 +52,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/like/{post_id}/{liked_by}/{path}', 'ReactsController@handleRequest');
 
     Route::post('/store_comment', 'CommentsController@store');
-    
-    
+    Route::get('/delete_comment/{comment_id}/{location}', 'CommentsController@deleteComment');
+    Route::get('/search', 'SearchController@search');
+    Route::get('/s', 'SearchController@index');
+    Route::get('/dicussion_rooms/{slug}', 'RoomsController@index');
 });
 
 

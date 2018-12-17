@@ -11,7 +11,7 @@
 </style>
 
 
-<div id="f" class="card shadow-sm card_margin card_marg container content_Section text-center fixed-side">
+<div id="f" class="card shadow-sm card_bottom card_margin card_marg container content_Section text-center fixed-side">
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">

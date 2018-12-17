@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class PagesController extends Controller
 {
@@ -20,5 +21,12 @@ class PagesController extends Controller
 
     public function faq(){
         return view('pages.faq');
+    }
+
+    public function blog(){
+        $posts = DB::select('SELECT * FROM posts, users WHERE owner_id = id');
+
+        return view('pages.blog')->with('posts', $posts);
+
     }
 }
