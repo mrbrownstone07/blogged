@@ -14,6 +14,11 @@ class ProfilesController extends Controller
 {
     public function index($slug){
         $usrData = DB::select("SELECT * FROM users where slug = '$slug' ");
+
+        if(!$usrData){
+            return view('potato')->with('msg', "Khuje toh pailam na ami ;'(");
+        }
+
         $id = $usrData[0]->id;
 
         $data = DB::select("select * from profile where user_id = '$id' ");

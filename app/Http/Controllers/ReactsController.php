@@ -5,10 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
+use Auth;
 class ReactsController extends Controller
 {
     public function handleRequest($post_id, $liked_by, $location){
         $post_data = DB::select("SELECT * FROM posts WHERE post_id ='$post_id'");
+
+        if(!$post_data){
+            $msg = 'post not Found <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);            
+        }
+
+        if($liked_by != Auth::user()->id){
+            $msg = 'unauthorized page <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
         $user_to_ber_notified = $post_data[0]->owner_id;
         $hash_id = md5($user_to_ber_notified . $liked_by);        
         $check = DB::select("SELECT * FROM reacts WHERE liker_id = '$liked_by' AND liked_post = '$post_id' ");

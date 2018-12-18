@@ -10,6 +10,11 @@ use Carbon\Carbon;
 class NotificationsController extends Controller
 {
     public function fetchNotifications($user_id){
+        if($user_id != Auth::user()->id){
+            $msg = 'unauthorized page <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
         $notifications = DB::select("SELECT * 
                                     FROM 
                                     notifications_log, users
@@ -17,13 +22,27 @@ class NotificationsController extends Controller
                                     user_to_be_notified = '$id'
                                     AND notification_from = users.id
                                     ORDER BY notification_send_at DESC");
+        
+        if(!$notifications){
+            $msg = 'Ami toh khujei pailam na <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
 
         return $notifications;
     }
 
     public function showNotifications($noti_id, $noti_type){
-        
-        
+        $check = DB::select("SELECT * FROM notifications_log WHERE notification_id = '$noti_id'");
+
+        if(!$check){
+            $msg = 'Ami toh khujei pailam na <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);            
+        }
+
+        if($check[0]->user_to_be_notified != Auth::user()->id){
+            $msg = 'Unauthorized Request ! <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
 
         $seen_at = Carbon::now()->toDateTimeString();
         DB::update("UPDATE notifications_log

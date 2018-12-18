@@ -50,5 +50,5 @@
 @endsection
 
 @section('right_section')
-
+    @include('talk.showOnline')
 @endsection

@@ -79,7 +79,7 @@ class PostsController extends Controller
         $style = 'none';
 
         if(empty($post)){
-            $msg = 'Recived an unathorized url <b> /show/'.$id  .'</b> send by '.Auth::user()->name;
+            $msg = 'Recived an unathorized url <b> /show/'.$id  .'</b> sent by <b> @'.Auth::user()->name. '</b>';
             return view('potato')->with('msg', $msg);
         }
 
@@ -95,8 +95,19 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   
         $post = DB::select("SELECT * FROM posts WHERE post_id = '$id'");
+
+        if(!$post){
+            $msg = 'Khuje toh pailam na <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
+        if($post[0]->owner_id != Auth::user()->id){
+            $msg = 'unauthorized page <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
         $id = Auth::user()->id;
         $data = DB::select("select * from profile where user_id = '$id' ");
         $usrData = DB::select("SELECT * FROM users WHERE id = '$id'");
@@ -146,6 +157,20 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $slug = Auth::user()->slug;
+
+        $post = DB::select("SELECT * FROM posts WHERE post_id = '$id'");
+
+        if(!$post){
+            $msg = 'Khuje toh pailam na <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
+        if($post[0]->owner_id != Auth::user()->id){
+            $msg = 'unauthorized page <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
+
         DB::delete("DELETE FROM reacts WHERE  liked_post = '$id'");
         $react_id = DB::select("SELECT * FROM react_notifications WHERE post_reacted = '$id'");
 

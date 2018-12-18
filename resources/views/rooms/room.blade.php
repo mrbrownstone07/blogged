@@ -82,15 +82,24 @@
         @foreach ($topics as $topic)
             <div id="topic.$topic->topic_id" class="card bg-white card_bottom">
                 <div class="card-header">
-                    <a href="/profile/{{$topic->slug}}">  
-                        <img src="{{ URL::to('img/user_imgs/' . $topic->profile_pic) }}" 
-                            alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
-                        {{'@'. $topic->name}}
-                        @php
-                            $d= (new Carbon\Carbon($topic->topic_created_at))->diffForHumans();
-                        @endphp 
-                    </a> 
-                    <small> {{$d}} </small>  
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="/profile/{{$topic->slug}}">  
+                                <img src="{{ URL::to('img/user_imgs/' . $topic->profile_pic) }}" 
+                                    alt="image not found" class="rounded-circle img-thumbnail" style="width:50px; length:50px">
+                                {{'@'. $topic->name}}
+                                @php
+                                    $d= (new Carbon\Carbon($topic->topic_created_at))->diffForHumans();
+                                @endphp 
+                            </a>
+                            <small> {{$d}} </small> 
+                        </div>
+                        <div class="col-md-6 text-right text-dark">
+                            @if($topic->id == Auth::user()->id)
+                                <a href="/delete_topic/{{$topic->topic_id}}" class="text-right"> delete </a>
+                            @endif
+                        </div>
+                    </div>                     
                 </div>
 
                 <div class="card-body">
@@ -195,7 +204,7 @@
 
 
 @section('right_section')
-    
+    @include('talk.showOnline')
 @endsection
 
 

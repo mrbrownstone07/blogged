@@ -90,7 +90,18 @@ class CommentsController extends Controller
     }
 
     public function deleteComment($comment_id, $location){
-        //dd($comment_id);
+        $comment = DB::select("SELECT * FROM comments_log  WHERE comment_id = '$comment_id'");
+
+        if(!$comment){
+            $msg = 'comment does not exist!<br> Request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);            
+        }
+
+        if($comment[0]->commented_by != Auth::user()->id){
+            $msg = 'Unauthorized request!<br> Request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
         DB::delete("DELETE FROM comments_log  WHERE comment_id = '$comment_id'");
         
         $noti_id = DB::select("SELECT * FROM comment_notifications WHERE comment_track_id = '$comment_id'");

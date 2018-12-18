@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/create_topic', 'RoomsController@createTopic');
     Route::post('/store_topic/comment', 'RoomsController@storeComment');
     Route::get('/join_room/{room_id}', 'RoomsController@joinRoom');
+    Route::get('/delete_topic/{topic_id}', 'RoomsController@deletTopic');
+    Route::get('/talk', 'TalkController@index');
 });
 
 

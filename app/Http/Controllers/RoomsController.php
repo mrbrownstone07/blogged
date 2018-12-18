@@ -38,12 +38,20 @@ class RoomsController extends Controller
 
     public function show($room_id){
         $id = Auth::user()->id;
-        $room = DB::select("SELECT * FROM room_log WHERE room_id = '$room_id'");
-        $notifications = self::getNotifications();
         $user = DB::select("SELECT * FROM users WHERE id = '$id'");
+        $room = DB::select("SELECT * FROM room_log WHERE room_id = '$room_id'");
+
+        if(!$room){
+            return view('potato')->with('msg', 'Is 13 Monkeys a real thing ? Are you From the future ? 
+                                            <br> because this room does not exist
+                                            <br> request sent by <b> @'.Auth::user()->name.'</b>');
+        }
+
+        $notifications = self::getNotifications();
+        
         $topics = DB::select("SELECT * FROM room_topics, users
                                 WHERE topic_of_room = '$room_id' 
-                                AND topic_owned_by = id");
+                                AND topic_owned_by = id ORDER BY topic_created_at DESC ");
         $members = DB::select("SELECT * FROM room_members, users 
                                 WHERE room_id_ref = '$room_id'
                                 AND id = member_id 
@@ -64,7 +72,8 @@ class RoomsController extends Controller
         $check = DB::select("SELECT * 
                                 FROM room_topics 
                                 WHERE topic = '$request->topic'
-                                AND topic_of_room = '$request->topic_room'");
+                                AND topic_of_room = '$request->topic_room'
+                            ");
 
         if($check){
             return redirect()->to('/show_room/'.$request->topic_room)->with('error', 'Exactly Duplicate of a topic created before');
@@ -103,6 +112,28 @@ class RoomsController extends Controller
 
         return redirect()->to('/show_room/'.$request->room_id);
         
+    }
+
+    public function deletTopic($topic_id){
+        
+
+        $check = DB::select("SELECT * FROM room_topics WHERE topic_id = '$topic_id'");
+
+        if(!$check){
+            $msg = 'You stink! <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
+        if($check[0]->topic_owned_by != Auth::user()->id){
+            $msg = 'Unauthorized Request ! <br> request sent by <b> @'.Auth::user()->name. '</b>';
+            return view('potato')->with('msg', $msg);
+        }
+
+        DB::delete("DELETE FROM topic_comment_log WHERE commented_on = '$topic_id'");
+        db::delete("DELETE FROM room_topics WHERE topic_id = '$topic_id'");
+        
+        return redirect()->to('/show_room/'.$check[0]->topic_of_room)->with('success', 'post deleted');
+  
     }
 
     public function getNotifications(){

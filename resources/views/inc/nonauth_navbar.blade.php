@@ -108,10 +108,12 @@
             </ul>
 
 
-            
-            <div class="col-md-6">
-                    @include('inc.searchBar')
-            </div>
+            @if (Auth::check())
+                <div class="col-md-6">
+                        @include('inc.searchBar')
+                </div>                
+            @endif
+
                 
 
             
