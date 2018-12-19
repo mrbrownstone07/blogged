@@ -15,6 +15,29 @@ class TalkController extends Controller
         return view('talk.index')->with('notifications', $notifications)->with('users', $users);
     }
 
+    public function conversation($reciver){
+        $sender = Auth::user()->id;
+        $convId = md5($reciver . $sender);
+        $check = DB::select("SELECT * FROM conversation WHERE conversation_id = '$convId' ");
+
+        if($check){
+            return $convId;
+        }
+
+        else{
+
+        }
+        
+    }
+
+    public function createConversation($convId, $reciver){
+        $created_at = Carbon::now()->toDateTimeString();
+        $sent_from = Auth::user()->id;
+
+        $sql = DB::insert("INSERT INTO conversations (conversation_id, )");
+    }
+
+
 
 
     public function getNotifications(){

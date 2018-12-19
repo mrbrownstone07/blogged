@@ -22,20 +22,24 @@
 
 <div id="scrollstyle" class="card bar_set">
     <div class="card-body" style="padding-left:5px; padding-right:5px">
-        <div class="card-title text-center">
+        <div class="card-title  text-center">
              
                 Talk
             
         </div>
         @php
             $uid = Auth::user()->id; 
-            $contacts = DB::select("SELECT * FROM users u 
-                                    join follows f on (followee = u.id)
-                                    WHERE follower = '$uid' 
+            $contacts = DB::select("SELECT DISTINCT * FROM users 
+                                    WHERE id IN
+                                    ((SELECT follower FROM follows WHERE followee = '$uid' ))
+
                                     UNION
-                                    SELECT * FROM users u 
-                                    join follows f on (follower = u.id) 
-                                    WHERE followee = '$uid'
+
+                                    SELECT * FROM users 
+                                    WHERE id IN
+                                    ((SELECT followee FROM follows WHERE follower = '$uid' ))
+
+                                    ORDER BY name
                                 ");
         @endphp
 

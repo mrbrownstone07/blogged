@@ -87,23 +87,19 @@
 <body>
     @include('inc.nonauth_navbar')
     
-        <div class="container-fluid body_wrap wrap">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="col-md-3">
-                        @yield('left_section')   
-                    </div>
-
-                    <div class="col-md-7">
-                        @yield('mid_section')
-                    </div>
-
-                    <div class="col-md-2">
-                        @yield('right_section')                    
-                    </div>
-                </div>
-            </div> 
-        </div>
+    <div class="container-fluid body_wrap wrap">
+        <div class="row">            
+            <div class="col-md-3">                
+                @yield('left_section')                    
+            </div>            
+            <div class="col-md-6">               
+                @yield('mid_section')
+            </div>
+            <div class="col-md-3">
+                @yield('right_section')
+            </div>
+        </div> 
+    </div>
         
 </body>
 </html>
