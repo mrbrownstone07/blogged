@@ -3,6 +3,11 @@
     .show_link{
         text-decoration: inherit;
     }
+    .bar_set{
+        height: 90%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
 </style>
 
 @php
@@ -15,7 +20,7 @@
 
 
 <div class="card shadow-sm  card_marg card_bottom text-center cotentsection">
-    <div class="card-header">
+    <div class="card-header bg-white">
         @if($location[0] == 'h')
             Your Home page
         @else

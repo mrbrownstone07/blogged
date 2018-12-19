@@ -49,7 +49,7 @@
 @section('mid_section')
         @include('inc.Ermsg')
         <div class="card bg-white card_bottom">
-            <div class="card-header">
+            <div class="card-header bg-white">
                 <div class="col-md-12 text-center">
                     {{$room->room_name}} 
                 </div>
@@ -80,8 +80,8 @@
         </div>
     @if ($has_auth)
         @foreach ($topics as $topic)
-            <div id="topic.$topic->topic_id" class="card bg-white card_bottom">
-                <div class="card-header">
+            <div id="topic{{$topic->topic_id}}" class="card bg-white card_bottom">
+                <div class="card-header bg-white">
                     <div class="row">
                         <div class="col-md-6">
                             <a href="/profile/{{$topic->slug}}">  

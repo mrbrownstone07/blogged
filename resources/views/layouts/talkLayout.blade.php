@@ -103,3 +103,23 @@
         
 </body>
 </html>
+
+
+<script>
+
+    var tx = document.getElementsByTagName('textarea');
+    for (var i = 0; i < tx.length; i++) {
+        tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
+        tx[i].addEventListener("input", OnInput, false);
+    }
+    
+    var idle = true;
+    function OnInput() {
+        if(this.scrollHeight < 200){
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        }else{
+            this.setAttribute('style', 'height: 200px;overflow-y:scroll;')
+        }
+    }
+</script>

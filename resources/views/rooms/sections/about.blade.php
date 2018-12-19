@@ -1,5 +1,5 @@
 <div class="card card_bottom">
-    <div class="card-header">
+    <div class="card-header bg-white">
         <div class="row">
             <div class="col-md-12 text-center">
                 About this room

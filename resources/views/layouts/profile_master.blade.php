@@ -79,8 +79,23 @@
             margin: 0px;
         }
         body{
-            overflow-y:scroll;  
-        }     
+            overflow-y:scroll;
+            background-color: #EBF5F5;  
+        }
+        
+        .fix_link{
+            text-decoration: none;
+            text-decoration-color: black;
+        }
+        .bar_set{
+            position: relative;
+            overflow-y: hidden;
+            overflow-x: hidden;
+        }
+    
+        .bar_set:hover{
+            overflow-y: scroll;
+        }
     </style>
 
 </head>

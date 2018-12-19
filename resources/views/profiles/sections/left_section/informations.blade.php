@@ -8,7 +8,7 @@
 
 
 <div id="i" class="card shadow-sm card_bottom card_marg text-center cotentsection card_margin">
-    <div class="card-header">
+    <div class="card-header bg-white">
             informations
             @if (Auth::user()->id == $usrData->id)
                 <a href="/editInfo">

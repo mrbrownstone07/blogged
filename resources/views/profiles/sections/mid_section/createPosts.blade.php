@@ -30,9 +30,9 @@
 
 
 
-<div id="a" class="card shadow-sm shadowElement card_marg card_bottom text-center cotentsection" 
+<div id="a" class="card  shadow-sm shadowElement card_marg card_bottom text-center cotentsection" 
     onmouseover="show('post_btn'); addShadow('a')" onmouseout="hide('post_btn'); removeShadow('a')">
-    <div class="card-header">
+    <div class="card-header bg-white">
             Share your thoughts
             <a href="">
                 <img src="{{ URL::to('img/icons/post.png')}}" alt="image not found" class="icon_wrap">    
@@ -54,7 +54,8 @@
             @csrf
             <div class="form-group row">    
                 <div class="col-md-12">
-                    {!! Form::text('title', '' , ['class' => ['form-control', 'form-rounded'], 'placeholder' => 'title']) !!}
+                    {!! Form::text('title', '' , ['class' => ['form-control', 'form-rounded'], 
+                            'placeholder' => 'title', 'autocomplete' => 'off']) !!}
                 </div>         
             </div>
             
@@ -63,7 +64,8 @@
                 <div class="form-group row" >  
                     <div class="col-md-12">
                         {!! Form::textarea('body', '', ['class' => ['form-control', 'form-rounded'],  
-                                'placeholder' => "what's in your mind", 'rows' => '2', 'id' => 'article-ckeditor']) !!}
+                                'placeholder' => "what's in your mind", 'rows' => '2', 
+                                'id' => 'article-ckeditor', 'autocomplete' => 'off']) !!}
                     </div>         
                 </div>
             </div>

@@ -51,7 +51,7 @@ class FollowsController extends Controller
 
     public function showFollowers(){
         $uid = Auth::user()->id;
-        $people_followers = DB::select("SELECT * FROM users u join follows f on (follower = u.id) WHERE followee = '$uid'");
+        $people_followers = DB::select("SELECT * FROM users u join follows f on (follower = u.id) WHERE followee = '$uid' ORDER BY follow_time DESC");
         $notifications = self::fetchNotifications($uid);
         $followersCount = DB::select("SELECT COUNT(follower) as f FROM follows WHERE followee = '$uid'");
         $followeesCount = DB::select("SELECT COUNT(followee) as f FROM follows WHERE follower = '$uid'");

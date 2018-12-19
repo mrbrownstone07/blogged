@@ -22,7 +22,7 @@
 
 @section('mid_section')
     <div class="card non_bottom text-center ">
-        <div class="card-header">
+        <div class="card-header bg-white">
             Edit Informations  
         </div>
 

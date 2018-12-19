@@ -4,6 +4,11 @@
         margin-right:0 !important;
     }
 
+    .Fixed{
+        position: fixed;
+        width: 23%;
+    }
+
 </style>
 
     <div class="card shadow-sm card_marg container card_bottom content_Section text-center fixed-side">
@@ -13,7 +18,7 @@
                     @if(Auth::user()->id == $usrData->id)
                         <a href="#" data-target="#change_pro_pic" data-toggle="modal">
                             <img src="{{ URL::to('img/user_imgs/' . $usrData->profile_pic) }}" 
-                                alt="image not found" class="rounded-circle img_wrap img-thumbnail">
+                                alt="image not found" class="rounded-circle img_wrap  img-thumbnail">
                         </a>
                     @endif
 

@@ -7,6 +7,14 @@
         width: 25px;
         height: 25px;
     }
+    .Fixed{
+        position: fixed;
+        width: 23%;
+    }
+
+    .top_marg{
+        margin-top: 35vh;
+    }
 
 </style>
 

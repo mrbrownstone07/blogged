@@ -1,32 +1,48 @@
 <style>
     .bar_set{
-        height: 90%;
-        overflow-y: scroll;
+        position: relative;
+        overflow-y: hidden;
         overflow-x: hidden;
     }
+
+    .bar_set:hover{
+        overflow-y: scroll;
+    }
     #Scrollstyle::-webkit-scrollbar-track{
-        
-     
+        background-color: #FFFFFF;
     }
 
     #Scrollstyle::-webkit-scrollbar{
-        display: none;
+        width: 8px;
+        background-color: rgba(106, 97, 97, 0.55);
     }
 
     #Scrollstyle::-webkit-scrollbar-thumb{
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
         background-color: #555;
+    }
+
+    .Fixed{
+        position: fixed;
+        width: 23%;
+    }
+
+    .link_fix{
+        text-decoration: none;
+        color:black;
+    }
+
+    .link_fix:hover{
+        text-decoration: none;
+        color:grey;        
     }
 </style>
 
-<div id="scrollstyle" class="card bar_set">
-    <div class="card-body" style="padding-left:5px; padding-right:5px">
-        <div class="card-title  text-center">
-             
-                Talk
-            
-        </div>
+<div  class="card Fixed h-100">
+    <div class="card-header bg-white text-center ">  
+            Talk    
+    </div>
+    <div id="scrollstyle" class="card-body bar_set" style="padding-left:5px; padding-right:5px; padding-top:5px">
+
         @php
             $uid = Auth::user()->id; 
             $contacts = DB::select("SELECT DISTINCT * FROM users 
@@ -53,11 +69,13 @@
 
                         </div>
                         <div class="col-md-11">
-                            <img src="{{ URL::to('img/user_imgs/' . $user->profile_pic) }}" 
-                                alt="image not found" class="rounded-circle" style="width:40px; length:40px"> 
-                            {{'@'.$user->name." "}}
-                            <img src="{{ URL::to('img/icons/active.png') }}" 
-                                alt="image not found" class="rounded-circle" style="width:10px; length:10px"> 
+                            <a href="/show_conversation/{{$user->id}}" class="link_fix">
+                                <img src="{{ URL::to('img/user_imgs/' . $user->profile_pic) }}" 
+                                    alt="image not found" class="rounded-circle" style="width:40px; length:40px"> 
+                                {{'@'.$user->name." "}}
+                                <img src="{{ URL::to('img/icons/active.png') }}" 
+                                    alt="image not found" class="rounded-circle" style="width:10px; length:10px"> 
+                            </a>
                         </div>
 
                     @else
@@ -65,11 +83,13 @@
 
                         </div>
                         <div class="col-md-11">
+                            <a href="/show_conversation/{{$user->id}}" class="link_fix">
                             <img src="{{ URL::to('img/user_imgs/' . $user->profile_pic) }}" 
                                 alt="image not found" class="rounded-circle" style="width:40px; length:40px"> 
                             {{'@'.$user->name." "}}
                             <img src="{{ URL::to('img/icons/offline.png') }}" 
                                 alt="image not found" class="rounded-circle" style="width:7px; length:7px"> 
+                            </a>
                         </div>
                     @endif    
                 </div>

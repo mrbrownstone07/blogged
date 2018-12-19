@@ -93,7 +93,8 @@
                                     {!! Form::submit('Comment', ['id' => "btn".$p->post_id,'class' => 'btn btn-outline-success', 'style' => 'display:none']) !!}
                                 </div>   
                                 <div class="col-md-11"> 
-                                    {!! Form::textarea('comment', '' , ['id'=> "comm".$p->post_id, 'class' => ['form-control', 'form-rounded'],  'placeholder' => 'comment', 'rows' => '1']) !!}
+                                    {!! Form::textarea('comment', '' , ['id'=> "comm".$p->post_id, 'class' => ['form-control', 'form-rounded'],  
+                                                            'placeholder' => 'comment', 'rows' => '1', 'autocomplete' => 'off']) !!}
                                 </div> 
                             </div>    
                         </form>

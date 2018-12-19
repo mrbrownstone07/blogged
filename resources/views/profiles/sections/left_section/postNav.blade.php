@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header text-center">
+    <div class="card-header bg-white text-center">
         post navigation
     </div>
 
@@ -9,7 +9,11 @@
         
         @else
             @foreach ($posts as $index => $p)
-            <a href="/post/{{$p->post_id}}"> {{($index+1).'. '}}    {{$p->title}} </a> 
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="/post/{{$p->post_id}}"> {{($index+1).'. '}}    {{$p->title}} </a> 
+                </div>
+            </div>            
             @endforeach
         @endif
         

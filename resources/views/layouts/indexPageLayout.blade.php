@@ -23,11 +23,9 @@
         .wrap{
             padding-top: 70px;
         }
-        body{
-            
+        body{ 
             background-image: url('img/background/global.jpg');
-            background-size: cover; 
-            
+            background-size: cover;             
         }
         .form-rounded {
             border-radius: 1rem;

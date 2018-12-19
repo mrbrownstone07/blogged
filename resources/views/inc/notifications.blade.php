@@ -1,4 +1,16 @@
-@php
+<style>
+    .bar_set{
+        position: relative;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }   
+    .bar_set:hover{
+        overflow-y: scroll;
+    }
+</style>                    
+                    
+                    
+                    @php
                         $noti_count = 0;
                         foreach ($notifications as $noti) {
                             if($noti->notification_status == 0){
@@ -22,7 +34,7 @@
                             </div>
                             
                             
-                            
+                        
                             <br>
                             @if (count($notifications) > 0)
                                 
