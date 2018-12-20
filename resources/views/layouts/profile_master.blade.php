@@ -196,6 +196,27 @@
             });
         }) (jQuery)
 
+        function updateLastSeen(){
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            }),
+    
+            $.ajax({
+                method: 'GET',
+                url: '{{URL::to('get_messages')}}',
+                data: {'reciver_id' : reciver_id},
+                success:function(data){
+                    if(data != ''){
+                        $('#write').append("" +data+ "")
+                        console.log(data);
+                    }
+                }  
+            });   
+        }
+
 </script>
 
    

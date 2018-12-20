@@ -1,7 +1,8 @@
 <div class="card">
+    <div class="card-header bg-white">
+        Settings
+    </div>
     <div class="card-body">
-        <div class="card-title">
-            setting
-        </div>
+        
     </div>
 </div>

@@ -38,6 +38,36 @@
         background: transparent;    --}}
         display:none;
     }
+    .recived{
+        background-color:  #D1E2E2;
+        padding: 5px;
+        border-radius: 39px;
+        margin-bottom: 2px;
+        max-width: 300px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .sent{
+        background-color:   #e0e0eb;
+        padding: 5px;
+        border-radius: 39px;
+        margin-bottom: 2px;
+        max-width: 300px;
+        padding-left: 10px;
+        padding-right: 10px;       
+    }
+
+    .m_wrap{
+        padding: 5px;
+        
+    }
+
+    .format{
+        margin-top: 10px;
+    }
+
+
 
 </style>
 
@@ -53,22 +83,32 @@
             </div>
         </div>
     </div>
-    <div id="chat_box" class="card-body  bar_set" style="">
-        <div class="row">
-            <div id="reciver" class="col-md-6 text-left">
-                @foreach ($oldMsgs as $msg)
+    
+    {{--  <div id="chat_box" class="card-body  bar_set" style="">
+        <div class="row">            
+            @foreach ($oldMsgs as $msg)
+                <div id="reciver" class="col-md-6 m_wrap text-left">
                     @if($msg->sent_from == $reciver->id)
-                        {{$msg->text}}
-                    @endif
-                @endforeach
-            </div>
-            <div id="sender" class="col-md-6 text-right">
-                @foreach ($oldMsgs as $msg)
+                        <div class="">
+                            <img src="{{ URL::to('img/user_imgs/' . $reciver->profile_pic) }}" 
+                                alt="image not found" class="rounded-circle" style="width:22px; length:2px"> 
+                            <span class="jumbotron no_wrap text-left recived"> {{$msg->text}} </span>
+                        </div>   
+                    @endif  
+                </div>
+                <div id="sender" class="col-md-6 m_wrap text-right">
                     @if($msg->sent_to == $reciver->id)
-                        {{$msg->text}}
+                        <div>
+                            <span class=" jumbotron no_wrap text-right sent"> {{$msg->text}} </span>      
+                        </div>
                     @endif
-                @endforeach                        
-            </div>
+                </div>
+            @endforeach                                    
+        </div>
+    </div>  --}}
+    <div id="chat_box" class="card-body  bar_set" style="">
+        <div id="write" class="row">            
+            {{--  <small class="text-center"> {{$last_chat}}  </small>                                 --}}
         </div>
     </div>
 
@@ -97,14 +137,34 @@
                 sendMsg();
             }else{
                 console.log('typing');
-                console.log(e);
+                
             }
         });
-
         pullData();
+        fetchAll();
+        lastText();  
+    } 
+    
+    function fetchAll(){
+        var reciver_id = $('#reciver_id').html();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }),
 
-        
-    }  
+        $.ajax({
+            method: 'GET',
+            url: '{{URL::to('fetch_all')}}',
+            data: {'reciver_id' : reciver_id},
+            success:function(data){
+                if(data != ''){
+                    $('#write').append("" +data+ "")
+                    
+                }
+            }  
+        });        
+    }
     
     function sendMsg(){
         var msg = $('#msg').val();
@@ -124,8 +184,11 @@
                     url: '{{URL::to('send_message')}}',
                     data: {'msg': msg, 'reciver_id' : reciver_id},
                     success:function(data){
+                        console.log(msg);
+                        $('#write').append("<div id='sender' class='col-md-12 m_wrap text-right bg-white'> <img ><span class=' format no_wrap text-center sent'>"
+                                        +msg+"</span><div>")
                         $('#msg').val('');
-                        $('#msg').height('40px'); 
+                        $('#msg').height('40px');
                     }
                 });
         
@@ -136,7 +199,7 @@
 
     function pullData(){
         fetchChatMessages();
-        setTimeout(pullData, 2000);
+        setTimeout(pullData, 3000);
     }
 
     function fetchChatMessages(){
@@ -152,10 +215,11 @@
             url: '{{URL::to('get_messages')}}',
             data: {'reciver_id' : reciver_id},
             success:function(data){
-                for(var i = 0; i < data.length; i++)
-                    $('#reciver').html(data[i].reciver);
+                if(data != ''){
+                    $('#write').append("" +data+ "")
                     console.log(data);
-            }
+                }
+            }  
         });        
     }
 

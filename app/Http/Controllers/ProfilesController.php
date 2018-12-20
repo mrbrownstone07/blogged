@@ -63,8 +63,10 @@ class ProfilesController extends Controller
                 return view('profiles.index');
             }
 
+            
+
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $fileName = $id . Auth::user()->name . Carbon::now()->toDateTimeString() .'.'. $ext;
+            $fileName = md5($id . Auth::user()->name . Carbon::now()->toDateTimeString()) .'.'. $ext;
             $path = public_path(). '/img/user_imgs';
 
             $pic->move($path, $fileName);

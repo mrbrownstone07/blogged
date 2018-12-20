@@ -69,6 +69,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/show_conversation/{id}', 'TalkController@conversation');
     Route::post('/send_message', 'TalkController@sendMessage');
     Route::get('/get_messages', 'TalkController@fetchMessages');
+    Route::get('/fetch_all', 'TalkController@fetchAll');
+    Route::get('last_text', 'TalkController@fetchOnlineusers');
 });
 
 

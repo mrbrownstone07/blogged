@@ -139,6 +139,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/home">Home</a>
                     </li>
+
+                    {{--  messages  --}}
+                        @include('inc.messages')
+                    {{--  messages ends here  --}}
                     
                     {{--  notifications drop down  --}}
                         @include('inc.notifications')

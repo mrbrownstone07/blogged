@@ -9,16 +9,16 @@
         overflow-y: scroll;
     }
 
-    #Scrollstyle::-webkit-scrollbar-track{
+    #showOnline::-webkit-scrollbar-track{
         background-color: #FFFFFF;
     }
 
-    #Scrollstyle::-webkit-scrollbar{
+    #showOnline::-webkit-scrollbar{
         width: 8px;
         background-color: rgba(106, 97, 97, 0.55);
     }
 
-    #Scrollstyle::-webkit-scrollbar-thumb{
+    #showOnline::-webkit-scrollbar-thumb{
         background-color: #555;
     }
 
@@ -38,13 +38,15 @@
     }
 </style>
     
-    <div  class="card Fixed h-100">
+    <div  class="card Fixed" style=" height: 87%">
         <div class="card-header bg-white text-center ">  
-                Talk    
+            <img src="{{ URL::to('img/icons/talk.png') }}" 
+                alt="image not found" class="p_icon_wrap"> 
+            <span> Talk </span>   
         </div>
-        <div id="scrollstyle" class="card-body bar_set" style="padding-left:5px; padding-right:5px; padding-top:5px">
+        <div id="showOnline" class="card-body bar_set" style="padding-left:5px; padding-right:5px; padding-top:5px">
     
-            @php
+            {{--  @php
                 $uid = Auth::user()->id; 
                 $contacts = DB::select("SELECT DISTINCT * FROM users 
                                         WHERE id IN
@@ -58,11 +60,11 @@
     
                                         ORDER BY name
                                     ");
-            @endphp
+            @endphp  --}}
     
     
     
-            @foreach ($contacts as $user)
+            {{--  @foreach ($contacts as $user)
                 <div class="jumbotron  no_wrap bg-light" style="margin-bottom:2px; padding:8px">    
                     <div class="row">
                         @if (Cache::has('user-is-online-' . $user->id))
@@ -95,6 +97,42 @@
                         @endif    
                     </div>
                 </div>       
-            @endforeach
+            @endforeach  --}}
         </div>
     </div>
+
+<script>
+
+    window.onload = function(){
+        
+        alert('ypp');       
+    }
+
+    function lastText(){
+        fetchLastText();
+        setTimeout(lastText, 3000);     
+    }
+
+    function fetchLastText(){
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }),
+
+        $.ajax({
+            method: 'GET',
+            url: '{{URL::to('last_text')}}',
+            data: {},
+            success:function(data){
+                if(data != ''){
+                    $('#showOnline').html(data);
+                    
+                }else{
+                    console.log('909');
+                }
+            }  
+        });        
+    }   
+</script>

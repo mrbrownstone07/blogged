@@ -37,9 +37,11 @@
     }
 </style>
 
-<div  class="card Fixed h-100">
-    <div class="card-header bg-white text-center ">  
-            Talk    
+<div  class="card Fixed" style=" height: 87%">
+    <div class="card-header bg-white text-center "> 
+        <img src="{{ URL::to('img/icons/talk.png') }}" 
+            alt="image not found" class="p_icon_wrap"> 
+        <span> Talk </span>    
     </div>
     <div id="scrollstyle" class="card-body bar_set" style="padding-left:5px; padding-right:5px; padding-top:5px">
 

@@ -80,13 +80,14 @@
         }
         body{
             overflow-y:scroll;  
-        }     
+        } 
+   
     </style>
-
+    
 </head>
 <body>
-    @include('inc.nonauth_navbar')
     
+    @include('inc.nonauth_navbar')
     <div class="container-fluid body_wrap wrap">
         <div class="row">            
             <div class="col-md-3">                
@@ -100,7 +101,7 @@
             </div>
         </div> 
     </div>
-        
+       
 </body>
 </html>
 
@@ -122,4 +123,6 @@
             this.setAttribute('style', 'height: 200px;overflow-y:scroll;')
         }
     }
+
+
 </script>
