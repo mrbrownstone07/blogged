@@ -27,7 +27,7 @@
                 Edit Informations   
             </div>
            
-            <div class="card body text-center">
+            <div class="card-body text-center">
                 
                 <form action="/updateInfo" method="post" style="margin-top:20px">
                 
@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="form-group row">
-                        {!! Form::label('bio', 'Bio:', ['class' => 'col-md-3 col-form-label text-md-right form-rounded']) !!}   
+                        {!! Form::label('bio', 'Bio:', ['id' => 'bio', 'class' => 'col-md-3 col-form-label text-md-right form-rounded']) !!}   
                         <div class="col-md-6">
                             {!! Form::textarea('bio', $data->bio, ['class' => 'form-control form-rounded', 'rows' => '4', 'cols' => '50']) !!}   
                         </div>         

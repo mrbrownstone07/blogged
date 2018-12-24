@@ -90,3 +90,11 @@
 @section('right_section')
     @include('talk.showOnline')
 @endsection
+
+
+<script>
+        window.onload = function (){
+            alert(1);
+        }
+    
+</script>

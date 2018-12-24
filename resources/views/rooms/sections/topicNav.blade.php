@@ -2,6 +2,8 @@
 
     <div class="card-header bg-white">
         Topic navigation
+        <img src="{{ URL::to('img/icons/nav.png') }}" 
+                alt="image not found" class="icon_wrap" style="">
     </div>
 
     <div class="card-body">  

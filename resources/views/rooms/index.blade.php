@@ -7,7 +7,7 @@
 @endsection
 
 @section('mid_section')
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header bg-white">
             <div class="col-md-12 text-center">
                 Dicussion Rooms

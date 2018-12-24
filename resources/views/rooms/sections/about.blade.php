@@ -1,4 +1,4 @@
-<div class="card card_bottom">
+<div class="card shadow-sm card_bottom">
     <div class="card-header bg-white">
         <div class="row">
             <div class="col-md-12 text-center">

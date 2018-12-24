@@ -37,8 +37,8 @@
     }
 </style>
 
-<div  class="card Fixed" style=" height: 87%">
-    <div class="card-header bg-white text-center "> 
+<div  class="card Fixed shadow-sm" style=" height: 87%">
+    <div class="card-header shadow-sm bg-white text-center "> 
         <img src="{{ URL::to('img/icons/talk.png') }}" 
             alt="image not found" class="p_icon_wrap"> 
         <span> Talk </span>    

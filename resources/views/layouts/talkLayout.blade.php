@@ -79,6 +79,7 @@
             margin: 0px;
         }
         body{
+            background-color: #EBF5F5;  
             overflow-y:scroll;  
         } 
    

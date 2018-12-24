@@ -126,14 +126,7 @@
         <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
         
         <script>
-            CKEDITOR.replace( 'article-ckeditor' );
-            CKEDITOR.on("instanceCreated", function(event) {
-                event.editor.on("change", function () {
-                    console.log('1')
-                    console((event.editor.getData()));
-                });
-            });
-        
+            CKEDITOR.replace( 'article-ckeditor' );   
         </script>
 
 
@@ -164,7 +157,7 @@
           this.style.height = 'auto';
           this.style.height = (this.scrollHeight) + 'px';
           idle = false;
-          //console.log(idle);
+          
         }
 
         idleTimer = null;
@@ -195,6 +188,7 @@
             
             });
         }) (jQuery)
+
 
         function updateLastSeen(){
             

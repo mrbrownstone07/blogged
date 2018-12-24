@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shadow-sm">
     <div class="card-header bg-white text-center">
         Find Discussion Room    
     </div>

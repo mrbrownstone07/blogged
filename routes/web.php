@@ -71,6 +71,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/get_messages', 'TalkController@fetchMessages');
     Route::get('/fetch_all', 'TalkController@fetchAll');
     Route::get('last_text', 'TalkController@fetchOnlineusers');
+    Route::get('get_msg_noti', 'TalkController@fetchMsgNoti');
+    Route::get('get_new_msg', 'TalkController@getNewMsg');
+    Route::get('/delete_chat_history/{reciverid}', 'TalkController@deleteChatHistory');
+
+    
 });
 
 

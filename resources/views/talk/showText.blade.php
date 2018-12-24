@@ -74,12 +74,17 @@
 
 
 
-<div class="card size">
+<div class="card size shadow">
     <div class="card-header bg-white text-right">
         <div class="row ">
             <div class="col-md-12">
-                <a href="/profile/{{$reciver->slug}}"> {{'@'.$reciver->name}} </a>
-                <span id="reciver_id" style=" display:none"> {{$reciver->id}} </span>    
+                @if (!empty($reciver))
+                    <a href="/profile/{{$reciver->slug}}"> {{'@'.$reciver->name}} </a>
+                    <span id="reciver_id" style=" display:none"> {{$reciver->id}} </span>                      
+                @else
+                    <span> No one selected </span>
+                @endif
+  
             </div>
         </div>
     </div>
@@ -115,10 +120,11 @@
     <div class="card-footer bg-white">
         <form action="#" method="post">
             @csrf
-            <div class="row">                                                    
+            <div class="row">
+                @if(!empty($reciver))                                                    
                     {!! Form::hidden('reciver_id', $reciver->id, ['class' => 'form-control']) !!}
                     {!! Form::submit('message', ['id' => 'btn','class' => 'btn btn-outline-success', 'style' => 'display:none']) !!}
-                 
+                @endif
                 <div class="col-md-12"> 
                     {!! Form::textarea('message', '' , ['id'=> "msg", 'class' => ['form-control', 'form-rounded', 'auto-text-area'],  
                                             'placeholder' => 'Type a message....', 'rows' => '2', 'autocomplete' => 'off']) !!}

@@ -94,3 +94,34 @@
 
 </body>
 </html>
+
+<script>
+    window.onload = function(){
+        $('#password').keyup(function(e){
+            if(isInvalid(e.keyCode)){
+                alert('HELLO THERE');
+                $('#password').val('');
+            }
+        });
+
+        $('#email').keyup(function(e){
+            console.log($('#email').val());
+        });
+        
+        
+  
+    }
+    
+    function isInvalid(code){
+        if(code == 222) return true;
+        if(code == 187) return true;
+        if(code == 188) return true;
+        if(code == 190) return true;
+        if(code == 191) return true;
+        if(code == 220) return true;
+        if(code == 219) return true;
+        if(code == 221) return true;
+        
+        return false;
+    }
+</script>

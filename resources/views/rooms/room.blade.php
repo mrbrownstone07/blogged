@@ -51,7 +51,9 @@
         <div class="card bg-white card_bottom">
             <div class="card-header bg-white">
                 <div class="col-md-12 text-center">
-                    {{$room->room_name}} 
+                    {{$room->room_name}}
+                    <img src="{{ URL::to('img/icons/options.png') }}" 
+                        alt="image not found" class="" style="height: 20px; width:20px"> 
                 </div>
             </div>
 
