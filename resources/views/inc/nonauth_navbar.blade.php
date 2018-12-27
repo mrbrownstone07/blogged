@@ -71,10 +71,18 @@
     input[type=text]:focus {
         width: 100%;
     } --}}
+
+    .gredient_bg{
+        {{--  background: -webkit-linear-gradient(-45deg, rgba(240,249,255,1) 0%,rgba(224,243,255,1) 53%,rgba(206,237,255,1) 100%);   --}}
+        {{--  background: -webkit-linear-gradient(-45deg, rgba(254,255,255,1) 0%,rgba(221,241,249,1) 35%,rgba(160,216,239,1) 100%);  --}}
+        background: linear-gradient(to bottom, rgba(255,255,255,1) 
+                    0%,rgba(246,246,246,1) 47%,
+                    rgba(237,237,237,1) 100%);
+    }
 </style>
 
 
-<nav class="navbar shadow fixed-top navbar-expand-sm navbar-light navbar-laravel" style="background-color:white">
+<nav class="navbar shadow fixed-top navbar-expand-sm navbar-light navbar-laravel gredient_bg">
     <div class="container no_wrap container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{ URL::to('img/icons/favicon.png')}}" alt="image not found" class="p_icon_wrap">

@@ -17,6 +17,8 @@ Route::get('/about_us', 'PagesController@about_us');
 Route::get('/contact_us', 'PagesController@contact_us');
 Route::get('/faq', 'PagesController@faq');
 Route::get('/blog', 'PagesController@blog');
+Route::get('/admin_log_in', 'AdminController@index');
+
 
 Auth::routes();
 
@@ -64,6 +66,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/store_topic/comment', 'RoomsController@storeComment');
     Route::get('/join_room/{room_id}', 'RoomsController@joinRoom');
     Route::get('/delete_topic/{topic_id}', 'RoomsController@deletTopic');
+    Route::get('/show_room_members/{room_id}', 'RoomsController@showRoomMembers');
+    Route::get('/remove_member/{mem_id}/{room_id}', 'RoomsController@removeMember');
     
     Route::get('/talk', 'TalkController@index');
     Route::get('/show_conversation/{id}', 'TalkController@conversation');
@@ -74,6 +78,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('get_msg_noti', 'TalkController@fetchMsgNoti');
     Route::get('get_new_msg', 'TalkController@getNewMsg');
     Route::get('/delete_chat_history/{reciverid}', 'TalkController@deleteChatHistory');
+
+
+    Route::get('/admin_log_in_request', 'AdminController@login');
+    Route::get('/showAllPosts', 'AdminController@showAllPosts');
+    Route::get('/deletePost/{id}', 'AdminController@deletePost');
+    Route::get('/showAllUsers', 'AdminController@showAllUsers');
+
 
     
 });

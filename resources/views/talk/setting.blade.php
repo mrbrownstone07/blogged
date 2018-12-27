@@ -1,4 +1,4 @@
-<div class="card" style="height:87%">
+<div class="card shadow" style="height:87%">
     <div class="card-header bg-white">
         Settings
     </div>

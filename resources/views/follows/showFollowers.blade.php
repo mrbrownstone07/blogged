@@ -25,7 +25,7 @@
 
 @section('mid_section')
     <div class="card text-center shadow-sm">
-        <div class="card-header">
+        <div class="card-header bg-white">
             Your Followers
         </div>
 

@@ -25,7 +25,7 @@
 
 @section('mid_section')
     <div class="card text-center">
-        <div class="card-header">
+        <div class="card-header bg-white">
             People You Follow
         </div>
 

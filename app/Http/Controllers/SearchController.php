@@ -19,7 +19,6 @@ class SearchController extends Controller
             $users = DB::select("SELECT * FROM users 
                                     WHERE name LIKE '$request->search%' 
                                     OR email LIKE '$request->search%'
-                                    OR name LIKE '%$request->search%'
                                 ");
             $posts = DB::select("SELECT * FROM posts 
                                     WHERE title LIKE '%$request->search'

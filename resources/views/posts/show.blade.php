@@ -6,7 +6,7 @@
             $p = $post
         @endphp
                <div class="card">
-                    <div class="card-header"> 
+                    <div class="card-header bg-white"> 
                         <div class="row">
                             <div class="col-md-6 push-left">
                                 <a href="/profile/{{$p->slug}}">  

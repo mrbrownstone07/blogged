@@ -22,11 +22,13 @@
 @section('left_section')
     @php
         $has_auth = false; 
+        $is_owner = false;
     @endphp
 
     @if($room->room_owner == Auth::user()->id)
         @php
-            $has_auth = true;  
+            $has_auth = true; 
+            $is_owner = true; 
         @endphp  
     @else  
         @foreach ($members as $member)
@@ -52,8 +54,22 @@
             <div class="card-header bg-white">
                 <div class="col-md-12 text-center">
                     {{$room->room_name}}
-                    <img src="{{ URL::to('img/icons/options.png') }}" 
-                        alt="image not found" class="" style="height: 20px; width:20px"> 
+                    
+                    <img src="{{ URL::to('img/icons/options.png') }}" data-toggle="dropdown" aria-haspopup="true" 
+                        aria-expanded="false" alt="image not found" class="dropdown-toggle" style="height: 20px; width:20px">
+                        
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                        <a class="dropdown-item" href="/show_room_members/{{$room->room_id}}">Members</a>
+                        
+                        @if($has_auth && ! $is_owner)
+                        <a class="dropdown-item" href="/remove_member/{{Auth::user()->id}}/{{$room->room_id}}">Leave Group</a>
+                        @endif
+
+                        @if($is_owner)
+                        <a class="dropdown-item" href="#">Delete Room</a>
+                        @endif
+                    </div>
                 </div>
             </div>
 

@@ -23,6 +23,10 @@
         overflow-y: scroll;
     }
 </style>
+
+@php
+$location = $_SERVER['REQUEST_URI'];  
+@endphp
 @extends('layouts.talkLayout')
 
 @section('left_section')
@@ -34,5 +38,8 @@
 @endsection
 
 @section('right_section')
-    @include('talk.setting')
+    @if ($location[1] == 's')
+        @include('talk.setting')
+    @endif
+    
 @endsection

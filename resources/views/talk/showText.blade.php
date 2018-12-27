@@ -89,28 +89,7 @@
         </div>
     </div>
     
-    {{--  <div id="chat_box" class="card-body  bar_set" style="">
-        <div class="row">            
-            @foreach ($oldMsgs as $msg)
-                <div id="reciver" class="col-md-6 m_wrap text-left">
-                    @if($msg->sent_from == $reciver->id)
-                        <div class="">
-                            <img src="{{ URL::to('img/user_imgs/' . $reciver->profile_pic) }}" 
-                                alt="image not found" class="rounded-circle" style="width:22px; length:2px"> 
-                            <span class="jumbotron no_wrap text-left recived"> {{$msg->text}} </span>
-                        </div>   
-                    @endif  
-                </div>
-                <div id="sender" class="col-md-6 m_wrap text-right">
-                    @if($msg->sent_to == $reciver->id)
-                        <div>
-                            <span class=" jumbotron no_wrap text-right sent"> {{$msg->text}} </span>      
-                        </div>
-                    @endif
-                </div>
-            @endforeach                                    
-        </div>
-    </div>  --}}
+
     <div id="chat_box" class="card-body  bar_set" style="">
         <div id="write" class="row">            
             {{--  <small class="text-center"> {{$last_chat}}  </small>                                 --}}
@@ -146,9 +125,10 @@
                 
             }
         });
-        pullData();
         fetchAll();
-        lastText();  
+        updateScroll('chat_box');
+        fetchLastText();
+        pullData();  
     } 
     
     function fetchAll(){
@@ -169,7 +149,28 @@
                     
                 }
             }  
-        });        
+        }); 
+    }
+
+    var flag_scroll = true;
+    function updateScroll(id){
+        var element = document.getElementById(id);
+
+        height = document.getElementById('write').scrollHeight - 330;
+        console.log(element.scrollTop);
+        console.log(document.getElementById('write').scrollHeight - 330);
+        if(height - 500 <= element.scrollTop || height + 500 <= element.scrollTop || height == element.scrollTop ){
+            flag_scroll = true;
+        }else{
+            flag_scroll = false;
+        }
+        
+        console.log(flag_scroll)
+        if(flag_scroll){
+            element.scrollTop = element.scrollHeight;
+        }
+
+
     }
     
     function sendMsg(){
@@ -205,6 +206,8 @@
 
     function pullData(){
         fetchChatMessages();
+        fetchLastText();
+        updateScroll("chat_box");
         setTimeout(pullData, 3000);
     }
 

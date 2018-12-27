@@ -1,3 +1,15 @@
+<style>
+    .no_wapper{
+        padding: 10px;
+        margin: 0px;
+    }
+    .comment_bubble{
+        background-color: #F6FBFF;
+        border-radius: 1rem;
+        
+    }
+</style>
+
 @extends('layouts.profile_master')
 
 @section('left_section')

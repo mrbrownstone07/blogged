@@ -58,24 +58,4 @@
         })   
     }
 
-    function getNewMessages(){
-        console.log(2);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        }),
-
-        $.ajax({
-            method: 'GET',
-            url: '{{URL::to('get_new_msg')}}',
-            data: {},
-            success:function(data){
-                if(data != ''){
-                    $("#msgNoti").append(data);
-                }
-            }  
-        }) 
-    }
- 
 </script>

@@ -26,7 +26,7 @@
 
     <div id="edit_post" class="card shadow-sm card_marg text-center cotentsection"
         onmouseover="addShadow('edit_post')" onmouseout="removeShadow('edit_post')" >
-        <div class="card-header">
+        <div class="card-header bg-white">
                 Share your thoughts
                 <a href="">
                     <img src="{{ URL::to('img/icons/post.png')}}" alt="image not found" class="icon_wrap">    

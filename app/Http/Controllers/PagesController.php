@@ -24,7 +24,7 @@ class PagesController extends Controller
     }
 
     public function blog(){
-        $posts = DB::select('SELECT * FROM posts, users WHERE owner_id = id');
+        $posts = DB::select('SELECT * FROM posts, users WHERE owner_id = id order by time DESC');
 
         return view('pages.blog')->with('posts', $posts);
 

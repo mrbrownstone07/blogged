@@ -103,7 +103,14 @@
                 $('#password').val('');
             }
         });
-
+        
+        $('#pswd').keyup(function(e){
+            if(isInvalid(e.keyCode)){
+                alert('HELLO THERE');
+                $('#pswd').val('');
+            }
+        });
+        
         $('#email').keyup(function(e){
             console.log($('#email').val());
         });

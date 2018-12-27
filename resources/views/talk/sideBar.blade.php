@@ -105,13 +105,13 @@
 
     window.onload = function(){
         
-        alert('ypp');       
+             
     }
 
-    function lastText(){
-        fetchLastText();
-        setTimeout(lastText, 3000);     
-    }
+    
+        
+         
+    
 
     function fetchLastText(){
 
